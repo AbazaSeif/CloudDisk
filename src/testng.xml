@@ -7,7 +7,7 @@
                 <methods>
                		<include name="newFolder"></include>
                		<include name="newFolderSame"></include>
-               		<include name="deleteNewFolder"></include>
+               		<include name="deleteFolder"></include>
                		
                 </methods>
             </class>

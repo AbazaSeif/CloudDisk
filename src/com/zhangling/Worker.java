@@ -82,7 +82,6 @@ public class Worker {
 	 * Utils.waitFor(3000); Assert.assertEquals(txt.getText(), "文件夹名称重复，请重新输入");
 	 * driver.findElement(By.className("dialog_close")).click();
 	 */
-	@Test
 	public void deleteFolder() {// 删除文件夾
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
@@ -92,7 +91,6 @@ public class Worker {
 		driver.findElement(By.className("btn_primary_large")).click();
 		driver.findElement(By.id("delete")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
-		Utils.waitElementShow(driver, By.xpath("//span[text()='操作完成']"), 10);
 		Boolean folderName = Utils.isExists(driver, By.xpath("//a[@data-name='111' and @title='111']"));
 		if (!folderName) {
 			System.out.println("删除文件夹成功");
