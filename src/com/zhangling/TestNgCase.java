@@ -1,8 +1,6 @@
 package com.zhangling;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -14,10 +12,6 @@ import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
-
-import autoitx4java.AutoItX;
-
-import com.jacob.com.LibraryLoader;
 
 public class TestNgCase {
 
@@ -49,14 +43,13 @@ public class TestNgCase {
 	/**
 	 * 新建同名文件夹，依赖newFolder方法
 	 */
-	@Test(dependsOnMethods={"newFolder"})
+	@Test
 	public void newFolderSame() {
 		worker.newFolderSame();
 	}
 
-	@Test(dependsOnMethods={"newFolderSame"})
+	@Test
 	public void deleteFolder() {// 删除文件夾
-
 		worker.deleteFolder();
 	}
 
@@ -65,81 +58,23 @@ public class TestNgCase {
 		worker.uploadCommon("1.txt");
 	}
 
-	public void uploadCommon(String fileName) {
-		File file = new File("lib/jacob-1.18-x64.dll");
-		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());
-
-		File file1 = new File("D:\\upload\\" + fileName);
-		System.out.println(file1);
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		driver.findElement(By.id("upload")).click();
-		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
-		AutoItX x = new AutoItX();
-		String open = "文件上传";
-		x.winActivate(open);
-		try {
-			Thread.sleep(1000);
-			x.controlFocus(open, "", "Edit1");
-			Thread.sleep(1000);
-			x.ControlSetText(open, "", "Edit1", file1.getAbsolutePath());
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-
-		}
-		x.controlClick(open, "", "Button1");
-
-		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			WebElement element = driver.findElement(By.xpath("//li[@data-name='" + fileName + "']"));
-		} catch (Exception e) {
-			Assert.fail("上传失败");
-		}
+	@Test(dependsOnMethods={"upload"})
+	public void deleteFile(){
+		worker.deleteFile();
 	}
 
+	/**
+	 * 云盘分享
+	 */
 	@Test
 	public void cloudShare() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		this.uploadCommon("2.txt");
-		driver.findElement(By.xpath("//ul[@data-name='2.txt']/li[1]/input")).click();
-		WebElement element = driver.findElement(By.id("share"));
-		element.click();
-		driver.findElement(By.id("cloudShare")).click();
-		driver.findElement(By.id("s2id_autogen2")).sendKeys("jenny");
-		try {
-			Thread.sleep(3000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		WebElement selector = driver.findElement(By.xpath("//div[@title='张小胖(jenny)']/parent::*/parent::*"));
-		selector.click();
-		// selector.sendKeys(Keys.ENTER);
-		driver.findElement(By.xpath(".//*[@id='modal_fileshare']/div[2]/div/div[2]/form/div[9]/button[1]")).click();
-		driver.findElement(By.xpath("//a[@lang='My_Share']/i")).click();
-		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
-		try {
-			driver.findElement(By.xpath("//a[@data-name='2.txt']"));
-		} catch (Exception e) {
-			Assert.fail("云盘分享失败");
-		}
-
+		worker.cloudShare();
 	}
 
 	@Test
 	public void linkShare() {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		this.uploadCommon("3.txt");
+		worker.uploadCommon("3.txt");
 		driver.findElement(By.xpath("//ul[@data-name='3.txt']/li[1]/input")).click();
 		WebElement element = driver.findElement(By.id("share"));
 		element.click();
@@ -181,7 +116,7 @@ public class TestNgCase {
 	@Test
 	public void copyToMyFiles() {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		this.uploadCommon("4.txt");
+		worker.uploadCommon("4.txt");
 		driver.findElement(By.xpath("//ul[@data-name='4.txt']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-fileTree-holder_1_span")).click();
@@ -227,7 +162,7 @@ public class TestNgCase {
 	@Test
 	public void copyToTeamfile() {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		this.uploadCommon("5.txt");
+		worker.uploadCommon("5.txt");
 		driver.findElement(By.xpath("//ul[@data-name='5.txt']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
@@ -244,7 +179,7 @@ public class TestNgCase {
 	@Test
 	public void copyAToCompanyfile() {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		this.uploadCommon("6.docx");
+		worker.uploadCommon("6.docx");
 		driver.findElement(By.xpath("//ul[@data-name='6.docx']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-compTree-holder_1_switch")).click();
@@ -261,7 +196,7 @@ public class TestNgCase {
 	@Parameters("favoritesUploadFileName")
 	public void favorites(String filename) {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		this.uploadCommon(filename);
+		worker.uploadCommon(filename);
 		WebElement txt = driver.findElement(By.xpath("//li[@data-name='7.pdf']"));
 		Actions action = new Actions(driver);
 		action.moveToElement(txt).build().perform();

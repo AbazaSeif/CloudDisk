@@ -9,8 +9,8 @@
                		<include name="newFolderSame"></include>
                		<include name="deleteFolder"></include>
                		<include name="upload"></include>
-           
-               		
+               		<include name="deleteFile"></include>
+               		<include name="cloudShare"></include>
                 </methods>
             </class>
             <parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
