@@ -62,7 +62,7 @@ public class TestNgCase {
 
 	@Test
 	public void upload() {
-		this.uploadCommon("1.txt");
+		worker.uploadCommon("1.txt");
 	}
 
 	public void uploadCommon(String fileName) {

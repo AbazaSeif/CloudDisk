@@ -8,6 +8,8 @@
                		<include name="newFolder"></include>
                		<include name="newFolderSame"></include>
                		<include name="deleteFolder"></include>
+               		<include name="upload"></include>
+           
                		
                 </methods>
             </class>

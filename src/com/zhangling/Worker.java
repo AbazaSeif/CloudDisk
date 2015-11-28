@@ -1,5 +1,6 @@
 package com.zhangling;
 
+import java.io.File;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +10,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import autoitx4java.AutoItX;
+
+import com.jacob.com.LibraryLoader;
 
 public class Worker {
 
@@ -34,10 +39,10 @@ public class Worker {
 		Utils.waitElementShow(driver, By.xpath("//span[text()='张小胖']"), 10);
 		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张小胖']"));
 		if (!exists) {
-			Assert.fail("登陆不成功");
+			Assert.fail("登陆文档云不成功");
+			System.out.println("登陆文档云失败");
 		}
-		System.out.println("登陆文档云+成功");
-
+		System.out.println("登陆文档云成功");
 	}
 
 	public void newFolder() {
@@ -51,6 +56,7 @@ public class Worker {
 		Boolean success = Utils.isExists(driver, By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li[@data-name='" + folderName + "']"));
 		if (!success) {
 			Assert.fail("新建文件夹失败");
+			System.out.println("新建文件夹失败");
 		}
 		System.out.println("新建文件夹成功");
 	}
@@ -73,16 +79,10 @@ public class Worker {
 		System.out.println("新建重名文件夹用例执行成功");
 	}
 
-	/*
-	 * // 再次新建同名文件夹 driver.findElement(By.id("new_build")).click();
-	 * driver.findElement(By.name("folderName")).sendKeys(folderName);
-	 * driver.findElement(By.className("confirmNewFolder")).click(); WebElement
-	 * txt =
-	 * driver.findElement(By.xpath(".//*[@id='page_message_warning']/span"));
-	 * Utils.waitFor(3000); Assert.assertEquals(txt.getText(), "文件夹名称重复，请重新输入");
-	 * driver.findElement(By.className("dialog_close")).click();
+	/**
+	 * 删除列表中的第一个文件夹
 	 */
-	public void deleteFolder() {// 删除文件夾
+	public void deleteFolder() {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
@@ -96,7 +96,45 @@ public class Worker {
 			System.out.println("删除文件夹成功");
 		} else {
 			System.out.println("删除文件夹失败");
+			Assert.fail("删除文件夹失败");
 		}
+	}
+
+	
+
+	public void uploadCommon(String fileName) {
+		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
+		
+		File file = new File("lib/jacob-1.18-x64.dll");//新建文件指向字符串指向的路径
+		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());//注册此文件
+		File file1 = new File("D:\\upload\\" + fileName);
+		
+		driver.findElement(By.id("upload")).click();
+		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
+		AutoItX x = new AutoItX();
+		String uploadWin = "文件上传";
+		x.winActivate(uploadWin);
+		try {
+			Thread.sleep(1000);
+			x.controlFocus(uploadWin, "", "Edit1");//定位到文件名输入框
+			Thread.sleep(1000);
+			x.ControlSetText(uploadWin, "", "Edit1", file1.getAbsolutePath());//在输入框中输入文件名称（包含路径）
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+
+		}
+		x.controlClick(uploadWin, "", "Button1");//点击“打开”
+
+		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
+		Utils.waitFor(3000);
+		Boolean uploadedfile = Utils.isExists(driver, By.xpath("//a[@data-name='"+fileName+"']"));
+		if(uploadedfile){
+			System.out.println("文件上传成功");
+		}else{
+			System.out.println("文件上传失败");
+			Assert.fail("文件上传失败");
+		}
+		
 	}
 
 }
