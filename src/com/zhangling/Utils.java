@@ -56,6 +56,7 @@ public class Utils {
 		String str = format.format(date);
 		return str;
 	}
+	
 	public static void takeScreenShot(WebDriver driver)
 	{
 		String path = "D:/screenshot/"+System.currentTimeMillis()+".jpg";
