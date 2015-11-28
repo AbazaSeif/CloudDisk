@@ -17,10 +17,11 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Utils {
-/**
- * 等待时间为毫秒
- * @param time
- */
+	
+	/**
+	 * 等待时间为毫秒
+	 * @param time
+	 */
 	public static void waitFor(int time) {
 		try {
 			Thread.currentThread().sleep(time);
