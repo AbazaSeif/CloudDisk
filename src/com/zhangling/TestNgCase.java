@@ -1,25 +1,16 @@
 package com.zhangling;
 
-import org.testng.annotations.Test;
-import org.testng.Assert;
-import org.testng.AssertJUnit;
-import org.testng.annotations.Test;
-import org.testng.AssertJUnit;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.rules.Verifier;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;

@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 public class Worker {
 	
@@ -81,31 +80,6 @@ public class Worker {
 		Assert.assertEquals(txt.getText(), "文件夹名称重复，请重新输入");
 		driver.findElement(By.className("dialog_close")).click();*/
 	
-	@Test
-	public void delete() {// 删除文件夾
-		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
-		String existsFolderName = lis.get(0).getAttribute("data-name");
-		driver.findElement(By.xpath(xpathExpression))
-		
-		
-		
-		driver.findElement(By.xpath("//li[@data-name='" + folderName + "']/preceding-sibling::*/input")).click();
-
-		driver.findElement(By.id("delete")).click();
-		driver.findElement(By.className("btn_primary_large")).click();
-		Utils.waitFor(5000);
-		try {
-			List<WebElement> txts = driver.findElements(By.className("txt"));
-			System.out.println(txts.size() + "----------------");
-			// Assert.assertEquals(txt.getText(), "操作完成");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		Utils.takeScreenShot(driver);
-
-		// 上传文件，删除文件
-	}
 
 
 
