@@ -54,36 +54,11 @@ public class TestNgCase {
 	}
 
 
-	@Test
-	public void delete() {//删除文件夾
-		driver.findElement(By.id("new_build")).click();
-		WebElement element = driver.findElement(By.name("folderName"));
-		String folderName = "folder" + System.currentTimeMillis();
-		element.sendKeys(folderName);
-		driver.findElement(By.className("confirmNewFolder")).click();
-		try {
-			Thread.sleep(6000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		driver.findElement(By.xpath("//li[@data-name='" + folderName + "']/preceding-sibling::*/input")).click();
-
-		driver.findElement(By.id("delete")).click();
-		driver.findElement(By.className("btn_primary_large")).click();
-		Utils.waitFor(5000);
-		try {
-			List<WebElement> txts = driver.findElements(By.className("txt"));
-			System.out.println(txts.size() + "----------------");
-			// Assert.assertEquals(txt.getText(), "操作完成");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	@Test(dependsOnMethods={"newFolderSame"})
+	public void deleteFolder() {//删除文件夾
 		
-		Utils.takeScreenShot(driver);
-
-		// 上传文件，删除文件
-	}
+		worker.deleteFolder();
+		}
 
 	@Test
 	public void upload() {

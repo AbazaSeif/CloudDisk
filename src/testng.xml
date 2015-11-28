@@ -5,7 +5,10 @@
         <classes>
             <class name="com.zhangling.TestNgCase">
                 <methods>
+               		<include name="newFolder"></include>
                		<include name="newFolderSame"></include>
+               		<include name="deleteNewFolder"></include>
+               		
                 </methods>
             </class>
             <parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
