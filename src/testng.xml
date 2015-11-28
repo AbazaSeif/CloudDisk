@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Suite1">
+     <test name="test12" preserve-order="true">
+        <classes>
+            <class name="com.zhangling.TestNgCase">
+                <methods>
+                	<include name="newFolder"></include>
+               		<include name="newFolderSame"></include>
+                </methods>
+            </class>
+            <parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
+            <parameter name="username" value="jenny"></parameter>
+        	<parameter name="password" value="888888"></parameter>
+        	
+        </classes>
+    </test>
+</suite>
