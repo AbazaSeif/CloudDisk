@@ -328,10 +328,32 @@ public class Worker {
 			Assert.fail("文件收藏失败");
 			System.out.println("文件收藏失败");
 		}else{
-			System.out.println("文件收藏成功");
-			
+			System.out.println("文件收藏成功");			
 		}
-
 	}
 	
+	
+	public void newExternalUpload(String myExternalUpload) {
+		Navigate.toMyFile(driver);
+		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
+		Utils.waitElementShow(driver, By.xpath("//span[text()='外链上传']"), 3);
+		driver.findElement(By.xpath("//div[@id='ExternalUpload']//span[@id='new_build']")).click();
+		WebElement element = driver.findElement(By.name("fileName"));
+		element.sendKeys(myExternalUpload);//
+		Boolean label = Utils.isExists(driver, By.xpath("//label[text()='永不过期']"));
+		if (!label) {
+			WebElement date = driver.findElement(By.name("creatStartTime"));
+			date.sendKeys(Utils.getToday());
+		}
+		Utils.waitElementShow(driver, By.xpath("//span[text()='确定']"), 10);
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		driver.findElement(By.xpath("//h4[text()='外链上传文件夹属性']/preceding-sibling::button")).click();//X按钮
+		Boolean folder = Utils.isExists(driver, By.xpath("//a[@title='myExternalUpload']"));
+		if (!folder) {
+			Assert.fail("新建外链上传文件夹失败");
+			System.out.println("新建外链上传文件夹失败");
+		}else{
+			System.out.println("新建外链上传文件夹成功");
+		}
+	}
 }

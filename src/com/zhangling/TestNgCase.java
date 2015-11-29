@@ -116,6 +116,10 @@ public class TestNgCase {
 		worker.copyToCompanyFile();
 	}
 
+	/**
+	 * 个人文件添加收藏
+	 * @param filename
+	 */
 	@Test
 	@Parameters("favoritesUploadFileName")
 	public void favorites(String filename) {
@@ -123,32 +127,15 @@ public class TestNgCase {
 	}
 
 	@Test
-	@Parameters({ "myExternalUpload" })
-	public void newBuildExternalUpload(String myExternalUpload) {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();// 点击个人文件
-		driver.findElement(By.xpath("//span[text()='外链上传']")).click();// 点击外链上传
-		Utils.waitElementShow(driver, By.xpath("//span[text()='外链上传']"), 3);
-		driver.findElement(By.xpath("//div[@id='ExternalUpload']//span[@id='new_build']")).click();// 点击新建
-		WebElement element = driver.findElement(By.name("fileName"));
-		element.sendKeys(myExternalUpload);// 在文本框中输入文件名称
-		Boolean label = Utils.isExists(driver, By.xpath("//label[text()='永不过期']"));
-		if (!label) {
-			WebElement date = driver.findElement(By.name("creatStartTime"));
-			date.sendKeys(Utils.getToday());
-		}// 判断是否存在永不过期。
-		Utils.waitElementShow(driver, By.xpath("//span[text()='确定']"), 10);
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		driver.findElement(By.xpath("//h4[text()='外链上传文件夹属性']/preceding-sibling::button")).click();
-		Boolean folder = Utils.isExists(driver, By.xpath("//a[@title='myExternalUpload']"));
-		if (!folder) {
-			Assert.fail("新建外链上传文件夹失败");
-		}
+	@Parameters({ "externalUpload" })
+	public void newExternalUpload(String myExternalUpload) {
+		worker.newExternalUpload(myExternalUpload);
 	}
 
 	@Test
 	@Parameters({ "y7techfile" })
 	public void closeExternalUpload(String y7techfile) {
-		this.newBuildExternalUpload(y7techfile);
+		newExternalUpload(y7techfile);
 		WebElement ul = driver.findElement(By.xpath("//ul[@data-name='订单地方']"));
 		Actions action = new Actions(driver);
 		action.moveToElement(ul).build().perform();

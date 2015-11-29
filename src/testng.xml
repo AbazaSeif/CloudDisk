@@ -24,6 +24,9 @@
             <parameter name="username" value="jenny"></parameter>
         	<parameter name="password" value="888888"></parameter>
         	<parameter name="favoritesUploadFileName" value="7.pdf"></parameter>
+        	<parameter name="externalUpload" value="myExternalUpload"></parameter>
+        	
+        	
         	
         </classes>
     </test>
