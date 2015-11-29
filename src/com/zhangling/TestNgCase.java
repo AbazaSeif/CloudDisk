@@ -37,6 +37,7 @@ public class TestNgCase {
 	 */
 	@Test
 	public void newFolder() {
+		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.newFolder();
 	}
 
@@ -45,21 +46,25 @@ public class TestNgCase {
 	 */
 	@Test
 	public void newFolderSame() {
+		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.newFolderSame();
 	}
 
 	@Test
 	public void deleteFolder() {// 删除文件夾
+		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.deleteFolder();
 	}
 
 	@Test
 	public void upload() {
+		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.uploadCommon("1.txt");
 	}
 
 	@Test(dependsOnMethods={"upload"})
 	public void deleteFile(){
+		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.deleteFile();
 	}
 
@@ -68,50 +73,14 @@ public class TestNgCase {
 	 */
 	@Test
 	public void cloudShare() {
+		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.cloudShare();
 	}
 
 	@Test
 	public void linkShare() {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		worker.uploadCommon("3.txt");
-		driver.findElement(By.xpath("//ul[@data-name='3.txt']/li[1]/input")).click();
-		WebElement element = driver.findElement(By.id("share"));
-		element.click();
-		driver.findElement(By.id("linkShare")).click();
-		driver.findElement(By.xpath("//button[text()='创建分享链接']")).click();
-		Utils.waitFor(3000);
-		WebElement password = driver.findElement(By.xpath("//label[text()='提取码']/following-sibling::*"));
-		String code = password.getText();
-		String link = driver.findElement(By.xpath("//label[text()='链接地址']/following-sibling::span")).getAttribute("title");
-
-		driver.findElement(By.xpath("//button[text()='关闭']")).click();
-		driver.findElement(By.xpath("//a[@lang='My_Share']/i")).click();
-		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
-		Boolean sentShare = Utils.isExists(driver, By.xpath("//a[@data-name='3.txt']"));
-		if(sentShare){
-			System.out.println("链接分享成功");
-		}else{
-			System.out.println("链接分享失败");
-			Assert.fail("链接分享失败");
-		}
-	
-					
-		driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
-		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
-		driver.switchTo().window(tabs.get(0)).navigate().to(link);
-		driver.findElement(By.xpath("//input[@placeholder='请输入提取码']")).sendKeys(code);
-		driver.findElement(By.id("team-check-submit")).click();
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		boolean exist = Utils.isExists(driver, By.xpath("//a[text()='3.txt' and @code]"));
-		if (!exist) {
-			Assert.fail("打开分享链接不成功");
-		}
-
+		worker.linkShare();	
 	}
 
 	@Test

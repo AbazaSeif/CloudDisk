@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
-import org.testng.annotations.Test;
 
 import autoitx4java.AutoItX;
 
@@ -48,7 +48,6 @@ public class Worker {
 	}
 
 	public void newFolder() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		driver.findElement(By.id("new_build")).click();
 		WebElement element = driver.findElement(By.name("folderName"));
 		String folderName = "folder" + System.currentTimeMillis();
@@ -67,7 +66,6 @@ public class Worker {
 	 * 新建同名文件夹，获取到所有文件夹的名称后，获取第一个文件夹名称
 	 */
 	public void newFolderSame() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 
@@ -85,7 +83,6 @@ public class Worker {
 	 * 删除列表中的第一个文件夹
 	 */
 	public void deleteFolder() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 		driver.findElement(By.xpath("//ul[@data-name='" + existsFolderName + "']/child::li[1]/input")).click();
@@ -106,8 +103,6 @@ public class Worker {
 	 * @param fileName
 	 */
 	public void uploadCommon(String fileName) {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		
 		File file = new File("lib/jacob-1.18-x64.dll");//新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());//注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
@@ -145,7 +140,6 @@ public class Worker {
 	 * 删除文件1.txt，需要依赖uploadCommon（）
 	 */
 	public void deleteFile(){
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		driver.findElement(By.xpath("//ul[@data-name='1.txt']//input")).click();
 		driver.findElement(By.id("delete")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
@@ -160,7 +154,6 @@ public class Worker {
 	}
 	
 	public void cloudShare() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		uploadCommon("2.txt");
 		driver.findElement(By.xpath("//ul[@data-name='2.txt']/li[1]/input")).click();
 		WebElement element = driver.findElement(By.id("share"));
@@ -169,9 +162,6 @@ public class Worker {
 		driver.findElement(By.id("s2id_autogen2")).sendKeys("jenny");
 		Utils.waitElementShow(driver, By.xpath("//div[@title='张小一(jenny)']"), 5);
 		driver.findElement(By.xpath("//div[@title='张小一(jenny)']")).sendKeys(Keys.ENTER);
-		//WebElement selector = driver.findElement(By.xpath("//div[@title='张小胖(jenny)']/parent::*/parent::*"));
-		//selector.click();
-		// selector.sendKeys(Keys.ENTER);
 		driver.findElement(By.xpath("//button[text()='确定分享']")).click();
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_share']")).click();
 		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
@@ -209,11 +199,9 @@ public class Worker {
 			System.out.println("链接分享失败");
 			Assert.fail("链接分享失败");
 		}
-	
-	
-	
-
-		driver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+		
+		((JavascriptExecutor)driver).executeScript("window.open('"+link+"')");
+		Utils.waitFor(5000);
 		ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
 		driver.switchTo().window(tabs.get(0)).navigate().to(link);
 		driver.findElement(By.xpath("//input[@placeholder='请输入提取码']")).sendKeys(code);
