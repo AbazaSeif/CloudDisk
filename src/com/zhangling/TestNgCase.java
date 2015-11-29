@@ -104,24 +104,16 @@ public class TestNgCase {
 	 * 复制文件到团队文件
 	 */
 	@Test
-	public void copyToTeamfile() {
-		worker.copyToTeamfile();
+	public void copyToTeamFile() {
+		worker.copyToTeamFile();
 	}
 
+	/**
+	 * 复制文件到公司文件
+	 */
 	@Test
-	public void copyAToCompanyfile() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		worker.uploadCommon("6.docx");
-		driver.findElement(By.xpath("//ul[@data-name='6.docx']/child::*/input")).click();
-		driver.findElement(By.id("copy")).click();
-		driver.findElement(By.id("copy-compTree-holder_1_switch")).click();
-		driver.findElement(By.xpath("//span[text()='companyTeam']")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		driver.findElement(By.className("headermenu_ico_companyfile")).click();
-		Boolean file = Utils.isExists(driver, By.xpath("//a[@data-name='6.docx']"));
-		if (!file) {
-			Assert.fail("复制到公司文件失败");
-		}
+	public void copyToCompanyFile() {
+		worker.copyToCompanyFile();
 	}
 
 	@Test

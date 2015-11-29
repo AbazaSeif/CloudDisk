@@ -14,7 +14,8 @@
                		<include name="linkShare"></include>
                		<include name="openLinkShared"></include>
                		<include name="createTeam"></include> 
-               		<include name="copyToMyFiles"></include>-->
+               		<include name="copyToMyFiles"></include>
+               		<include name="copyToFiles"></include> -->
                		<include name="copyToFiles"></include>
                 </methods>
             </class>
