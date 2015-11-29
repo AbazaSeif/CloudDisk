@@ -205,6 +205,7 @@ public class Worker {
 	public void openLinkShared() {
 		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
+		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//a[@title='3.txt' and @data-name='3.txt']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
 		String linkAndCode = Utils.getClip();
 		String code = linkAndCode.substring(linkAndCode.lastIndexOf(":") + 1);// 截取链接中最后一个：后面的内容
