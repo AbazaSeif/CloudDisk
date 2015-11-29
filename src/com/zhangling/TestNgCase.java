@@ -119,22 +119,7 @@ public class TestNgCase {
 	@Test
 	@Parameters("favoritesUploadFileName")
 	public void favorites(String filename) {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		worker.uploadCommon(filename);
-		WebElement txt = driver.findElement(By.xpath("//li[@data-name='7.pdf']"));
-		Actions action = new Actions(driver);
-		action.moveToElement(txt).build().perform();
-		Utils.waitFor(5000);
-		driver.findElement(By.xpath("//li[@data-name='" + filename + "']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
-		driver.findElement(By.xpath("//a[text()='添加收藏']")).click();
-		driver.findElement(By.xpath("//span[text()='我的收藏']")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		driver.findElement(By.xpath("//span[text()='收藏夹']")).click();
-		Boolean favorite = Utils.isExists(driver, By.xpath("//a[@title='7.pdf']"));
-		if (!favorite) {
-			AssertJUnit.fail("文件收藏失败");
-		}
-
+		worker.favorites(filename);
 	}
 
 	@Test
