@@ -54,66 +54,76 @@ public class TestNgCase {
 	}
 
 	@Test
-	public void upload() {
-		worker.uploadCommon("1.txt");
+	@Parameters({"upload"})
+	public void upload(String uploadFile) {
+		worker.uploadCommon(uploadFile);
 	}
+	
 
 	@Test(dependsOnMethods={"upload"})
-	public void deleteFile(){
-		worker.deleteFile();
+	@Parameters({"upload"})
+	public void deleteFile(String delFile){
+		worker.deleteFile(delFile);
 	}
 
 	/**
 	 * 云盘分享
 	 */
 	@Test
-	public void cloudShare() {
-		worker.cloudShare();
+	@Parameters({"cloudShare"})
+	public void cloudShare(String file) {
+		worker.cloudShare(file);
 	}
 	/**
 	 * 链接分享
 	 */
 	@Test
-	public void linkShare() {
-		worker.linkShare();	
+	@Parameters({"linkShare"})
+	public void linkShare(String file ) {
+		worker.linkShare(file);	
 	}
 	/**
 	 *在浏览器中打开链接分享 
 	 */
 	@Test(dependsOnMethods={"linkShare"})
-	public void openLinkShared() {
-		worker.openLinkShared();	
+	@Parameters({"openLinkShare"})
+	public void openLinkShared(String file) {
+		worker.openLinkShared(file);	
 	}
 	/**
 	 * 创建团队
 	 */
 	@Test
-	public void createTeam() {
-		worker.createTeam();
+	@Parameters({"createTeam"})
+	public void createTeam(String name) {
+		worker.createTeam(name);
 	}
 
 	/**
 	 * 复制文件到当前（个人）文件，文件名称后+1
 	 */
 	@Test
-	public void copyToMyFiles() {
-		worker.copyToMyFiles();
+	@Parameters({"copyToMyFiles"})
+	public void copyToMyFiles(String file) {
+		worker.copyToMyFiles(file);
 	}
 	
 	/**
 	 * 复制文件到团队文件
 	 */
 	@Test
-	public void copyToTeamFile() {
-		worker.copyToTeamFile();
+	@Parameters({"copyToTeamFile"})
+	public void copyToTeamFile(String file) {
+		worker.copyToTeamFile(file);
 	}
 
 	/**
 	 * 复制文件到公司文件
 	 */
 	@Test
-	public void copyToCompanyFile() {
-		worker.copyToCompanyFile();
+	@Parameters({"copyToCompanyFile"})
+	public void copyToCompanyFile(String file) {
+		worker.copyToCompanyFile(file);
 	}
 
 	/**

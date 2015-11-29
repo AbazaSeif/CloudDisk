@@ -144,17 +144,23 @@ public class Worker {
 		}
 
 	}
+	
+	public void download(){
+		Navigate.toMyFile(driver);
+		
+	}
+	
 
 	/**
 	 * 删除文件1.txt，需要依赖uploadCommon（）
 	 */
-	public void deleteFile() {
+	public void deleteFile(String deleteFile) {
 		Navigate.toMyFile(driver);
-		driver.findElement(By.xpath("//ul[@data-name='1.txt']//input")).click();
+		driver.findElement(By.xpath("//ul[@data-name='"+deleteFile+"']//input")).click();
 		driver.findElement(By.id("delete")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
 		Utils.waitFor(3000);
-		Boolean folderName = Utils.isExists(driver, By.xpath("//a[@data-name='1.txt' and @title='1.txt']"));
+		Boolean folderName = Utils.isExists(driver, By.xpath("//a[@data-name='"+deleteFile+"' and @title='"+deleteFile+"']"));
 		if (!folderName) {
 			System.out.println("删除文件成功");
 		} else {
@@ -163,10 +169,10 @@ public class Worker {
 		}
 	}
 
-	public void cloudShare() {
+	public void cloudShare(String shareFile) {
 		Navigate.toMyFile(driver);
-		uploadCommon("2.txt");
-		driver.findElement(By.xpath("//ul[@data-name='2.txt']/li[1]/input")).click();
+		uploadCommon(shareFile);
+		driver.findElement(By.xpath("//ul[@data-name='"+shareFile+"']/li[1]/input")).click();
 		WebElement element = driver.findElement(By.id("share"));
 		element.click();
 		driver.findElement(By.id("cloudShare")).click();
@@ -177,7 +183,7 @@ public class Worker {
 		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
 
-		Boolean sendShare = Utils.isExists(driver, By.xpath("//a[@data-name='2.txt']"));
+		Boolean sendShare = Utils.isExists(driver, By.xpath("//a[@data-name='"+shareFile+"']"));
 		if (sendShare) {
 			System.out.println("云盘分享文件成功");
 		} else {
@@ -186,17 +192,17 @@ public class Worker {
 		}
 	}
 
-	public void linkShare() {
+	public void linkShare(String shareFile) {
 		Navigate.toMyFile(driver);
-		uploadCommon("3.txt");
-		driver.findElement(By.xpath("//ul[@data-name='3.txt']/li[1]/input")).click();
+		uploadCommon(shareFile);
+		driver.findElement(By.xpath("//ul[@data-name='"+shareFile+"']/li[1]/input")).click();
 		WebElement element = driver.findElement(By.id("share"));
 		element.click();
 		driver.findElement(By.id("linkShare")).click();
 		driver.findElement(By.xpath("//button[text()='创建分享链接']")).click();
 		driver.findElement(By.xpath("//button[text()='关闭']")).click();
 		Navigate.toMyShares(driver);
-		Boolean sentShare = Utils.isExists(driver, By.xpath("//a[@data-name='3.txt']"));
+		Boolean sentShare = Utils.isExists(driver, By.xpath("//a[@data-name='"+shareFile+"']"));
 		if (sentShare) {
 			System.out.println("链接分享成功");
 		} else {
@@ -205,11 +211,11 @@ public class Worker {
 		}
 	}
 
-	public void openLinkShared() {
+	public void openLinkShared(String shareFile) {
 		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
 		Utils.waitFor(5000);
-		driver.findElement(By.xpath("//a[@title='3.txt' and @data-name='3.txt']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
+		driver.findElement(By.xpath("//a[@title='"+shareFile+"' and @data-name='"+shareFile+"']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
 		String linkAndCode = Utils.getClip();
 		String code = linkAndCode.substring(linkAndCode.lastIndexOf(":") + 1);// 截取链接中最后一个：后面的内容
 		((JavascriptExecutor) driver).executeScript("window.open('" + linkAndCode + "')");
@@ -225,17 +231,17 @@ public class Worker {
 		driver.switchTo().window(secondHandle);
 		driver.findElement(By.id("linkcode")).sendKeys(code);
 		driver.findElement(By.xpath(".//a[contains(text(),'提取')]")).click();
-		boolean exist = Utils.isExists(driver, By.xpath("//a[text()='3.txt' and @code]"));
+		boolean exist = Utils.isExists(driver, By.xpath("//a[text()='"+shareFile+"' and @code]"));
 		if (!exist) {
 			 Assert.fail("打开分享链接不成功"); 
 		}
 	}
 	
-	public void createTeam() {
+	public void createTeam(String fileName) {
 		Navigate.toTeamFile(driver);
 		Utils.waitElementShow(driver, By.id("btn_newTeam"), 10);
 		driver.findElement(By.id("btn_newTeam")).click();
-		driver.findElement(By.name("new_team_name")).sendKeys("myTeam");
+		driver.findElement(By.name("new_team_name")).sendKeys(fileName);
 		driver.findElement(By.xpath("//i[@class='ico_location']")).click();
 		driver.findElement(By.id("userGroupTree_1_span")).click();
 		driver.findElement(By.xpath("//button[text()='下一步']")).click();
@@ -248,7 +254,7 @@ public class Worker {
 		Utils.waitFor(3000);
 		driver.findElement(By.xpath("//div[@title='张小二(jenny01)']")).click();
 		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
-		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='myTeam']"));
+		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='"+fileName+"']"));
 		if(myteam){
 			System.out.println("创建团队成功");
 		}else{
@@ -257,15 +263,17 @@ public class Worker {
 		}
 	}
 	
-	public void copyToMyFiles() {
+	public void copyToMyFiles(String file) {
 		Navigate.toMyFile(driver);
-		uploadCommon("4.txt");
-		driver.findElement(By.xpath("//ul[@data-name='4.txt']/child::*/input")).click();
+		uploadCommon(file);
+		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-fileTree-holder_1_span")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Utils.waitFor(2000);
-		Boolean copyFileExists = Utils.isExists(driver, By.xpath("//ul[@data-name='4(1).txt']/child::*/input"));
+		String name = file.substring(0, file.indexOf("."));
+		String prefix = file.substring(file.indexOf("."));
+		Boolean copyFileExists = Utils.isExists(driver, By.xpath("//ul[@data-name='"+name+"(1)"+prefix+"']/child::*/input"));
 		if (!copyFileExists) {
 			System.out.println("复制到个人文件失败");
 			Assert.fail("复制到个人文件失败");
@@ -275,17 +283,17 @@ public class Worker {
 	}
 	
 	
-	public void copyToTeamFile() {
+	public void copyToTeamFile(String file) {
 		Navigate.toMyFile(driver);
-		uploadCommon("5.txt");
-		driver.findElement(By.xpath("//ul[@data-name='5.txt']/child::*/input")).click();
+		uploadCommon(file);
+		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
 		driver.findElement(By.xpath("//span[text()='myTeam']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Navigate.toTeamFile(driver);		
-		Boolean file = Utils.isExists(driver, By.xpath("//a[@data-name='5.txt']"));
-		if (!file) {
+		Boolean filename = Utils.isExists(driver, By.xpath("//a[@data-name='"+file+"']"));
+		if (!filename) {
 			Assert.fail("复制到团队文件失败");
 			System.out.println("复制到团队文件失败");
 		}else{
@@ -293,16 +301,16 @@ public class Worker {
 		}
 	}
 	
-	public void copyToCompanyFile() {
+	public void copyToCompanyFile(String filename) {
 		Navigate.toMyFile(driver);
-		uploadCommon("6.docx");
-		driver.findElement(By.xpath("//ul[@data-name='6.docx']/child::*/input")).click();
+		uploadCommon(filename);
+		driver.findElement(By.xpath("//ul[@data-name='"+filename+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-compTree-holder_1_switch")).click();
 		driver.findElement(By.xpath("//span[text()='companyTeam']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Navigate.toCompanyFile(driver);
-		Boolean file = Utils.isExists(driver, By.xpath("//a[@data-name='6.docx']"));
+		Boolean file = Utils.isExists(driver, By.xpath("//a[@data-name='"+filename+"']"));
 		if (!file) {
 			Assert.fail("复制到公司文件失败");
 			System.out.println("复制到公司文件失败");

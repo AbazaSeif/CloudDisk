@@ -25,6 +25,14 @@
             <parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
             <parameter name="username" value="jenny"></parameter>
         	<parameter name="password" value="888888"></parameter>
+        	<parameter name="upload" value="1.doc"></parameter>
+        	<parameter name="cloudShare" value="2.xlsx"></parameter>
+        	<parameter name="linkShare" value="3.ppt"></parameter>
+        	<parameter name="openLinkShare" value="3.ppt"></parameter>
+        	<parameter name="createTeam" value="myTeam"></parameter>
+        	<parameter name="copyToMyFiles" value="4.png"></parameter>        	
+        	<parameter name="copyToTeamFile" value="5.jpeg"></parameter>
+        	<parameter name="copyToCompanyFile" value="6.txt"></parameter>       	
         	<parameter name="favoritesUploadFileName" value="7.pdf"></parameter>
         	<parameter name="newExternalUpload" value="testExc1"></parameter>
         	
