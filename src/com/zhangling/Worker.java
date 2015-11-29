@@ -11,7 +11,10 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.AssertJUnit;
+import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import autoitx4java.AutoItX;
@@ -306,6 +309,26 @@ public class Worker {
 		}else{
 			System.out.println("复制到公司文件成功");
 		}			
+	}
+	
+	@Parameters("favoritesUploadFileName")
+	public void favorites(String filename) {
+		Navigate.toMyFile(driver);
+		uploadCommon("7.pdf");
+		WebElement txt = driver.findElement(By.xpath("//li[@data-name='7.pdf']"));
+		Actions action = new Actions(driver);
+		action.moveToElement(txt).build().perform();
+		Utils.waitFor(5000);
+		driver.findElement(By.xpath("//li[@data-name='" + filename + "']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
+		driver.findElement(By.xpath("//a[text()='添加收藏']")).click();
+		driver.findElement(By.xpath("//span[text()='我的收藏']")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		driver.findElement(By.xpath("//span[text()='收藏夹']")).click();
+		Boolean favorite = Utils.isExists(driver, By.xpath("//a[@title='7.pdf']"));
+		if (!favorite) {
+			AssertJUnit.fail("文件收藏失败");
+		}
+
 	}
 	
 }
