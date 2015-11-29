@@ -94,25 +94,8 @@ public class TestNgCase {
 
 	@Test
 	public void copyToMyFiles() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		worker.uploadCommon("4.txt");
-		driver.findElement(By.xpath("//ul[@data-name='4.txt']/child::*/input")).click();
-		driver.findElement(By.id("copy")).click();
-		driver.findElement(By.id("copy-fileTree-holder_1_span")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		Utils.waitFor(2000);
-		boolean alarm = Utils.isExists(driver, By.xpath("//span[text()='操作完成']"));
-
-		if (!alarm) {
-			Assert.fail("复制到个人文件失败");
-		}
-		try {
-			driver.findElement(By.xpath("//a[@data-name='4(1).txt']"));
-		} catch (Exception e) {
-			Assert.fail("同目录下复制失败");
-		}
+		worker.copyToMyFiles();
 	}
-
 	
 	@Test
 	public void copyToTeamfile() {

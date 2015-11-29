@@ -253,4 +253,22 @@ public class Worker {
 			Assert.fail("创建团队失败");			
 		}
 	}
+	
+	public void copyToMyFiles() {
+		Navigate.toMyFile(driver);
+		uploadCommon("4.txt");
+		driver.findElement(By.xpath("//ul[@data-name='4.txt']/child::*/input")).click();
+		driver.findElement(By.id("copy")).click();
+		driver.findElement(By.id("copy-fileTree-holder_1_span")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Utils.waitFor(2000);
+		Boolean copyFileExists = Utils.isExists(driver, By.xpath("//ul[@data-name='4(1).txt']/child::*/input"));
+		if (!copyFileExists) {
+			System.out.println("复制到个人文件失败");
+			Assert.fail("复制到个人文件失败");
+		}else{
+			System.out.println("复制到个人文件成功");
+		}
+	}
+
 }
