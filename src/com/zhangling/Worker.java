@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import autoitx4java.AutoItX;
 
@@ -223,6 +224,32 @@ public class Worker {
 		boolean exist = Utils.isExists(driver, By.xpath("//a[text()='3.txt' and @code]"));
 		if (!exist) {
 			 Assert.fail("打开分享链接不成功"); 
+		}
+	}
+	
+	public void createTeam() {
+		Navigate.toTeamFile(driver);
+		Utils.waitElementShow(driver, By.id("btn_newTeam"), 10);
+		driver.findElement(By.id("btn_newTeam")).click();
+		driver.findElement(By.name("new_team_name")).sendKeys("myTeam");
+		driver.findElement(By.xpath("//i[@class='ico_location']")).click();
+		driver.findElement(By.id("userGroupTree_1_span")).click();
+		driver.findElement(By.xpath("//button[text()='下一步']")).click();
+		String path = "//input[contains(@id,'s2id_autogen')]";
+		Utils.waitElementShow(driver, By.xpath(path), 10);
+		driver.findElement(By.xpath(path)).click();
+		Utils.waitElementShow(driver, By.xpath("//input[contains(@id,'s2id_autogen')]"), 2);
+		driver.findElement(By.xpath(path)).click();
+		driver.findElement(By.xpath(path)).sendKeys("jenny01");
+		Utils.waitFor(3000);
+		driver.findElement(By.xpath("//div[@title='张小娜(jenny01)']")).click();
+		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
+		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='myTeam']"));
+		if(myteam){
+			System.out.println("创建团队成功");
+		}else{
+			System.out.println("创建团队失败");
+			Assert.fail("创建团队失败");			
 		}
 	}
 }

@@ -70,15 +70,26 @@ public class TestNgCase {
 	public void cloudShare() {
 		worker.cloudShare();
 	}
-
+	/**
+	 * 链接分享
+	 */
 	@Test
 	public void linkShare() {
 		worker.linkShare();	
 	}
-	
+	/**
+	 *在浏览器中打开链接分享 
+	 */
 	@Test(dependsOnMethods={"linkShare"})
 	public void openLinkShared() {
 		worker.openLinkShared();	
+	}
+	/**
+	 * 创建团队
+	 */
+	@Test
+	public void createTeam() {
+		worker.createTeam();
 	}
 
 	@Test
@@ -102,31 +113,7 @@ public class TestNgCase {
 		}
 	}
 
-	@Test
-	public void createTeam() {
-		driver.findElement(By.className("headermenu_ico_team")).click();
-		Utils.waitFor(3000);
-		driver.findElement(By.id("btn_newTeam")).click();
-		driver.findElement(By.name("new_team_name")).sendKeys("myTeam");
-		driver.findElement(By.xpath("//i[@class='ico_location']")).click();
-		driver.findElement(By.id("userGroupTree_1_span")).click();
-		driver.findElement(By.xpath("//button[text()='下一步']")).click();
-		Utils.waitFor(1500);
-		String path = "//input[contains(@id,'s2id_autogen')]";
-		driver.findElement(By.xpath(path)).click();
-		Utils.waitElementShow(driver, By.xpath("//input[contains(@id,'s2id_autogen')]"), 2);
-		driver.findElement(By.xpath(path)).click();
-		driver.findElement(By.xpath(path)).sendKeys("jenny01");
-		Utils.waitFor(3000);
-		driver.findElement(By.xpath("//div[@title='张小娜(jenny01)']")).click();
-		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
-		try {
-			driver.findElement(By.xpath("//span[text()='myTeam']"));
-		} catch (Exception e) {
-			Assert.fail("创建团队失败");
-		}
-	}
-
+	
 	@Test
 	public void copyToTeamfile() {
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
