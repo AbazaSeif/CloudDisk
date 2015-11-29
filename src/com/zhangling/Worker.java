@@ -271,7 +271,7 @@ public class Worker {
 		}
 	}
 	
-	@Test
+	
 	public void copyToTeamFile() {
 		Navigate.toMyFile(driver);
 		uploadCommon("5.txt");
