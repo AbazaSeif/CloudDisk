@@ -192,7 +192,6 @@ public class Worker {
 		driver.findElement(By.xpath("//button[text()='创建分享链接']")).click();
 		driver.findElement(By.xpath("//button[text()='关闭']")).click();
 		Navigate.toMyShares(driver);
-		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
 		Boolean sentShare = Utils.isExists(driver, By.xpath("//a[@data-name='3.txt']"));
 		if (sentShare) {
 			System.out.println("链接分享成功");
@@ -203,8 +202,8 @@ public class Worker {
 	}
 
 	public void openLinkShared() {
-		Navigate.toMyFile(driver);
-		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
+		Navigate.toMyShares(driver);
+		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
 		driver.findElement(By.xpath("//a[@title='3.txt' and @data-name='3.txt']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
 		String linkAndCode = Utils.getClip();
 		String code = linkAndCode.substring(linkAndCode.lastIndexOf(":") + 1);// 截取链接中最后一个：后面的内容
