@@ -356,4 +356,15 @@ public class Worker {
 			System.out.println("新建外链上传文件夹成功");
 		}
 	}
+	
+
+	public void closeExternalUpload(String myExternalUpload) {
+		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
+		driver.findElement(By.id("closeLink")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		WebElement closed = driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']/li[5]"));
+		String txt = closed.getText();
+		Assert.assertEquals(txt, "已关闭", "aaa");
+		
+	}
 }

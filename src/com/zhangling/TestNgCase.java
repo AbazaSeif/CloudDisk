@@ -126,19 +126,24 @@ public class TestNgCase {
 		worker.favorites(filename);
 	}
 
+	/**
+	 * 新建外链上传文件夹
+	 * @param myExternalUpload
+	 */
 	@Test
 	@Parameters({ "externalUpload" })
 	public void newExternalUpload(String myExternalUpload) {
 		worker.newExternalUpload(myExternalUpload);
 	}
 
-	@Test
-	@Parameters({ "y7techfile" })
-	public void closeExternalUpload(String y7techfile) {
-		newExternalUpload(y7techfile);
-		WebElement ul = driver.findElement(By.xpath("//ul[@data-name='订单地方']"));
-		Actions action = new Actions(driver);
-		action.moveToElement(ul).build().perform();
+	/**
+	 * 关闭外链上传文件夹，依赖newExternalUpload()
+	 * @param myExternalUpload
+	 */
+	@Test(dependsOnMethods={"newExternalUpload"})
+	public void closeExternalUpload(String myExternalUpload) {
+		worker.closeExternalUpload(myExternalUpload);
+	
 
 	}
 }
