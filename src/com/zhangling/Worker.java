@@ -348,7 +348,7 @@ public class Worker {
 		Utils.waitElementShow(driver, By.xpath("//span[text()='确定']"), 10);
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		driver.findElement(By.xpath("//h4[text()='外链上传文件夹属性']/preceding-sibling::button")).click();//X按钮
-		Boolean folder = Utils.isExists(driver, By.xpath("//a[@title='myExternalUpload']"));
+		Boolean folder = Utils.isExists(driver, By.xpath("//a[@title='"+myExternalUpload+"']"));
 		if (!folder) {
 			Assert.fail("新建外链上传文件夹失败");
 			System.out.println("新建外链上传文件夹失败");
@@ -362,8 +362,9 @@ public class Worker {
 		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
 		driver.findElement(By.id("closeLink")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Utils.waitFor(3000);
 		WebElement closed = driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']/li[5]"));
-		String txt = closed.getText();
+		String txt = closed.getText();		
 		Assert.assertEquals(txt, "已关闭", "aaa");
 		
 	}

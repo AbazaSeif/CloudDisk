@@ -131,7 +131,7 @@ public class TestNgCase {
 	 * @param myExternalUpload
 	 */
 	@Test
-	@Parameters({ "externalUpload" })
+	@Parameters({ "newExternalUpload" })
 	public void newExternalUpload(String myExternalUpload) {
 		worker.newExternalUpload(myExternalUpload);
 	}
@@ -141,6 +141,7 @@ public class TestNgCase {
 	 * @param myExternalUpload
 	 */
 	@Test(dependsOnMethods={"newExternalUpload"})
+	@Parameters({"newExternalUpload"})
 	public void closeExternalUpload(String myExternalUpload) {
 		worker.closeExternalUpload(myExternalUpload);
 	
