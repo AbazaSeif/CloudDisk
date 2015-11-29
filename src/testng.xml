@@ -37,8 +37,8 @@
 			<parameter name="newExternalUpload" value="testExc1"></parameter>
 		</classes>
 		<listeners>
-			<listener class-name = org.uncommons.reportng.HTMLReporter " />
-			<listener class-name = org.uncommons.reportng.JUnitXMLReporter " />
+			<listener class-name="org.uncommons.reportng.HTMLReporter" />
+			<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
 		</listeners>
 	</test>
 </suite>
