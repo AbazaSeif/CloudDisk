@@ -270,5 +270,24 @@ public class Worker {
 			System.out.println("复制到个人文件成功");
 		}
 	}
+	
+	@Test
+	public void copyToTeamfile() {
+		Navigate.toMyFile(driver);
+		uploadCommon("5.txt");
+		driver.findElement(By.xpath("//ul[@data-name='5.txt']/child::*/input")).click();
+		driver.findElement(By.id("copy")).click();
+		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
+		driver.findElement(By.xpath("//span[text()='myTeam']")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Navigate.toTeamFile(driver);		
+		Boolean file = Utils.isExists(driver, By.xpath("//a[@data-name='5.txt']"));
+		if (!file) {
+			Assert.fail("复制到团队文件失败");
+			System.out.println("复制到团队文件失败");
+		}else{
+			System.out.println("复制到团队文件成功");
+		}
+	}
 
 }

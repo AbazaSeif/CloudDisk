@@ -92,26 +92,20 @@ public class TestNgCase {
 		worker.createTeam();
 	}
 
+	/**
+	 * 复制文件到当前（个人）文件，文件名称后+1
+	 */
 	@Test
 	public void copyToMyFiles() {
 		worker.copyToMyFiles();
 	}
 	
+	/**
+	 * 复制文件到团队文件
+	 */
 	@Test
 	public void copyToTeamfile() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
-		worker.uploadCommon("5.txt");
-		driver.findElement(By.xpath("//ul[@data-name='5.txt']/child::*/input")).click();
-		driver.findElement(By.id("copy")).click();
-		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
-		driver.findElement(By.xpath("//span[text()='myTeam']")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		driver.findElement(By.className("headermenu_ico_team")).click();
-		driver.findElement(By.xpath("//a[@data-name='myTeam']")).click();
-		Boolean file = Utils.isExists(driver, By.xpath("//a[@data-name='5.txt']"));
-		if (!file) {
-			Assert.fail("复制到团队文件失败");
-		}
+		worker.copyToTeamfile();
 	}
 
 	@Test
