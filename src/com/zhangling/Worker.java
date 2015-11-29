@@ -243,7 +243,7 @@ public class Worker {
 		driver.findElement(By.xpath(path)).click();
 		driver.findElement(By.xpath(path)).sendKeys("jenny01");
 		Utils.waitFor(3000);
-		driver.findElement(By.xpath("//div[@title='张小娜(jenny01)']")).click();
+		driver.findElement(By.xpath("//div[@title='张小二(jenny01)']")).click();
 		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
 		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='myTeam']"));
 		if(myteam){
