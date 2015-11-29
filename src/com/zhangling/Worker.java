@@ -34,8 +34,9 @@ public class Worker {
 		}
 		//profile.setPreference("extensions.firebug.currentVersion","1.9.1"); 
 		//profile.setPreference("browser.download.downloadDir", "c:/data"); 
+		profile.setPreference("browser.startup.homepage", "about:blank");
+		profile.setPreference("startup.homepage_welcome_url.additional", "");
 		driver = new FirefoxDriver(profile);
-		driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
 		driver.manage().window().maximize();
@@ -186,7 +187,8 @@ public class Worker {
 		driver.findElement(By.id("cloudShare")).click();
 		driver.findElement(By.id("s2id_autogen2")).sendKeys("jenny");
 		Utils.waitElementShow(driver, By.xpath("//div[@title='张小一(jenny)']"), 5);
-		driver.findElement(By.xpath("//div[@title='张小一(jenny)']")).sendKeys(Keys.ENTER);
+		//driver.findElement(By.xpath("//div[@title='张小一(jenny)']")).sendKeys(Keys.ENTER);
+		new Actions(driver).click(driver.findElement(By.xpath("//div[@title='张小一(jenny)']"))).perform();
 		driver.findElement(By.xpath("//button[text()='确定分享']")).click();
 		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
@@ -253,17 +255,13 @@ public class Worker {
 		driver.findElement(By.xpath("//i[@class='ico_location']")).click();
 		driver.findElement(By.id("userGroupTree_1_span")).click();
 		driver.findElement(By.xpath("//button[text()='下一步']")).click();
-		String path = "//input[contains(@id,'s2id_autogen')]";
-		Utils.waitElementShow(driver, By.xpath(path), 10);
-		driver.findElement(By.xpath(path)).click();
-		Utils.waitElementShow(driver, By.xpath("//input[contains(@id,'s2id_autogen')]"), 5);
-		driver.findElement(By.xpath(path)).click();
-		driver.findElement(By.xpath(path)).sendKeys("jenny01");
-		Utils.waitFor(5000);
-		driver.findElement(By.xpath("//div[@title='张小二(jenny01)']")).click();
-		Utils.waitFor(5000);
-		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
-		Utils.waitFor(3000);
+		driver.findElement(By.xpath("//input[contains(@id,'s2id_autogen')]")).sendKeys("jenny01");
+		Utils.waitFor(1000);
+		new Actions(driver).click(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']"))).perform();;
+		Utils.waitFor(1000);
+		new Actions(driver).moveToElement(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']")), 500, 500).contextClick().perform();
+		new Actions(driver).click(driver.findElement(By.xpath("//button[text()='创建团队']"))).perform();
+		Utils.waitFor(1000);
 		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='"+fileName+"']"));
 		if(myteam){
 			System.out.println("创建团队成功");
