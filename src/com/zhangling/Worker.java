@@ -1,6 +1,7 @@
 package com.zhangling;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -11,11 +12,9 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.AssertJUnit;
-import org.testng.annotations.Parameters;
-import org.testng.annotations.Test;
 
 import autoitx4java.AutoItX;
 
@@ -26,7 +25,16 @@ public class Worker {
 	WebDriver driver;
 
 	public Worker(String url, String username, String password) {
-		driver = new FirefoxDriver();
+		File file = new File("lib/firepath-0.9.7.1-fx.xpi"); 
+		FirefoxProfile profile = new FirefoxProfile(); 
+		try {
+			profile.addExtension(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		//profile.setPreference("extensions.firebug.currentVersion","1.9.1"); 
+		//profile.setPreference("browser.download.downloadDir", "c:/data"); 
+		driver = new FirefoxDriver(profile);
 		driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
@@ -133,7 +141,7 @@ public class Worker {
 		x.controlClick(uploadWin, "", "Button1");// 点击“打开”
 
 		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
-		Utils.waitFor(3000);
+		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//button[@title='关闭']")).click();
 		Boolean uploadedfile = Utils.isExists(driver, By.xpath("//a[@data-name='" + fileName + "']"));
 		if (uploadedfile) {
@@ -248,12 +256,14 @@ public class Worker {
 		String path = "//input[contains(@id,'s2id_autogen')]";
 		Utils.waitElementShow(driver, By.xpath(path), 10);
 		driver.findElement(By.xpath(path)).click();
-		Utils.waitElementShow(driver, By.xpath("//input[contains(@id,'s2id_autogen')]"), 2);
+		Utils.waitElementShow(driver, By.xpath("//input[contains(@id,'s2id_autogen')]"), 5);
 		driver.findElement(By.xpath(path)).click();
 		driver.findElement(By.xpath(path)).sendKeys("jenny01");
-		Utils.waitFor(3000);
+		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//div[@title='张小二(jenny01)']")).click();
+		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
+		Utils.waitFor(3000);
 		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='"+fileName+"']"));
 		if(myteam){
 			System.out.println("创建团队成功");
@@ -261,6 +271,7 @@ public class Worker {
 			System.out.println("创建团队失败");
 			Assert.fail("创建团队失败");			
 		}
+		
 	}
 	
 	public void copyToMyFiles(String file) {
@@ -283,13 +294,13 @@ public class Worker {
 	}
 	
 	
-	public void copyToTeamFile(String file) {
+	public void copyToTeamFile(String file,String teamName) {
 		Navigate.toMyFile(driver);
 		uploadCommon(file);
 		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
-		driver.findElement(By.xpath("//span[text()='myTeam']")).click();
+		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Navigate.toTeamFile(driver);		
 		Boolean filename = Utils.isExists(driver, By.xpath("//a[@data-name='"+file+"']"));
@@ -367,13 +378,15 @@ public class Worker {
 	
 
 	public void closeExternalUpload(String myExternalUpload) {
+		Navigate.toMyFile(driver);
+		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
 		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
 		driver.findElement(By.id("closeLink")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Utils.waitFor(3000);
 		WebElement closed = driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']/li[5]"));
 		String txt = closed.getText();		
-		Assert.assertEquals(txt, "已关闭", "aaa");
+		Assert.assertEquals(txt, "已关闭", "关闭外链上传文件失败");
 		
 	}
 }

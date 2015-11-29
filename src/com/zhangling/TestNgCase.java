@@ -102,7 +102,7 @@ public class TestNgCase {
 	/**
 	 * 复制文件到当前（个人）文件，文件名称后+1
 	 */
-	@Test
+	@Test(dependsOnMethods="createTeam")
 	@Parameters({"copyToMyFiles"})
 	public void copyToMyFiles(String file) {
 		worker.copyToMyFiles(file);
@@ -112,9 +112,9 @@ public class TestNgCase {
 	 * 复制文件到团队文件
 	 */
 	@Test
-	@Parameters({"copyToTeamFile"})
-	public void copyToTeamFile(String file) {
-		worker.copyToTeamFile(file);
+	@Parameters({"copyToTeamFile","createTeam"})
+	public void copyToTeamFile(String file,String teamname) {
+		worker.copyToTeamFile(file,teamname);
 	}
 
 	/**
