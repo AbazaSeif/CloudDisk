@@ -5,7 +5,7 @@
         <classes>
             <class name="com.zhangling.TestNgCase">
                 <methods>
-               		<!-- <include name="newFolder"></include>
+               <!-- <include name="newFolder"></include>
                		<include name="newFolderSame"></include>
                		<include name="deleteFolder"></include>
                		<include name="upload"></include>
@@ -16,8 +16,9 @@
                		<include name="createTeam"></include> 
                		<include name="copyToMyFiles"></include>
                		<include name="copyToTeamFile"></include>
-               		<include name="copyToCompanyFile"></include> -->
-               		<include name="favorites"></include>
+               		<include name="copyToCompanyFile"></include> 
+               		<include name="favorites"></include> -->
+               		<include name="newExternalUpload"></include>
                 </methods>
             </class>
             <parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
