@@ -36,8 +36,7 @@ public class TestNgCase {
 	 * 新建文件夹
 	 */
 	@Test
-	public void newFolder() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
+	public void newFolder() {		
 		worker.newFolder();
 	}
 
@@ -46,25 +45,21 @@ public class TestNgCase {
 	 */
 	@Test
 	public void newFolderSame() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.newFolderSame();
 	}
 
 	@Test
 	public void deleteFolder() {// 删除文件夾
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.deleteFolder();
 	}
 
 	@Test
 	public void upload() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.uploadCommon("1.txt");
 	}
 
 	@Test(dependsOnMethods={"upload"})
 	public void deleteFile(){
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.deleteFile();
 	}
 
@@ -73,14 +68,17 @@ public class TestNgCase {
 	 */
 	@Test
 	public void cloudShare() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.cloudShare();
 	}
 
 	@Test
 	public void linkShare() {
-		driver.findElement(By.xpath("//i[@class='headermenu_ico_myfile']")).click();
 		worker.linkShare();	
+	}
+	
+	@Test(dependsOnMethods={"linkShare"})
+	public void openLinkShared() {
+		worker.openLinkShared();	
 	}
 
 	@Test

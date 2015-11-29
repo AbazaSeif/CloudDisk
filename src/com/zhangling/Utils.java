@@ -1,5 +1,8 @@
 package com.zhangling;
 
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
 import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
@@ -66,8 +69,23 @@ public class Utils {
 		try {
 			FileUtils.copyFile(file, a);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * 获取到粘贴板上的内容
+	 * @return
+	 */
+	public static String getClip(){
+		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+		DataFlavor flavor = DataFlavor.stringFlavor;
+		if (clipboard.isDataFlavorAvailable(flavor)) {
+			try {
+				return clipboard.getData(flavor).toString();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return "";
 	}
 }
