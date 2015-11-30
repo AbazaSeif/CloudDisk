@@ -5,21 +5,24 @@
 		<classes>
 			<class name="com.zhangling.TestNgCase">
 				<methods>
-					<include name="newFolder"></include>
+					<!-- <include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
 					<include name="upload"></include>
 					<include name="deleteFile"></include>
 					<include name="cloudShare"></include>
 					<include name="linkShare"></include>
-					<!-- <include name="openLinkShared"></include> -->
+					<include name="openLinkShared"></include>
 					<include name="createTeam"></include>
 					<include name="copyToMyFiles"></include>
 					<include name="copyToTeamFile"></include>
 					<include name="copyToCompanyFile"></include>
 					<include name="favorites"></include>
 					<include name="newExternalUpload"></include>
-					<include name="closeExternalUpload"></include>
+					<include name="closeExternalUpload"></include> 
+					<include name="deleteExternalUpload"></include>
+					<include name="tagging"></include> -->
+					<include name="common"></include>
 				</methods>
 			</class>
 			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
@@ -35,6 +38,11 @@
 			<parameter name="copyToCompanyFile" value="6.txt"></parameter>
 			<parameter name="favoritesUploadFileName" value="7.pdf"></parameter>
 			<parameter name="newExternalUpload" value="testExc1"></parameter>
+			<parameter name="tagging" value="8.mp3"></parameter>
+			<parameter name="common" value="9.wmv"></parameter>
+			<parameter name="renaming" value="10.jpg"></parameter>
+
+		
 		</classes>
 		<listeners>
 			<listener class-name="org.uncommons.reportng.HTMLReporter" />

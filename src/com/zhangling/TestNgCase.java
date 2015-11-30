@@ -154,9 +154,45 @@ public class TestNgCase {
 	@Parameters({"newExternalUpload"})
 	public void closeExternalUpload(String myExternalUpload) {
 		worker.closeExternalUpload(myExternalUpload);
-	
-
 	}
+	
+	/**
+	 * 删除外链上传文件夹
+	 * @param myExternalUpload
+	 */
+	@Test
+	@Parameters({"newExternalUpload"})
+	public void deleteExternalUpload(String myExternalUpload){
+		worker.deleteExternalUpload(myExternalUpload);		
+	}
+	
+	/**
+	 * 打标签
+	 * @param filename
+	 */
+	@Test
+	@Parameters({"tagging"})
+	public void tagging(String filename){
+		worker.tagging(filename);
+	}
+	
+	/**
+	 * 评论
+	 * @param filename
+	 */
+	@Test
+	@Parameters({"common"})
+	public void common(String filename){
+		worker.common(filename);
+	}
+	
+	@Test
+	@Parameters({"renaming"})
+	public void renaming(String filename){
+		worker.renaming(filename);
+		
+	}
+	
 }
 
 /*

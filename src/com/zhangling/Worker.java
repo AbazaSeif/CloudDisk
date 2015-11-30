@@ -387,4 +387,75 @@ public class Worker {
 		Assert.assertEquals(txt, "已关闭", "关闭外链上传文件失败");
 		
 	}
+	
+	public void deleteExternalUpload(String myExternalUpload){
+		Navigate.toMyFile(driver);
+		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
+		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
+		driver.findElement(By.id("delete")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();	
+	}
+	
+	public void tagging(String file){
+		Navigate.toMyFile(driver);
+		uploadCommon(file);
+		WebElement ele = driver.findElement(By.xpath("//ul[@data-name='"+file+"']/li[2]"));
+		Actions act = new Actions(driver);
+		act.moveToElement(ele).build().perform();
+		driver.findElement(By.xpath("//a[@title='打标签']")).click();
+		WebElement tag = driver.findElement(By.className("js_tag_name"));
+		String tagname = "tag"+System.currentTimeMillis();
+		tag.sendKeys(tagname);
+		driver.findElement(By.xpath("//a[text()='贴上']")).click();
+		driver.findElement(By.xpath("//span[text()='提交']")).click();
+		Utils.waitFor(3000);
+		act.moveToElement(ele).build().perform();
+		driver.findElement(By.xpath("//a[@title='打标签']")).click();
+		Utils.waitFor(3000);
+		Boolean isexist = Utils.isExists(driver, By.xpath("//span[text()='"+tagname+"']"));
+		if(!isexist){
+			System.out.println("打标签失败");
+			Assert.fail("打标签失败");
+		}else{
+			System.out.println("打标签成功");
+		}
+		driver.findElement(By.xpath("//span[text()='关闭']")).click();		
+	}
+	
+	public void common(String fileName){
+		Navigate.toMyFile(driver);
+		uploadCommon(fileName);
+		WebElement file = driver.findElement(By.xpath("//li[@class='filename' and @data-name='"+fileName+"']"));
+		Actions act = new Actions(driver);
+		act.moveToElement(file).build().perform();
+		driver.findElement(By.className("file_comment")).click();
+		driver.findElement(By.id("commentTextarea")).sendKeys("中国共产党万岁");
+		driver.findElement(By.xpath("//span[text()='评论']")).click();
+		Boolean common = Utils.isExists(driver, By.className("tooLongToHidden"));
+		if(common){
+			System.out.println("评论成功");
+		}else{
+			System.out.println("评论失败");
+			Assert.fail("评论失败");
+		}		
+		act.moveToElement(file).build().perform();
+		driver.findElement(By.className("file_comment")).click();
+	}
+	
+	public void renaming(String fileName){
+		uploadCommon(fileName);
+		Navigate.toMyFile(driver);
+		WebElement ele = driver.findElement(By.xpath("//li[@class='filename' and @data-name='"+fileName+"']"));
+		Actions act = new Actions(driver);
+		act.moveToElement(ele).build().perform();
+		driver.findElement(By.xpath("//li[@data-name='9.wmv']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
+		driver.findElement(By.xpath("//a[text()='重命名']")).click();
+		WebElement element = driver.findElement(By.className("rename_txt"));
+		element.clear();
+		element.sendKeys("pass");
+		driver.findElement(By.className("js_sub_rename")).click();
+		
+		
+		
+	}
 }
