@@ -8,7 +8,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -453,9 +452,15 @@ public class Worker {
 		WebElement element = driver.findElement(By.className("rename_txt"));
 		element.clear();
 		element.sendKeys("pass");
+		
 		driver.findElement(By.className("js_sub_rename")).click();
-		
-		
-		
+		driver.switchTo().alert().accept();
+		Boolean success = Utils.isExists(driver, By.xpath("//a[text()='pass']"));
+		if(!success){
+			System.out.println("修改文件名失败");
+			Assert.fail("修改文件名失败");
+		}else{
+			System.out.println("修改文件名成功");
+		}
 	}
 }
