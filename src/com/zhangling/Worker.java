@@ -447,7 +447,7 @@ public class Worker {
 		WebElement ele = driver.findElement(By.xpath("//li[@class='filename' and @data-name='"+fileName+"']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(ele).build().perform();
-		driver.findElement(By.xpath("//li[@data-name='9.wmv']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
+		driver.findElement(By.xpath("//li[@data-name='"+fileName+"']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
 		driver.findElement(By.xpath("//a[text()='重命名']")).click();
 		WebElement element = driver.findElement(By.className("rename_txt"));
 		element.clear();
