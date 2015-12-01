@@ -256,13 +256,15 @@ public class Worker {
 		driver.findElement(By.xpath("//button[text()='下一步']")).click();
 		driver.findElement(By.xpath("//input[contains(@id,'s2id_autogen')]")).sendKeys("jenny01");
 		Utils.waitFor(1000);
-		new Actions(driver).click(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']"))).perform();
+		new Actions(driver).click(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']"))).build().perform();
 		Utils.waitFor(1000);
-		new Actions(driver).moveToElement(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']")), 500, 500).contextClick().perform();
-		new Actions(driver).click(driver.findElement(By.xpath("//button[text()='创建团队']"))).perform();
-		Utils.waitFor(1000);
+		new Actions(driver).click(driver.findElement(By.xpath("//button[text()='创建团队']"))).build().perform();
+		Utils.waitFor(5000);
+		driver.findElement(By.xpath("//span[text()='"+fileName+"']")).click();		
 		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='"+fileName+"']"));
+		
 		if(myteam){
+			
 			System.out.println("创建团队成功");
 		}else{
 			System.out.println("创建团队失败");
@@ -392,7 +394,15 @@ public class Worker {
 		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
 		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
 		driver.findElement(By.id("delete")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();	
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Boolean file = Utils.isExists(driver, By.xpath("//a[@title='"+myExternalUpload+"' and @data-name='"+myExternalUpload+"']"));
+		if(! file){
+			System.out.println("删除外链上传文件夹成功");
+		}else{
+			System.out.println("删除外链上传文件夹失败");
+			Assert.fail("删除外链上传文件夹失败");
+		}
+		
 	}
 	
 	public void tagging(String file){
