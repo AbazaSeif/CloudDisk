@@ -44,9 +44,9 @@
 			<parameter name="common" value="9.wmv"></parameter>
 			<parameter name="renaming" value="10.jpg"></parameter>
 		</classes>
-		<listeners>
-			<listener class-name="org.uncommons.reportng.HTMLReporter" />
-			<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
-		</listeners>
 	</test>
+	<listeners>
+		<listener class-name="org.uncommons.reportng.HTMLReporter" />
+		<listener class-name="org.uncommons.reportng.JUnitXMLReporter" />
+	</listeners>
 </suite>
