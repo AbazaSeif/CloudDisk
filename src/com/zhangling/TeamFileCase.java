@@ -9,35 +9,40 @@ public class TeamFileCase {
 	Worker worker;
 	
 	@Test
-	@Parameters({"upload"})
-	public void upload(String filename){
+	@Parameters({"upload","createTeam"})
+	public void upload(String fileName,String teamName){
 		Navigate.toTeamFile(driver);
-		worker.uploadCommon(filename);
+		Navigate.clickTeam(driver, teamName);
+		worker.uploadCommon(fileName);
 	}
 	
 	@Test
-	public void newFolder(){
+	public void newFolder(String teamName){
 		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
 		worker.newFolder();
 	}
 	
 	@Test
-	public void newFolderSame(){
+	public void newFolderSame(String teamName){
 		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
 		worker.newFolderSame();
 	}
 	
 	@Test
-	public void deleteFolder() {// 删除文件夾
+	public void deleteFolder(String teamName) {// 删除文件夾
 		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);		
 		worker.deleteFolder();
 	}
 
 
 	@Test(dependsOnMethods={"upload"})
 	@Parameters({"upload"})
-	public void deleteFile(String delFile){
+	public void deleteFile(String delFile,String teamName){
 		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
 		worker.deleteFile(delFile);
 	}
 
@@ -46,8 +51,9 @@ public class TeamFileCase {
 	 */
 	@Test
 	@Parameters({"cloudShare"})
-	public void cloudShare(String file) {
+	public void cloudShare(String file,String teamName) {
 		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
 		worker.cloudShare(file);
 	}
 	/**
@@ -55,8 +61,9 @@ public class TeamFileCase {
 	 */
 	@Test
 	@Parameters({"linkShare"})
-	public void linkShare(String file ) {
+	public void linkShare(String file,String teamName ) {
 		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
 		worker.linkShare(file);	
 	}
 	/**
@@ -64,8 +71,9 @@ public class TeamFileCase {
 	 */
 	@Test(dependsOnMethods={"linkShare"})
 	@Parameters({"openLinkShare"})
-	public void openLinkShared(String file) {
+	public void openLinkShared(String file,String teamName ) {
 		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
 		worker.openLinkShared(file);	
 	}
 	/**
@@ -81,10 +89,13 @@ public class TeamFileCase {
 	/**
 	 * 复制文件到当前（个人）文件，文件名称后+1
 	 */
-	@Test(dependsOnMethods="createTeam")
-	@Parameters({"copyToMyFiles"})
-	public void copyToMyFiles(String file) {
-		worker.copyToMyFiles(file);
+	@Test
+	public void copyToMyFiles(String file,String teamName) {
+		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
+		
+		
+		
 	}
 	
 	/**

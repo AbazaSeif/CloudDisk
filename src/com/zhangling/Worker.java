@@ -21,7 +21,7 @@ import com.jacob.com.LibraryLoader;
 
 public class Worker {
 
-	WebDriver driver;
+	static WebDriver driver;
 
 	public Worker(String url, String username, String password) {
 		File file = new File("lib/firepath-0.9.7.1-fx.xpi"); 
@@ -115,7 +115,7 @@ public class Worker {
 	 * 
 	 * @param fileName
 	 */
-	public void uploadCommon(String fileName) {
+	public static void uploadCommon(String fileName) {
 		File file = new File("lib/jacob-1.18-x64.dll");// 新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);

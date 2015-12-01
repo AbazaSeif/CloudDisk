@@ -20,5 +20,9 @@ public class Navigate {
 	public static void toMyShares(WebDriver driver){		
 		driver.findElement(By.xpath("//i[@class='headermenu_ico_share']")).click();		
 	}
+	
+	public static void clickTeam(WebDriver driver,String teamName){
+		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
+	}
 
 }
