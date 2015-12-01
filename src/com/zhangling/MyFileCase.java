@@ -1,22 +1,13 @@
 package com.zhangling;
 
-import java.util.ArrayList;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
-import org.testng.Assert;
-import org.testng.AssertJUnit;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class TestNgCase {
-
-	WebDriver driver;
+public class MyFileCase {
 	Worker worker;
+	WebDriver driver;
 
 	/**
 	 * 初始化浏览器,登陆文档云+
@@ -28,7 +19,7 @@ public class TestNgCase {
 	@BeforeClass
 	@Parameters({ "url", "username", "password" })
 	public void initBrowser(String url, String username, String password) {
-		worker = new Worker(url, username, password);
+		worker = new Worker(url);
 		worker.loginRight(username, password);
 	}
 
@@ -36,7 +27,7 @@ public class TestNgCase {
 	 * 新建文件夹
 	 */
 	@Test
-	public void newFolder() {	
+	public void newFolder() {
 		Navigate.toMyFile(driver);
 		worker.newFolder();
 	}

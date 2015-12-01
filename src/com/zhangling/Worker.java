@@ -21,9 +21,9 @@ import com.jacob.com.LibraryLoader;
 
 public class Worker {
 
-	static WebDriver driver;
-
-	public Worker(String url, String username, String password) {
+	WebDriver driver;
+	
+	public Worker(String url) {
 		File file = new File("lib/firepath-0.9.7.1-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
 		try {
@@ -31,13 +31,11 @@ public class Worker {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		//profile.setPreference("extensions.firebug.currentVersion","1.9.1"); 
-		//profile.setPreference("browser.download.downloadDir", "c:/data"); 
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
+		
 		driver = new FirefoxDriver(profile);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
 		driver.manage().window().maximize();
 		driver.navigate().to(url);
 	}
@@ -115,7 +113,7 @@ public class Worker {
 	 * 
 	 * @param fileName
 	 */
-	public static void uploadCommon(String fileName) {
+	public void uploadCommon(String fileName) {
 		File file = new File("lib/jacob-1.18-x64.dll");// 新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);

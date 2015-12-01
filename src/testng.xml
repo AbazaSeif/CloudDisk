@@ -3,9 +3,9 @@
 <suite name="Suite1">
 	<test name="test12" preserve-order="true">
 		<classes>
-			<class name="com.zhangling.TestNgCase">
+			<class name="com.zhangling.MyFileCase">
 				<methods>
-				<include name="createTeam"></include>
+					<include name="createTeam"></include>
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
@@ -20,14 +20,11 @@
 					<include name="copyToCompanyFile"></include>
 					<include name="favorites"></include>
 					<include name="newExternalUpload"></include>
-					<include name="closeExternalUpload"></include> 
+					<include name="closeExternalUpload"></include>
 					<include name="deleteExternalUpload"></include>
 					<include name="tagging"></include>
 					<include name="common"></include>
 					<include name="renaming"></include>
-				</methods>
-				<methods>
-				
 				</methods>
 			</class>
 			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
@@ -46,8 +43,6 @@
 			<parameter name="tagging" value="8.mp3"></parameter>
 			<parameter name="common" value="9.wmv"></parameter>
 			<parameter name="renaming" value="10.jpg"></parameter>
-
-		
 		</classes>
 		<listeners>
 			<listener class-name="org.uncommons.reportng.HTMLReporter" />
