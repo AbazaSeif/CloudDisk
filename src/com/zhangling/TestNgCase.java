@@ -36,7 +36,8 @@ public class TestNgCase {
 	 * 新建文件夹
 	 */
 	@Test
-	public void newFolder() {		
+	public void newFolder() {	
+		Navigate.toMyFile(driver);
 		worker.newFolder();
 	}
 
@@ -45,17 +46,20 @@ public class TestNgCase {
 	 */
 	@Test
 	public void newFolderSame() {
+		Navigate.toMyFile(driver);
 		worker.newFolderSame();
 	}
 
 	@Test
 	public void deleteFolder() {// 删除文件夾
+		Navigate.toMyFile(driver);
 		worker.deleteFolder();
 	}
 
 	@Test
 	@Parameters({"upload"})
 	public void upload(String uploadFile) {
+		Navigate.toMyFile(driver);
 		worker.uploadCommon(uploadFile);
 	}
 	
@@ -63,6 +67,7 @@ public class TestNgCase {
 	@Test(dependsOnMethods={"upload"})
 	@Parameters({"upload"})
 	public void deleteFile(String delFile){
+		Navigate.toMyFile(driver);
 		worker.deleteFile(delFile);
 	}
 
@@ -72,6 +77,7 @@ public class TestNgCase {
 	@Test
 	@Parameters({"cloudShare"})
 	public void cloudShare(String file) {
+		Navigate.toMyFile(driver);
 		worker.cloudShare(file);
 	}
 	/**
@@ -80,6 +86,7 @@ public class TestNgCase {
 	@Test
 	@Parameters({"linkShare"})
 	public void linkShare(String file ) {
+		Navigate.toMyFile(driver);
 		worker.linkShare(file);	
 	}
 	/**
@@ -88,6 +95,7 @@ public class TestNgCase {
 	@Test(dependsOnMethods={"linkShare"})
 	@Parameters({"openLinkShare"})
 	public void openLinkShared(String file) {
+		Navigate.toMyShares(driver);
 		worker.openLinkShared(file);	
 	}
 	/**
@@ -96,6 +104,7 @@ public class TestNgCase {
 	@Test
 	@Parameters({"createTeam"})
 	public void createTeam(String name) {
+		Navigate.toTeamFile(driver);
 		worker.createTeam(name);
 	}
 
@@ -189,9 +198,10 @@ public class TestNgCase {
 	@Test
 	@Parameters({"renaming"})
 	public void renaming(String filename){
-		worker.renaming(filename);
-		
+		worker.renaming(filename);		
 	}
+	
+	
 	
 }
 

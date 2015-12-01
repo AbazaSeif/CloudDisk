@@ -60,7 +60,6 @@ public class Worker {
 	}
 
 	public void newFolder() {
-		Navigate.toMyFile(driver);
 		driver.findElement(By.id("new_build")).click();
 		WebElement element = driver.findElement(By.name("folderName"));
 		String folderName = "folder" + System.currentTimeMillis();
@@ -79,7 +78,6 @@ public class Worker {
 	 * 新建同名文件夹，获取到所有文件夹的名称后，获取第一个文件夹名称
 	 */
 	public void newFolderSame() {
-		Navigate.toMyFile(driver);
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 
@@ -97,7 +95,6 @@ public class Worker {
 	 * 删除列表中的第一个文件夹
 	 */
 	public void deleteFolder() {
-		Navigate.toMyFile(driver);
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 		driver.findElement(By.xpath("//ul[@data-name='" + existsFolderName + "']/child::li[1]/input")).click();
@@ -119,7 +116,6 @@ public class Worker {
 	 * @param fileName
 	 */
 	public void uploadCommon(String fileName) {
-		Navigate.toMyFile(driver);
 		File file = new File("lib/jacob-1.18-x64.dll");// 新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
@@ -163,7 +159,6 @@ public class Worker {
 	 * 删除文件1.txt，需要依赖uploadCommon（）
 	 */
 	public void deleteFile(String deleteFile) {
-		Navigate.toMyFile(driver);
 		driver.findElement(By.xpath("//ul[@data-name='"+deleteFile+"']//input")).click();
 		driver.findElement(By.id("delete")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
@@ -178,7 +173,6 @@ public class Worker {
 	}
 
 	public void cloudShare(String shareFile) {
-		Navigate.toMyFile(driver);
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//ul[@data-name='"+shareFile+"']/li[1]/input")).click();
 		WebElement element = driver.findElement(By.id("share"));
@@ -202,7 +196,6 @@ public class Worker {
 	}
 
 	public void linkShare(String shareFile) {
-		Navigate.toMyFile(driver);
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//ul[@data-name='"+shareFile+"']/li[1]/input")).click();
 		WebElement element = driver.findElement(By.id("share"));
@@ -221,7 +214,6 @@ public class Worker {
 	}
 
 	public void openLinkShared(String shareFile) {
-		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
 		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//a[@title='"+shareFile+"' and @data-name='"+shareFile+"']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
@@ -247,7 +239,7 @@ public class Worker {
 	}
 	
 	public void createTeam(String fileName) {
-		Navigate.toTeamFile(driver);
+		
 		Utils.waitElementShow(driver, By.id("btn_newTeam"), 10);
 		driver.findElement(By.id("btn_newTeam")).click();
 		driver.findElement(By.name("new_team_name")).sendKeys(fileName);
@@ -473,4 +465,8 @@ public class Worker {
 			System.out.println("修改文件名成功");
 		}
 	}
+	
+	
+		
+
 }
