@@ -14,6 +14,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Parameters;
 
 import autoitx4java.AutoItX;
 
@@ -113,12 +115,12 @@ public class Worker {
 	 * 
 	 * @param fileName
 	 */
-	public void uploadCommon(String fileName) {
+	public void uploadCommon(String fileName,String uploadXpath) {
 		File file = new File("lib/jacob-1.18-x64.dll");// 新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
 
-		driver.findElement(By.id("upload")).click();
+		driver.findElement(By.xpath(uploadXpath)).click();
 		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
 		AutoItX x = new AutoItX();
 		String uploadWin = "文件上传";
@@ -135,15 +137,13 @@ public class Worker {
 		x.controlClick(uploadWin, "", "Button1");// 点击“打开”
 
 		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
-		Utils.waitFor(5000);
+		Utils.waitFor(10000);
 		driver.findElement(By.xpath("//button[@title='关闭']")).click();
 		Boolean uploadedfile = Utils.isExists(driver, By.xpath("//a[@data-name='" + fileName + "']"));
-		if (uploadedfile) {
-			System.out.println("文件上传成功");
-		} else {
+		if (! uploadedfile) {
 			System.out.println("文件上传失败");
 			Assert.fail("文件上传失败");
-		}
+		} 
 
 	}
 	
@@ -264,7 +264,7 @@ public class Worker {
 	}
 	
 	public void copyToMyFiles(String file) {
-		Navigate.toMyFile(driver);
+		
 		uploadCommon(file);
 		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
@@ -283,15 +283,16 @@ public class Worker {
 	}
 	
 	
-	public void copyToTeamFile(String file,String teamName) {
-		Navigate.toMyFile(driver);
+	public void copyToTeamFile(String file,String teamName) {		
 		uploadCommon(file);
 		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
 		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		Navigate.toTeamFile(driver);		
+		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
+		Utils.waitFor(3000);
 		Boolean filename = Utils.isExists(driver, By.xpath("//a[@data-name='"+file+"']"));
 		if (!filename) {
 			Assert.fail("复制到团队文件失败");
@@ -302,7 +303,6 @@ public class Worker {
 	}
 	
 	public void copyToCompanyFile(String filename) {
-		Navigate.toMyFile(driver);
 		uploadCommon(filename);
 		driver.findElement(By.xpath("//ul[@data-name='"+filename+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
@@ -321,7 +321,6 @@ public class Worker {
 	
 	
 	public void favorites(String filename) {
-		Navigate.toMyFile(driver);
 		uploadCommon(filename);
 		WebElement txt = driver.findElement(By.xpath("//li[@data-name='"+filename+"']"));
 		Actions action = new Actions(driver);
@@ -342,7 +341,6 @@ public class Worker {
 	
 	
 	public void newExternalUpload(String myExternalUpload) {
-		Navigate.toMyFile(driver);
 		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
 		Utils.waitElementShow(driver, By.xpath("//span[text()='外链上传']"), 3);
 		driver.findElement(By.xpath("//div[@id='ExternalUpload']//span[@id='new_build']")).click();
@@ -367,24 +365,24 @@ public class Worker {
 	
 
 	public void closeExternalUpload(String myExternalUpload) {
-		Navigate.toMyFile(driver);
-		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
-		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
-		driver.findElement(By.id("closeLink")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		Utils.waitFor(3000);
-		WebElement closed = driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']/li[5]"));
-		String txt = closed.getText();		
-		Assert.assertEquals(txt, "已关闭", "关闭外链上传文件失败");
+		driver.findElement(By.xpath("//span[text()='外链上传']")).click();//点击外链上传
+		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();//勾选待删除文件前的复选框
+		driver.findElement(By.id("closeLink")).click();//点击关闭
+		driver.findElement(By.xpath("//span[text()='确定']")).click();//点击提示框中的确定按钮
+		Utils.waitFor(3000);//等待3秒钟
+		WebElement closed = driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']/li[5]"));//查找关闭的文件
+		String txt = closed.getText();		//获取状态信息
+		Assert.assertEquals(txt, "已关闭"); //判断状态是否是已关闭
+		System.out.println("关闭外链上传文件夹成功");//输出成功信息
 		
 	}
 	
 	public void deleteExternalUpload(String myExternalUpload){
-		Navigate.toMyFile(driver);
 		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
 		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
-		driver.findElement(By.id("delete")).click();
+		driver.findElement(By.xpath("//div[@id='ExternalUpload']//span[@id='delete']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Utils.waitFor(3000);
 		Boolean file = Utils.isExists(driver, By.xpath("//a[@title='"+myExternalUpload+"' and @data-name='"+myExternalUpload+"']"));
 		if(! file){
 			System.out.println("删除外链上传文件夹成功");
@@ -396,7 +394,6 @@ public class Worker {
 	}
 	
 	public void tagging(String file){
-		Navigate.toMyFile(driver);
 		uploadCommon(file);
 		WebElement ele = driver.findElement(By.xpath("//ul[@data-name='"+file+"']/li[2]"));
 		Actions act = new Actions(driver);
@@ -418,16 +415,15 @@ public class Worker {
 		}else{
 			System.out.println("打标签成功");
 		}
-		driver.findElement(By.xpath("//span[text()='关闭']")).click();		
+		driver.findElement(By.xpath("//div[@id='dialog_add_tags']//span[text()='关闭']")).click();		
 	}
 	
-	public void common(String fileName){
-		Navigate.toMyFile(driver);
+	public void comment(String fileName){
 		uploadCommon(fileName);
 		WebElement file = driver.findElement(By.xpath("//li[@class='filename' and @data-name='"+fileName+"']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(file).build().perform();
-		driver.findElement(By.className("file_comment")).click();
+		driver.findElement(By.xpath("//li[@data-name='9.wmv']/following-sibling::li[1]/a[@title='评论']")).click();
 		driver.findElement(By.id("commentTextarea")).sendKeys("中国共产党万岁");
 		driver.findElement(By.xpath("//span[text()='评论']")).click();
 		Boolean common = Utils.isExists(driver, By.className("tooLongToHidden"));
@@ -461,6 +457,24 @@ public class Worker {
 			Assert.fail("修改文件名失败");
 		}else{
 			System.out.println("修改文件名成功");
+		}
+	}
+	/**
+	 * 团队文件复制到个人文件
+	 */
+	
+	
+
+	public void logout(){
+		driver.findElement(By.xpath("//b[@class='caret']")).click();
+		driver.findElement(By.xpath("//span[text()='退出系统']")).click();
+		Utils.waitFor(3000);
+		Boolean button = Utils.isExists(driver, By.xpath("//button[text()='登 录']"));
+		if(button){
+			System.out.println("退出系统成功");
+		}else{
+			Assert.fail("退出系统失败");
+			System.out.println("退出系统失败");
 		}
 	}
 	

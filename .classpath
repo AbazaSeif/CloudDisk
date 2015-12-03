@@ -2,8 +2,12 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry exported="true" kind="lib" path="lib/testng-6.8.8.jar" sourcepath="lib/testng-6.8.8-sources.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/Clouddisk/lib/testng-6.8.8-javadoc.jar!/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.47.1.jar"/>
-	<classpathentry kind="lib" path="lib/testng-6.8.8.jar"/>
 	<classpathentry kind="lib" path="lib/jacob.jar"/>
 	<classpathentry kind="lib" path="lib/AutoItX4Java.jar"/>
 	<classpathentry kind="lib" path="lib/guice-3.0.jar"/>

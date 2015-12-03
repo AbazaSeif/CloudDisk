@@ -1,6 +1,9 @@
 package com.zhangling;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
@@ -8,12 +11,27 @@ public class TeamFileCase {
 	Worker worker;
 	WebDriver driver;
 
+	/**
+	 * 初始化浏览器,登陆文档云+
+	 * 
+	 * @param url
+	 * @param username
+	 * @param password
+	 */
+	@BeforeClass
+	@Parameters({ "url", "username", "password" })
+	public void initBrowser(String url, String username, String password) {
+		worker = new Worker(url);
+		driver = worker.driver;
+		worker.loginRight(username, password);
+	}
+	
 	@Test
-	@Parameters({ "upload", "createTeam" })
-	public void upload(String fileName, String teamName) {
+	@Parameters({"createTeam","upload"})
+	public void upload(String teamName,String fileName) {
 		Navigate.toTeamFile(driver);
-		Navigate.clickTeam(driver, teamName);
-		worker.uploadCommon(fileName);
+		Navigate.clickTeam(driver,teamName);
+		worker.uploadCommon(fileName,"//div[@id='TeamFiles']//span[@id='upload']");
 	}
 
 	@Test
@@ -78,23 +96,13 @@ public class TeamFileCase {
 		worker.openLinkShared(file);
 	}
 
-	/**
-	 * 创建团队
-	 * 
-	 * @Test
-	 * @Parameters({"createTeam" ) public void createTeam(String name) {
-	 *                           Navigate.toTeamFile(driver);
-	 *                           worker.createTeam(name); }
-	 */
-	/**
-	 * 复制文件到当前（个人）文件，文件名称后+1
-	 */
-	@Test
-	public void copyToMyFiles(String file, String teamName) {
-		Navigate.toTeamFile(driver);
-		Navigate.clickTeam(driver, teamName);
+	
+	/*@Test
+	@Parameters({"teamFileToMyFile","upload"})
+	public void teamFileToMyFiles(String fileName, String teamName) {
+		worker.teamFileToMyFile(teamName, fileName);		
 
-	}
+	}*/
 
 	/**
 	 * 复制文件到团队文件
@@ -175,9 +183,9 @@ public class TeamFileCase {
 	 * @param filename
 	 */
 	@Test
-	@Parameters({ "common" })
-	public void common(String filename) {
-		worker.common(filename);
+	@Parameters({ "comment" })
+	public void comment(String filename) {
+		worker.comment(filename);
 	}
 
 	@Test
@@ -186,4 +194,23 @@ public class TeamFileCase {
 		worker.renaming(filename);
 	}
 
+	public void teamFileToMyFile(String teamName,String fileName){
+		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
+		worker.uploadCommon(fileName);
+		driver.findElement(By.xpath("//ul[@data-name='"+fileName+"']/child::li[1]/input")).click();
+		driver.findElement(By.id("copy")).click();
+		driver.findElement(By.id("copy-fileTree-holder_1_span")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Utils.waitFor(2000);
+		Navigate.toMyFile(driver);
+		Boolean copyFileExists = Utils.isExists(driver, By.xpath("//a[@data-name='"+fileName+"']"));		 
+		if (!copyFileExists) {
+			System.out.println("团队文件复制到个人文件失败");
+			Assert.fail("团队文件复制到个人文件失败");
+		}else{
+			System.out.println("团队文件复制到个人文件成功");
+		}
+		
+	}
 }

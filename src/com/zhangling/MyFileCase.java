@@ -1,6 +1,9 @@
 package com.zhangling;
 
+import org.junit.AfterClass;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -20,6 +23,7 @@ public class MyFileCase {
 	@Parameters({ "url", "username", "password" })
 	public void initBrowser(String url, String username, String password) {
 		worker = new Worker(url);
+		driver = worker.driver;
 		worker.loginRight(username, password);
 	}
 
@@ -51,7 +55,7 @@ public class MyFileCase {
 	@Parameters({"upload"})
 	public void upload(String uploadFile) {
 		Navigate.toMyFile(driver);
-		worker.uploadCommon(uploadFile);
+		worker.uploadCommon(uploadFile,"//span[@id='upload']");
 	}
 	
 
@@ -105,16 +109,19 @@ public class MyFileCase {
 	@Test(dependsOnMethods="createTeam")
 	@Parameters({"copyToMyFiles"})
 	public void copyToMyFiles(String file) {
+		Navigate.toMyFile(driver);
 		worker.copyToMyFiles(file);
 	}
 	
 	/**
 	 * 复制文件到团队文件
 	 */
-	@Test
+	@Test(dependsOnMethods={"createTeam"})
 	@Parameters({"copyToTeamFile","createTeam"})
 	public void copyToTeamFile(String file,String teamname) {
+		Navigate.toMyFile(driver);
 		worker.copyToTeamFile(file,teamname);
+		Navigate.toMyFile(driver);
 	}
 
 	/**
@@ -123,7 +130,9 @@ public class MyFileCase {
 	@Test
 	@Parameters({"copyToCompanyFile"})
 	public void copyToCompanyFile(String file) {
+		Navigate.toMyFile(driver);
 		worker.copyToCompanyFile(file);
+		Navigate.toMyFile(driver);
 	}
 
 	/**
@@ -133,6 +142,7 @@ public class MyFileCase {
 	@Test
 	@Parameters("favoritesUploadFileName")
 	public void favorites(String filename) {
+		Navigate.toMyFile(driver);
 		worker.favorites(filename);
 	}
 
@@ -143,6 +153,7 @@ public class MyFileCase {
 	@Test
 	@Parameters({ "newExternalUpload" })
 	public void newExternalUpload(String myExternalUpload) {
+		Navigate.toMyFile(driver);
 		worker.newExternalUpload(myExternalUpload);
 	}
 
@@ -153,6 +164,7 @@ public class MyFileCase {
 	@Test(dependsOnMethods={"newExternalUpload"})
 	@Parameters({"newExternalUpload"})
 	public void closeExternalUpload(String myExternalUpload) {
+		Navigate.toMyFile(driver);
 		worker.closeExternalUpload(myExternalUpload);
 	}
 	
@@ -160,9 +172,10 @@ public class MyFileCase {
 	 * 删除外链上传文件夹
 	 * @param myExternalUpload
 	 */
-	@Test
+	@Test(dependsOnMethods={"closeExternalUpload"})
 	@Parameters({"newExternalUpload"})
 	public void deleteExternalUpload(String myExternalUpload){
+		Navigate.toMyFile(driver);
 		worker.deleteExternalUpload(myExternalUpload);		
 	}
 	
@@ -173,6 +186,7 @@ public class MyFileCase {
 	@Test
 	@Parameters({"tagging"})
 	public void tagging(String filename){
+		Navigate.toMyFile(driver);
 		worker.tagging(filename);
 	}
 	
@@ -182,29 +196,29 @@ public class MyFileCase {
 	 */
 	@Test
 	@Parameters({"common"})
-	public void common(String filename){
-		worker.common(filename);
+	public void comment(String filename){
+		Navigate.toMyFile(driver);
+		worker.comment(filename);
 	}
 	
 	@Test
 	@Parameters({"renaming"})
 	public void renaming(String filename){
+		Navigate.toMyFile(driver);
 		worker.renaming(filename);		
 	}
 	
+	@AfterClass
+	public void logout(){
+	Navigate.toMyFile(driver);
+	worker.logout();
+	}
 	
 	
 }
 
-/*
- * @AfterMethod public void logout() {
- * driver.findElement(By.className("caret")).click();
- * driver.findElement(By.xpath(".//*[@id='loginOut']/span")).click(); WebElement
- * login = driver.findElement(By.className("btn_login")); boolean success
- * =login.isDisplayed(); Assert.assertEquals(success,true); }
- * 
- * @AfterClass public void afterClass() { }
- * 
- * @BeforeTest public void beforeTest() { }
- */
+
+
+
+
 
