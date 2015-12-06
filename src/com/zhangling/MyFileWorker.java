@@ -14,8 +14,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.Parameters;
 
 import autoitx4java.AutoItX;
 
@@ -26,15 +24,29 @@ public class MyFileWorker {
 	WebDriver driver;
 	
 	public MyFileWorker(String url) {
-		File file = new File("lib/firepath-0.9.7.1-fx.xpi"); 
+		File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
+		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
 		try {
-			profile.addExtension(file);
+			profile.addExtension(firepath);
+			profile.addExtension(firebug);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
+		
+		profile.setPreference("browser.download.folderList", 2);
+		profile.setPreference("browser.download.manager.showWhenStarting", false);
+		profile.setPreference("browser.download.dir", "d:\\");
+		profile.setPreference("browser.helperApps.neverAsk.openFile","text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
+		profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
+		profile.setPreference("browser.download.manager.focusWhenStarting", false);
+		profile.setPreference("browser.download.manager.useWindow", false);
+		profile.setPreference("browser.download.manager.showAlertOnComplete", false);
+		profile.setPreference("browser.download.manager.closeWhenDone", false);
 		
 		driver = new FirefoxDriver(profile);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -147,9 +159,15 @@ public class MyFileWorker {
 
 	}
 	
-	public void download(){
+	public void download(String fileName){
 		Navigate.toMyFile(driver);
-		
+		uploadCommon(fileName);
+		WebElement ele = driver.findElement(By.className("selectAll"));
+		Boolean select = ele.isSelected();
+		if(!select){
+			ele.click();
+		}
+		driver.findElement(By.id("downloadZip")).click();
 	}
 	
 
@@ -325,6 +343,7 @@ public class MyFileWorker {
 		WebElement txt = driver.findElement(By.xpath("//li[@data-name='"+filename+"']"));
 		Actions action = new Actions(driver);
 		action.moveToElement(txt).build().perform();
+		Utils.takeScreenShot(driver);
 		driver.findElement(By.xpath("//li[@data-name='" + filename + "']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
 		driver.findElement(By.xpath("//a[text()='添加收藏']")).click();
 		driver.findElement(By.xpath("//span[text()='我的收藏']")).click();

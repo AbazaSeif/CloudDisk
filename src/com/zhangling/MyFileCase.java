@@ -1,9 +1,9 @@
 package com.zhangling;
 
-import org.junit.AfterClass;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
@@ -58,7 +58,13 @@ public class MyFileCase {
 		myFileWorker.uploadCommon(uploadFile);
 	}
 	
-
+	@Test
+	@Parameters({"download"})
+	public void download(String fileName){
+		Navigate.toMyFile(driver);
+		myFileWorker.download(fileName);
+	}
+	
 	@Test(dependsOnMethods={"upload"})
 	@Parameters({"upload"})
 	public void deleteFile(String delFile){

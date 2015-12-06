@@ -5,14 +5,15 @@
 		<classes>
 			 <class name="com.zhangling.MyFileCase">
 				<methods>
-					<include name="newFolder"></include>
+					<!-- <include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
-					<include name="upload"></include>
-					<include name="deleteFile"></include>
+					<include name="upload"></include> -->
+					<include name="download"></include>
+				<!-- 	<include name="deleteFile"></include>
 					<include name="cloudShare"></include>
 					<include name="linkShare"></include>
-					<!-- <include name="openLinkShared"></include> -->
+					<include name="openLinkShared"></include>
 					<include name="createTeam"></include>
 					<include name="copyToMyFiles"></include>
 					<include name="copyToTeamFile"></include> 
@@ -23,7 +24,7 @@
 					<include name="deleteExternalUpload"></include>
 					<include name="tagging"></include>
 					<include name="comment"></include>
-					<include name="renaming"></include>			
+					<include name="renaming"></include> -->			
 				</methods>
 			</class> 	
 			
@@ -49,6 +50,7 @@
 			<parameter name="tagging" value="8.mp3"></parameter>
 			<parameter name="common" value="9.wmv"></parameter>
 			<parameter name="renaming" value="10.jpg"></parameter>
+			<parameter name ="download" value ="11.html"></parameter>
 		</classes>
 	</test>
 	<listeners>
