@@ -31,7 +31,7 @@ public class TeamFileCase {
 	public void upload(String teamName,String fileName) {
 		Navigate.toTeamFile(driver);
 		Navigate.clickTeam(driver,teamName);
-		worker.uploadCommon(fileName,"//div[@id='TeamFiles']//span[@id='upload']");
+		worker.uploadCommon(fileName);
 	}
 
 	@Test

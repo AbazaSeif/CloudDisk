@@ -55,7 +55,7 @@ public class MyFileCase {
 	@Parameters({"upload"})
 	public void upload(String uploadFile) {
 		Navigate.toMyFile(driver);
-		worker.uploadCommon(uploadFile,"//span[@id='upload']");
+		worker.uploadCommon(uploadFile);
 	}
 	
 

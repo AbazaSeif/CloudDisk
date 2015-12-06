@@ -115,12 +115,12 @@ public class Worker {
 	 * 
 	 * @param fileName
 	 */
-	public void uploadCommon(String fileName,String uploadXpath) {
+	public void uploadCommon(String fileName) {
 		File file = new File("lib/jacob-1.18-x64.dll");// 新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
 
-		driver.findElement(By.xpath(uploadXpath)).click();
+		driver.findElement(By.xpath("//div[@id='Home']//span[@id='upload']")).click();
 		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
 		AutoItX x = new AutoItX();
 		String uploadWin = "文件上传";

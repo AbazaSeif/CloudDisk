@@ -7,11 +7,11 @@
 			<attribute name="javadoc_location" value="jar:platform:/resource/Clouddisk/lib/testng-6.8.8-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.47.1.jar"/>
 	<classpathentry kind="lib" path="lib/jacob.jar"/>
 	<classpathentry kind="lib" path="lib/AutoItX4Java.jar"/>
 	<classpathentry kind="lib" path="lib/guice-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/reportng-1.1.4.jar"/>
 	<classpathentry kind="lib" path="lib/velocity-dep-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/selenium-server-standalone-2.47.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
