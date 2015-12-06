@@ -38,8 +38,8 @@ public class MyFileWorker {
 		
 		profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
 		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
-//		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
-		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/zip,application/pdf,image/png");
+		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
+		//profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/zip,application/pdf,image/png");
 		/*profile.setPreference("browser.helperApps.neverAsk.openFile","application/pdf,text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
 		profile.setPreference("pdfjs.disabled", true);
 		profile.setPreference("plugin.scan.plid.all", false);
