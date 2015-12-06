@@ -164,12 +164,7 @@ public class MyFileWorker {
 	
 	public void download(String fileName){
 		Navigate.toMyFile(driver);
-		uploadCommon(fileName);
-		WebElement ele = driver.findElement(By.className("selectAll"));
-		Boolean select = ele.isSelected();
-		if(!select){
-			ele.click();
-		}
+		driver.findElement(By.className("selectAll")).click();
 		driver.findElement(By.id("downloadZip")).click();
 	}
 	
