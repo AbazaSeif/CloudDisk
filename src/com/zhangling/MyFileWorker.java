@@ -36,17 +36,18 @@ public class MyFileWorker {
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
 		
-		profile.setPreference("browser.download.folderList", 2);
-		profile.setPreference("browser.download.manager.showWhenStarting", false);
-		profile.setPreference("browser.download.dir", "d:\\");
-		profile.setPreference("browser.helperApps.neverAsk.openFile","text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		profile.setPreference("browser.download.folderList", 2);//设置成0代表下载到浏览器默认下载路径；设置成2则可以保存到指定目录
+		profile.setPreference("browser.download.manager.showWhenStarting", false);//是否显示开始
+		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
+		//不询问下载路径；后面的参数为要下载页面的Content-type的值
 		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+		/*profile.setPreference("browser.helperApps.neverAsk.openFile","text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
 		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
 		profile.setPreference("browser.download.manager.focusWhenStarting", false);
 		profile.setPreference("browser.download.manager.useWindow", false);
 		profile.setPreference("browser.download.manager.showAlertOnComplete", false);
-		profile.setPreference("browser.download.manager.closeWhenDone", false);
+		profile.setPreference("browser.download.manager.closeWhenDone", false);*/
 		
 		driver = new FirefoxDriver(profile);
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
