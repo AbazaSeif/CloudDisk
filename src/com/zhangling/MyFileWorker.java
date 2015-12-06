@@ -21,11 +21,11 @@ import autoitx4java.AutoItX;
 
 import com.jacob.com.LibraryLoader;
 
-public class Worker {
+public class MyFileWorker {
 
 	WebDriver driver;
 	
-	public Worker(String url) {
+	public MyFileWorker(String url) {
 		File file = new File("lib/firepath-0.9.7.1-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
 		try {

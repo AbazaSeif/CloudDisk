@@ -9,7 +9,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class MyFileCase {
-	Worker worker;
+	MyFileWorker myFileWorker;
 	WebDriver driver;
 
 	/**
@@ -22,9 +22,9 @@ public class MyFileCase {
 	@BeforeClass
 	@Parameters({ "url", "username", "password" })
 	public void initBrowser(String url, String username, String password) {
-		worker = new Worker(url);
-		driver = worker.driver;
-		worker.loginRight(username, password);
+		myFileWorker = new MyFileWorker(url);
+		driver = myFileWorker.driver;
+		myFileWorker.loginRight(username, password);
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class MyFileCase {
 	@Test
 	public void newFolder() {
 		Navigate.toMyFile(driver);
-		worker.newFolder();
+		myFileWorker.newFolder();
 	}
 
 	/**
@@ -42,20 +42,20 @@ public class MyFileCase {
 	@Test
 	public void newFolderSame() {
 		Navigate.toMyFile(driver);
-		worker.newFolderSame();
+		myFileWorker.newFolderSame();
 	}
 
 	@Test
 	public void deleteFolder() {// 删除文件夾
 		Navigate.toMyFile(driver);
-		worker.deleteFolder();
+		myFileWorker.deleteFolder();
 	}
 
 	@Test
 	@Parameters({"upload"})
 	public void upload(String uploadFile) {
 		Navigate.toMyFile(driver);
-		worker.uploadCommon(uploadFile);
+		myFileWorker.uploadCommon(uploadFile);
 	}
 	
 
@@ -63,7 +63,7 @@ public class MyFileCase {
 	@Parameters({"upload"})
 	public void deleteFile(String delFile){
 		Navigate.toMyFile(driver);
-		worker.deleteFile(delFile);
+		myFileWorker.deleteFile(delFile);
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class MyFileCase {
 	@Parameters({"cloudShare"})
 	public void cloudShare(String file) {
 		Navigate.toMyFile(driver);
-		worker.cloudShare(file);
+		myFileWorker.cloudShare(file);
 	}
 	/**
 	 * 链接分享
@@ -82,7 +82,7 @@ public class MyFileCase {
 	@Parameters({"linkShare"})
 	public void linkShare(String file ) {
 		Navigate.toMyFile(driver);
-		worker.linkShare(file);	
+		myFileWorker.linkShare(file);	
 	}
 	/**
 	 *在浏览器中打开链接分享 
@@ -91,7 +91,7 @@ public class MyFileCase {
 	@Parameters({"openLinkShare"})
 	public void openLinkShared(String file) {
 		Navigate.toMyShares(driver);
-		worker.openLinkShared(file);	
+		myFileWorker.openLinkShared(file);	
 	}
 	/**
 	 * 创建团队
@@ -100,7 +100,7 @@ public class MyFileCase {
 	@Parameters({"createTeam"})
 	public void createTeam(String name) {
 		Navigate.toTeamFile(driver);
-		worker.createTeam(name);
+		myFileWorker.createTeam(name);
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class MyFileCase {
 	@Parameters({"copyToMyFiles"})
 	public void copyToMyFiles(String file) {
 		Navigate.toMyFile(driver);
-		worker.copyToMyFiles(file);
+		myFileWorker.copyToMyFiles(file);
 	}
 	
 	/**
@@ -120,7 +120,7 @@ public class MyFileCase {
 	@Parameters({"copyToTeamFile","createTeam"})
 	public void copyToTeamFile(String file,String teamname) {
 		Navigate.toMyFile(driver);
-		worker.copyToTeamFile(file,teamname);
+		myFileWorker.copyToTeamFile(file,teamname);
 		Navigate.toMyFile(driver);
 	}
 
@@ -131,7 +131,7 @@ public class MyFileCase {
 	@Parameters({"copyToCompanyFile"})
 	public void copyToCompanyFile(String file) {
 		Navigate.toMyFile(driver);
-		worker.copyToCompanyFile(file);
+		myFileWorker.copyToCompanyFile(file);
 		Navigate.toMyFile(driver);
 	}
 
@@ -143,7 +143,7 @@ public class MyFileCase {
 	@Parameters("favoritesUploadFileName")
 	public void favorites(String filename) {
 		Navigate.toMyFile(driver);
-		worker.favorites(filename);
+		myFileWorker.favorites(filename);
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class MyFileCase {
 	@Parameters({ "newExternalUpload" })
 	public void newExternalUpload(String myExternalUpload) {
 		Navigate.toMyFile(driver);
-		worker.newExternalUpload(myExternalUpload);
+		myFileWorker.newExternalUpload(myExternalUpload);
 	}
 
 	/**
@@ -165,7 +165,7 @@ public class MyFileCase {
 	@Parameters({"newExternalUpload"})
 	public void closeExternalUpload(String myExternalUpload) {
 		Navigate.toMyFile(driver);
-		worker.closeExternalUpload(myExternalUpload);
+		myFileWorker.closeExternalUpload(myExternalUpload);
 	}
 	
 	/**
@@ -176,7 +176,7 @@ public class MyFileCase {
 	@Parameters({"newExternalUpload"})
 	public void deleteExternalUpload(String myExternalUpload){
 		Navigate.toMyFile(driver);
-		worker.deleteExternalUpload(myExternalUpload);		
+		myFileWorker.deleteExternalUpload(myExternalUpload);		
 	}
 	
 	/**
@@ -187,7 +187,7 @@ public class MyFileCase {
 	@Parameters({"tagging"})
 	public void tagging(String filename){
 		Navigate.toMyFile(driver);
-		worker.tagging(filename);
+		myFileWorker.tagging(filename);
 	}
 	
 	/**
@@ -198,20 +198,20 @@ public class MyFileCase {
 	@Parameters({"common"})
 	public void comment(String filename){
 		Navigate.toMyFile(driver);
-		worker.comment(filename);
+		myFileWorker.comment(filename);
 	}
 	
 	@Test
 	@Parameters({"renaming"})
 	public void renaming(String filename){
 		Navigate.toMyFile(driver);
-		worker.renaming(filename);		
+		myFileWorker.renaming(filename);		
 	}
 	
 	@AfterClass
 	public void logout(){
 	Navigate.toMyFile(driver);
-	worker.logout();
+	myFileWorker.logout();
 	}
 	
 	
