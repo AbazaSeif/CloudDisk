@@ -36,15 +36,14 @@ public class MyFileWorker {
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
 		
-		profile.setPreference("browser.download.folderList", 2);//设置成0代表下载到浏览器默认下载路径；设置成2则可以保存到指定目录
+		profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
 		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
-		//不询问下载路径；后面的参数为要下载页面的Content-type的值
-		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf,text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
-		profile.setPreference("pdfjs.disabled", true);
+		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
+		/*profile.setPreference("pdfjs.disabled", true);
 		profile.setPreference("plugin.scan.plid.all", false);
 		profile.setPreference("plugin.scan.Acrobat","99.0");
 		profile.setPreference("browser.download.manager.showWhenStarting", false);//是否显示开始
-		/*profile.setPreference("browser.helperApps.neverAsk.openFile","application/pdf,text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
+*/		/*profile.setPreference("browser.helperApps.neverAsk.openFile","application/pdf,text/csv,application/x-msexcel,application/excel,application/x-excel,application/vnd.ms-excel,image/png,image/jpeg,text/html,text/plain,application/msword,application/xml");
 		profile.setPreference("browser.helperApps.alwaysAsk.force", false);
 		profile.setPreference("browser.download.manager.alertOnEXEOpen", false);
 		profile.setPreference("browser.download.manager.focusWhenStarting", false);
