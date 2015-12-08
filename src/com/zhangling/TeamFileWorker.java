@@ -76,7 +76,7 @@ public class TeamFileWorker {
 		element.sendKeys(folderName);
 		WebElement confirm = driver.findElement(By.className("confirmNewFolder"));
 		confirm.click();
-		Boolean success = Utils.isExists(driver, By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li[@data-name='" + folderName + "']"));
+		Boolean success = Utils.isExists(driver, By.xpath("//a[@title='"+folderName+"']"));
 		if (!success) {
 			Assert.fail("新建文件夹失败");
 			System.out.println("新建文件夹失败");
@@ -89,8 +89,8 @@ public class TeamFileWorker {
 	 */
 	public void newFolderSame() {
 		
-		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
-		String existsFolderName = lis.get(0).getAttribute("data-name");
+		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]"));
+		String existsFolderName = lis.get(0).getAttribute("title");
 
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
 		driver.findElement(By.name("folderName")).sendKeys(existsFolderName);
@@ -107,7 +107,7 @@ public class TeamFileWorker {
 	 */
 	public void deleteFolder() {
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
-		String existsFolderName = lis.get(0).getAttribute("data-name");
+		String existsFolderName = lis.get(0).getAttribute("title");
 		driver.findElement(By.xpath("//ul[@data-name='" + existsFolderName + "']/child::li[1]/input")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='delete']")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
