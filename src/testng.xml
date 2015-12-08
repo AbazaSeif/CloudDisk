@@ -30,7 +30,12 @@
 			
 			<class name="com.zhangling.TeamFileCase">
 			<methods>
-				<include name="newFolder"></include>
+					<include name="newFolder"></include>
+					<include name="newFolderSame"></include>
+					<include name="deleteFolder"></include>
+					<include name="upload"></include> 
+					<include name="download"></include>
+					<include name="deleteFile"></include>
 			</methods>
 			</class> 
 			

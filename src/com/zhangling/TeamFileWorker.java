@@ -92,7 +92,7 @@ public class TeamFileWorker {
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 
-		driver.findElement(By.id("new_build")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
 		driver.findElement(By.name("folderName")).sendKeys(existsFolderName);
 		driver.findElement(By.className("confirmNewFolder")).click();
 		WebElement txt = driver.findElement(By.xpath(".//*[@id='page_message_warning']/span"));
@@ -109,7 +109,7 @@ public class TeamFileWorker {
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 		driver.findElement(By.xpath("//ul[@data-name='" + existsFolderName + "']/child::li[1]/input")).click();
-		driver.findElement(By.id("delete")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='delete']")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
 		Utils.waitFor(3000);
 		Boolean folderName = Utils.isExists(driver, By.xpath("//a[@data-name='" + existsFolderName + "' and @title='" + existsFolderName + "']"));
@@ -131,7 +131,7 @@ public class TeamFileWorker {
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
 
-		driver.findElement(By.xpath("//div[@id='Home']//span[@id='upload']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='upload']")).click();
 		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
 		AutoItX x = new AutoItX();
 		String uploadWin = "文件上传";
@@ -170,7 +170,7 @@ public class TeamFileWorker {
 	 */
 	public void deleteFile(String deleteFile) {
 		driver.findElement(By.xpath("//ul[@data-name='"+deleteFile+"']//input")).click();
-		driver.findElement(By.id("delete")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='delete']")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
 		Utils.waitFor(3000);
 		Boolean folderName = Utils.isExists(driver, By.xpath("//a[@data-name='"+deleteFile+"' and @title='"+deleteFile+"']"));
