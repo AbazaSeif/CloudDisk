@@ -96,7 +96,7 @@ public class TeamFileWorker {
 		driver.findElement(By.name("folderName")).sendKeys(existsFolderName);
 		driver.findElement(By.className("confirmNewFolder")).click();
 		WebElement txt = driver.findElement(By.xpath(".//*[@id='page_message_warning']/span"));
-		Assert.assertEquals(txt.getText(), "文件夹名称重复，请重新输入");
+		Assert.assertEquals(txt.getText(), "请输入文件夹名称");
 		Utils.waitElementShow(driver, By.xpath("//button[text()='取消']"), 5);
 		driver.findElement(By.xpath("//button[text()='取消']")).click();
 		System.out.println("新建重名文件夹用例执行成功");
@@ -106,8 +106,8 @@ public class TeamFileWorker {
 	 * 删除列表中的第一个文件夹
 	 */
 	public void deleteFolder() {
-		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
-		String existsFolderName = lis.get(0).getAttribute("title");
+		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li/parent::ul"));
+		String existsFolderName = lis.get(0).getAttribute("data-name");
 		driver.findElement(By.xpath("//ul[@data-name='" + existsFolderName + "']/child::li[1]/input")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='delete']")).click();
 		driver.findElement(By.className("btn_primary_large")).click();
