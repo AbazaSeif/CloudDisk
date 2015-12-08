@@ -30,7 +30,7 @@
 			
 			<class name="com.zhangling.TeamFileCase">
 			<methods>
-			<include name="upload"></include>	
+			
 			</methods>
 			</class> 
 			
