@@ -46,6 +46,11 @@ public class TeamFileWorker {
 		driver.manage().window().maximize();
 		driver.navigate().to(url);
 	}
+	
+	public void enterMyTeam(String teamName){
+		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
+	}
 
 	public void loginRight(String username, String password) {
 		driver.findElement(By.className("user")).sendKeys(username);
@@ -64,8 +69,8 @@ public class TeamFileWorker {
 		System.out.println("登陆文档云成功");
 	}
 
-	public void newFolder() {
-		driver.findElement(By.id("new_build")).click();
+	public void newFolder() {		
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
 		WebElement element = driver.findElement(By.name("folderName"));
 		String folderName = "folder" + System.currentTimeMillis();
 		element.sendKeys(folderName);
@@ -83,6 +88,7 @@ public class TeamFileWorker {
 	 * 新建同名文件夹，获取到所有文件夹的名称后，获取第一个文件夹名称
 	 */
 	public void newFolderSame() {
+		
 		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/parent::li"));
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 
