@@ -63,7 +63,6 @@ public class TeamFileCase {
 	@Test
 	@Parameters({"cloudShare"})
 	public void cloudShare(String file) {
-	
 		worker.cloudShare(file);
 	}
 	/**

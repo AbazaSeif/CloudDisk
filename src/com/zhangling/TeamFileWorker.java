@@ -184,10 +184,10 @@ public class TeamFileWorker {
 
 	public void cloudShare(String shareFile) {
 		uploadCommon(shareFile);
-		driver.findElement(By.xpath("//ul[@data-name='"+shareFile+"']/li[1]/input")).click();
-		WebElement element = driver.findElement(By.id("share"));
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+shareFile+"']/li/input")).click();
+		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='share']"));
 		element.click();
-		driver.findElement(By.id("cloudShare")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@id='cloudShare']")).click();
 		driver.findElement(By.id("s2id_autogen2")).sendKeys("jenny");
 		Utils.waitElementShow(driver, By.xpath("//div[@title='张小一(jenny)']"), 5);
 		//driver.findElement(By.xpath("//div[@title='张小一(jenny)']")).sendKeys(Keys.ENTER);
@@ -208,9 +208,9 @@ public class TeamFileWorker {
 	public void linkShare(String shareFile) {
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//ul[@data-name='"+shareFile+"']/li[1]/input")).click();
-		WebElement element = driver.findElement(By.id("share"));
+		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='share']"));
 		element.click();
-		driver.findElement(By.id("linkShare")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@id='linkShare']")).click();
 		driver.findElement(By.xpath("//button[text()='创建分享链接']")).click();
 		driver.findElement(By.xpath("//button[text()='关闭']")).click();
 		Navigate.toMyShares(driver);
