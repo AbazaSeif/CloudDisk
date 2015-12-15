@@ -39,6 +39,10 @@
 					<include name="cloudShare"></include>
 					<include name="linkShare"></include>
 					<include name="openLinkShared"></include>
+					<include name="teamFileCopyToMyFiles"></include>
+					<include name="teamFileCopyToTeamFile"></include> 
+					<include name="teamFileCopyToCompanyFile"></include>
+					<include name="favorites"></include>
 			</methods>
 			</class> 
 			

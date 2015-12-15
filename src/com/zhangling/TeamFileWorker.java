@@ -248,64 +248,17 @@ public class TeamFileWorker {
 		}
 	}
 	
-	public void createTeam(String fileName) {
-		
-		Utils.waitElementShow(driver, By.id("btn_newTeam"), 10);
-		driver.findElement(By.id("btn_newTeam")).click();
-		driver.findElement(By.name("new_team_name")).sendKeys(fileName);
-		driver.findElement(By.xpath("//i[@class='ico_location']")).click();
-		driver.findElement(By.id("userGroupTree_1_span")).click();
-		driver.findElement(By.xpath("//button[text()='下一步']")).click();
-		driver.findElement(By.xpath("//input[contains(@id,'s2id_autogen')]")).sendKeys("jenny01");
-		Utils.waitFor(1000);
-		new Actions(driver).click(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']"))).build().perform();
-		Utils.waitFor(1000);
-		new Actions(driver).click(driver.findElement(By.xpath("//button[text()='创建团队']"))).build().perform();
-		Utils.waitFor(5000);
-		driver.findElement(By.xpath("//span[text()='"+fileName+"']")).click();		
-		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='"+fileName+"']"));
-		
-		if(myteam){
-			
-			System.out.println("创建团队成功");
-		}else{
-			System.out.println("创建团队失败");
-			Assert.fail("创建团队失败");			
-		}
-		
-	}
 	
-	public void copyToMyFiles(String file) {
+	public void teamFilCopyToMyFiles(String file) {
 		
 		uploadCommon(file);
-		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
-		driver.findElement(By.id("copy")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+file+"']/child::*/input")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='copy']")).click();
 		driver.findElement(By.id("copy-fileTree-holder_1_span")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Utils.waitFor(2000);
-		String name = file.substring(0, file.indexOf("."));
-		String prefix = file.substring(file.indexOf("."));
-		Boolean copyFileExists = Utils.isExists(driver, By.xpath("//ul[@data-name='"+name+"(1)"+prefix+"']/child::*/input"));
-		if (!copyFileExists) {
-			System.out.println("复制到个人文件失败");
-			Assert.fail("复制到个人文件失败");
-		}else{
-			System.out.println("复制到个人文件成功");
-		}
-	}
-	
-	
-	public void copyToTeamFile(String file,String teamName) {		
-		uploadCommon(file);
-		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
-		driver.findElement(By.id("copy")).click();
-		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
-		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		Navigate.toTeamFile(driver);
-		Navigate.clickTeam(driver, teamName);
-		Utils.waitFor(3000);
-		Boolean filename = Utils.isExists(driver, By.xpath("//a[@data-name='"+file+"']"));
+		Navigate.toMyFile(driver);
+		Boolean filename = Utils.isExists(driver, By.xpath("//div[@id='Home']//a[@data-name='"+file+"']"));
 		if (!filename) {
 			Assert.fail("复制到团队文件失败");
 			System.out.println("复制到团队文件失败");
@@ -314,10 +267,29 @@ public class TeamFileWorker {
 		}
 	}
 	
-	public void copyToCompanyFile(String filename) {
+	public void teamFileCopyToTeamFile(String file,String teamName) {		
+		uploadCommon(file);
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+file+"']/child::*/input")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='copy']")).click();
+		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
+		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Utils.waitFor(3000);
+		String name = file.substring(0, file.indexOf("."));
+		String prefix = file.substring(file.indexOf("."));
+		Boolean filename = Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//a[@data-name='"+name+"(1)"+prefix+"']"));
+		if (!filename) {
+			Assert.fail("复制到团队文件失败");
+			System.out.println("复制到团队文件失败");
+		}else{
+			System.out.println("复制到团队文件成功");
+		}
+	}
+	
+	public void teamFileCopyToCompanyFile(String filename) {
 		uploadCommon(filename);
-		driver.findElement(By.xpath("//ul[@data-name='"+filename+"']/child::*/input")).click();
-		driver.findElement(By.id("copy")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+filename+"']/child::*/input")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='copy']")).click();
 		driver.findElement(By.id("copy-compTree-holder_1_switch")).click();
 		driver.findElement(By.xpath("//span[text()='companyTeam']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
@@ -334,14 +306,15 @@ public class TeamFileWorker {
 	
 	public void favorites(String filename) {
 		uploadCommon(filename);
-		WebElement txt = driver.findElement(By.xpath("//li[@data-name='"+filename+"']"));
+		WebElement txt = driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@data-name='"+filename+"']"));
 		Actions action = new Actions(driver);
 		action.moveToElement(txt).build().perform();
 		Utils.takeScreenShot(driver);
-		driver.findElement(By.xpath("//li[@data-name='" + filename + "']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
-		driver.findElement(By.xpath("//a[text()='添加收藏']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+filename+"']//li[@class='filebtns']//a[@title='更多']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//li[@class='filebtns']//a[@title='添加收藏']")).click();
 		driver.findElement(By.xpath("//span[text()='我的收藏']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Navigate.toMyFile(driver);
 		driver.findElement(By.xpath("//span[text()='收藏夹']")).click();
 		Boolean favorite = Utils.isExists(driver, By.xpath("//a[@title='"+filename+"']"));
 		if (!favorite) {

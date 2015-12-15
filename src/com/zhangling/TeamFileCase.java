@@ -81,31 +81,23 @@ public class TeamFileCase {
 	public void openLinkShared(String file) {
 		worker.openLinkShared(file);	
 	}
-	/**
-	 * 创建团队
-	 */
-	@Test
-	@Parameters({"createTeam"})
-	public void createTeam(String name) {
-		worker.createTeam(name);
-	}
 
 	/**
-	 * 复制文件到当前（个人）文件，文件名称后+1
+	 * 复制文件到个人文件
 	 */
-	@Test(dependsOnMethods="createTeam")
+	@Test
 	@Parameters({"copyToMyFiles"})
-	public void copyToMyFiles(String file) {
-		worker.copyToMyFiles(file);
+	public void teamFilCopyToMyFiles(String file) {
+		worker.teamFilCopyToMyFiles(file);
 	}
 	
 	/**
-	 * 复制文件到团队文件
+	 * 复制文件到团队文件,文件名称后+1
 	 */
-	@Test(dependsOnMethods={"createTeam"})
+	@Test
 	@Parameters({"copyToTeamFile","createTeam"})
-	public void copyToTeamFile(String file,String teamname) {
-		worker.copyToTeamFile(file,teamname);
+	public void teamFileCopyToTeamFile(String file,String teamname) {
+		worker.teamFileCopyToTeamFile(file, teamname);
 	}
 
 	/**
@@ -113,12 +105,12 @@ public class TeamFileCase {
 	 */
 	@Test
 	@Parameters({"copyToCompanyFile"})
-	public void copyToCompanyFile(String file) {
-		worker.copyToCompanyFile(file);
+	public void teamFileCopyToCompanyFile(String file) {
+		worker.teamFileCopyToCompanyFile(file);
 	}
 
 	/**
-	 * 个人文件添加收藏
+	 * 团队文件添加收藏
 	 * @param filename
 	 */
 	@Test
