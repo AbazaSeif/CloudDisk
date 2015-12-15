@@ -36,6 +36,9 @@
 					<include name="upload"></include> 
 					<include name="download"></include>
 					<include name="deleteFile"></include>
+					<include name="cloudShare"></include>
+					<include name="linkShare"></include>
+					<include name="openLinkShared"></include>
 			</methods>
 			</class> 
 			

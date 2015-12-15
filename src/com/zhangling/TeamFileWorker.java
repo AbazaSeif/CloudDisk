@@ -207,7 +207,7 @@ public class TeamFileWorker {
 
 	public void linkShare(String shareFile) {
 		uploadCommon(shareFile);
-		driver.findElement(By.xpath("//ul[@data-name='"+shareFile+"']/li[1]/input")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+shareFile+"']/li/input")).click();
 		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='share']"));
 		element.click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@id='linkShare']")).click();
