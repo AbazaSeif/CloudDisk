@@ -34,7 +34,6 @@
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
 					<include name="upload"></include> 
-					<include name="download"></include>
 					<include name="deleteFile"></include>
 					<include name="cloudShare"></include>
 					<include name="linkShare"></include>

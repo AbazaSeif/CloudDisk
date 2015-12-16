@@ -89,14 +89,14 @@ public class TeamFileWorker {
 	 */
 	public void newFolderSame() {
 		
-		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]"));
-		String existsFolderName = lis.get(0).getAttribute("title");
+		List<WebElement> lis = driver.findElements(By.xpath("//img[contains(@src,'floder_defult.png')]/following-sibling::div"));
+		String existsFolderName = lis.get(0).getAttribute("data-name");
 
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
 		driver.findElement(By.name("folderName")).sendKeys(existsFolderName);
 		driver.findElement(By.className("confirmNewFolder")).click();
 		WebElement txt = driver.findElement(By.xpath(".//*[@id='page_message_warning']/span"));
-		Assert.assertEquals(txt.getText(), "请输入文件夹名称");
+		Assert.assertEquals(txt.getText(), "文件夹名称重复，请重新输入");
 		Utils.waitElementShow(driver, By.xpath("//button[text()='取消']"), 5);
 		driver.findElement(By.xpath("//button[text()='取消']")).click();
 		System.out.println("新建重名文件夹用例执行成功");
@@ -110,7 +110,7 @@ public class TeamFileWorker {
 		String existsFolderName = lis.get(0).getAttribute("data-name");
 		driver.findElement(By.xpath("//ul[@data-name='" + existsFolderName + "']/child::li[1]/input")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='delete']")).click();
-		driver.findElement(By.className("btn_primary_large")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Utils.waitFor(3000);
 		Boolean folderName = Utils.isExists(driver, By.xpath("//a[@data-name='" + existsFolderName + "' and @title='" + existsFolderName + "']"));
 		if (!folderName) {
@@ -224,6 +224,7 @@ public class TeamFileWorker {
 	}
 
 	public void openLinkShared(String shareFile) {
+		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
 		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//a[@title='"+shareFile+"' and @data-name='"+shareFile+"']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
@@ -272,7 +273,7 @@ public class TeamFileWorker {
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='copy']")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
-		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='"+teamName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Utils.waitFor(3000);
 		String name = file.substring(0, file.indexOf("."));
