@@ -118,36 +118,6 @@ public class TeamFileCase {
 	public void favorites(String filename) {
 		worker.favorites(filename);
 	}
-
-	/**
-	 * 新建外链上传文件夹
-	 * @param myExternalUpload
-	 */
-	@Test
-	@Parameters({ "newExternalUpload" })
-	public void newExternalUpload(String myExternalUpload) {
-		worker.newExternalUpload(myExternalUpload);
-	}
-
-	/**
-	 * 关闭外链上传文件夹，依赖newExternalUpload()
-	 * @param myExternalUpload
-	 */
-	@Test(dependsOnMethods={"newExternalUpload"})
-	@Parameters({"newExternalUpload"})
-	public void closeExternalUpload(String myExternalUpload) {
-		worker.closeExternalUpload(myExternalUpload);
-	}
-	
-	/**
-	 * 删除外链上传文件夹
-	 * @param myExternalUpload
-	 */
-	@Test(dependsOnMethods={"closeExternalUpload"})
-	@Parameters({"newExternalUpload"})
-	public void deleteExternalUpload(String myExternalUpload){
-		worker.deleteExternalUpload(myExternalUpload);		
-	}
 	
 	/**
 	 * 打标签
@@ -174,7 +144,34 @@ public class TeamFileCase {
 	public void renaming(String filename){
 		worker.renaming(filename);		
 	}
+	/**
+	 * 团队文件中将文件移动到文件夹
+	 * @param fileName
+	 */
+	@Test
+	@Parameters({"moveFileToFolder"})
+	public void moveFileToFolder(String fileName){
+		worker.moveFileToFolder(fileName);
+	}
 	
+	@Test
+	@Parameters({"moveToCurrentDir","createTeam"})
+	public void moveToCurrentDir(String fileName,String teamName){
+		worker.moveToCurrentDir(fileName, teamName);
+	}
+	
+	@Test
+	@Parameters({"lock"})
+	public void lock(String fileName){
+		worker.lock(fileName);
+	}
+	
+	@Test
+	@Parameters({"lock"})
+	public void unlock(String fileName){
+		worker.unlock(fileName);
+	}
+		
 	@AfterClass
 	public void logout(){
 	worker.logout();

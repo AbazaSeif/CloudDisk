@@ -69,7 +69,7 @@ public class TeamFileWorker {
 		System.out.println("登陆文档云成功");
 	}
 
-	public void newFolder() {		
+	public String  newFolder() {		
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
 		WebElement element = driver.findElement(By.name("folderName"));
 		String folderName = "folder" + System.currentTimeMillis();
@@ -82,6 +82,7 @@ public class TeamFileWorker {
 			System.out.println("新建文件夹失败");
 		}
 		System.out.println("新建文件夹成功");
+		return folderName;
 	}
 
 	/**
@@ -326,66 +327,12 @@ public class TeamFileWorker {
 		}
 	}
 	
-	
-	public void newExternalUpload(String myExternalUpload) {
-		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
-		Utils.waitElementShow(driver, By.xpath("//span[text()='外链上传']"), 3);
-		driver.findElement(By.xpath("//div[@id='ExternalUpload']//span[@id='new_build']")).click();
-		WebElement element = driver.findElement(By.name("fileName"));
-		element.sendKeys(myExternalUpload);//
-		Boolean label = Utils.isExists(driver, By.xpath("//label[text()='永不过期']"));
-		if (!label) {
-			WebElement date = driver.findElement(By.name("creatStartTime"));
-			date.sendKeys(Utils.getToday());
-		}
-		Utils.waitElementShow(driver, By.xpath("//span[text()='确定']"), 10);
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		driver.findElement(By.xpath("//h4[text()='外链上传文件夹属性']/preceding-sibling::button")).click();//X按钮
-		Boolean folder = Utils.isExists(driver, By.xpath("//a[@title='"+myExternalUpload+"']"));
-		if (!folder) {
-			Assert.fail("新建外链上传文件夹失败");
-			System.out.println("新建外链上传文件夹失败");
-		}else{
-			System.out.println("新建外链上传文件夹成功");
-		}
-	}
-	
-
-	public void closeExternalUpload(String myExternalUpload) {
-		driver.findElement(By.xpath("//span[text()='外链上传']")).click();//点击外链上传
-		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();//勾选待删除文件前的复选框
-		driver.findElement(By.id("closeLink")).click();//点击关闭
-		driver.findElement(By.xpath("//span[text()='确定']")).click();//点击提示框中的确定按钮
-		Utils.waitFor(3000);//等待3秒钟
-		WebElement closed = driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']/li[5]"));//查找关闭的文件
-		String txt = closed.getText();		//获取状态信息
-		Assert.assertEquals(txt, "已关闭"); //判断状态是否是已关闭
-		System.out.println("关闭外链上传文件夹成功");//输出成功信息
-		
-	}
-	
-	public void deleteExternalUpload(String myExternalUpload){
-		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
-		driver.findElement(By.xpath("//ul[@data-name='"+myExternalUpload+"']//input")).click();
-		driver.findElement(By.xpath("//div[@id='ExternalUpload']//span[@id='delete']")).click();
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		Utils.waitFor(3000);
-		Boolean file = Utils.isExists(driver, By.xpath("//a[@title='"+myExternalUpload+"' and @data-name='"+myExternalUpload+"']"));
-		if(! file){
-			System.out.println("删除外链上传文件夹成功");
-		}else{
-			System.out.println("删除外链上传文件夹失败");
-			Assert.fail("删除外链上传文件夹失败");
-		}
-		
-	}
-	
 	public void tagging(String file){
 		uploadCommon(file);
-		WebElement ele = driver.findElement(By.xpath("//ul[@data-name='"+file+"']/li[2]"));
+		WebElement ele = driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+file+"']/li[2]"));
 		Actions act = new Actions(driver);
 		act.moveToElement(ele).build().perform();
-		driver.findElement(By.xpath("//a[@title='打标签']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@title='打标签']")).click();
 		WebElement tag = driver.findElement(By.className("js_tag_name"));
 		String tagname = "tag"+System.currentTimeMillis();
 		tag.sendKeys(tagname);
@@ -407,10 +354,10 @@ public class TeamFileWorker {
 	
 	public void comment(String fileName){
 		uploadCommon(fileName);
-		WebElement file = driver.findElement(By.xpath("//li[@class='filename' and @data-name='"+fileName+"']"));
+		WebElement file = driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@class='list-item' and @data-name='"+fileName+"']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(file).build().perform();
-		driver.findElement(By.xpath("//li[@data-name='9.wmv']/following-sibling::li[1]/a[@title='评论']")).click();
+		driver.findElement(By.xpath("//li[@data-name='"+fileName+"']/following-sibling::li[1]/a[@title='评论']")).click();
 		driver.findElement(By.id("commentTextarea")).sendKeys("中国共产党万岁");
 		driver.findElement(By.xpath("//span[text()='评论']")).click();
 		Boolean common = Utils.isExists(driver, By.className("tooLongToHidden"));
@@ -426,12 +373,11 @@ public class TeamFileWorker {
 	
 	public void renaming(String fileName){
 		uploadCommon(fileName);
-		Navigate.toMyFile(driver);
-		WebElement ele = driver.findElement(By.xpath("//li[@class='filename' and @data-name='"+fileName+"']"));
+		WebElement ele = driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@class='list-item' and @data-name='"+fileName+"']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(ele).build().perform();
-		driver.findElement(By.xpath("//li[@data-name='"+fileName+"']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
-		driver.findElement(By.xpath("//a[text()='重命名']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//li[@class='filebtns']//a[@title='更多']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[text()='重命名']")).click();
 		WebElement element = driver.findElement(By.className("rename_txt"));
 		element.clear();
 		element.sendKeys("pass");
@@ -446,12 +392,74 @@ public class TeamFileWorker {
 			System.out.println("修改文件名成功");
 		}
 	}
-	/**
-	 * 团队文件复制到个人文件
-	 */
-	
-	
 
+	public void moveFileToFolder(String fileName){
+		uploadCommon(fileName);
+		String folderName = newFolder();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[ @data-name='"+fileName+"']//li[1]//input")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='move']")).click();
+		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click();
+		driver.findElement(By.id("//span[text()='"+folderName+"']")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@title='"+fileName+"']")).click();
+		Boolean ele= Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//a[text()='"+fileName+"']"));
+		if(!ele){
+			System.out.println("移动到文件夹失败");
+			Assert.fail("移动到文件夹失败");
+		}else{
+			System.out.println("移动到文件夹成功");
+		}
+	}
+	
+	public void moveToCurrentDir(String fileName,String teamName){
+		uploadCommon(fileName);
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[ @data-name='"+fileName+"']//li[1]//input")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='move']")).click();
+		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
+		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Boolean ele = Utils.isExists(driver, By.xpath("//span[text()='不能移到相同目录']"));
+		if(!ele){
+			System.out.println("移动到当前目录失败");
+			Assert.fail("移动到当前目录失败");
+		}else{
+			System.out.println("移动到当前目录成功");		
+		}		
+	}
+	
+	public void lock(String fileName){
+		uploadCommon(fileName);
+		WebElement ele = driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@class='list-item' and @data-name='"+fileName+"']"));
+		Actions act = new Actions(driver);
+		act.moveToElement(ele).build().perform();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//li[@class='filebtns']//a[@title='更多']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[text()='锁定']")).click();
+		Utils.waitFor(3000);
+		Boolean mark = Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//i[@class='main_ico_my_lock']"));
+		if(!mark){
+			System.out.println("锁定文件失败");
+			Assert.fail("锁定文件失败");
+		}else{
+			System.out.println("锁定文件成功");
+		}
+	}
+	
+	public void unlock(String fileName){
+		WebElement ele = driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@class='list-item' and @data-name='"+fileName+"']"));
+		Actions act = new Actions(driver);
+		act.moveToElement(ele).build().perform();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//li[@class='filebtns']//a[@title='更多']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[text()='解锁']")).click();
+		Utils.waitFor(3000);
+		Boolean mark = Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//i[@class='main_ico_my_lock']"));
+		if(!mark){
+			System.out.println("文件解锁成功");
+			
+		}else{
+			System.out.println("文件解锁失败");
+			Assert.fail("文件解锁失败");
+		}
+	}
+	
 	public void logout(){
 		driver.findElement(By.xpath("//b[@class='caret']")).click();
 		driver.findElement(By.xpath("//span[text()='退出系统']")).click();

@@ -42,6 +42,13 @@
 					<include name="teamFileCopyToTeamFile"></include> 
 					<include name="teamFileCopyToCompanyFile"></include>
 					<include name="favorites"></include>
+					<include name="tagging"></include>
+					<include name="comment"></include>
+					<include name="renaming"></include> 
+					<include name="moveFileToFolder"></include> 
+					<include name="lock"></include> 
+					<include name="unlock"></include> 
+					
 			</methods>
 			</class> 
 			
@@ -62,6 +69,9 @@
 			<parameter name="common" value="9.wmv"></parameter>
 			<parameter name="renaming" value="10.jpg"></parameter>
 			<parameter name ="download" value ="11.html"></parameter>
+			<parameter name ="moveFileToFolder" value ="12.docx"></parameter>
+			<parameter name ="moveToCurrentDir" value ="13.xls"></parameter>
+			<parameter name ="lock" value ="14.pptx"></parameter>
 		</classes>
 	</test>
 	<listeners>

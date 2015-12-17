@@ -441,7 +441,7 @@ public class MyFileWorker {
 		WebElement file = driver.findElement(By.xpath("//li[@class='filename' and @data-name='"+fileName+"']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(file).build().perform();
-		driver.findElement(By.xpath("//li[@data-name='9.wmv']/following-sibling::li[1]/a[@title='评论']")).click();
+		driver.findElement(By.xpath("//li[@data-name='"+fileName+"']/following-sibling::li[1]/a[@title='评论']")).click();
 		driver.findElement(By.id("commentTextarea")).sendKeys("中国共产党万岁");
 		driver.findElement(By.xpath("//span[text()='评论']")).click();
 		Boolean common = Utils.isExists(driver, By.className("tooLongToHidden"));
