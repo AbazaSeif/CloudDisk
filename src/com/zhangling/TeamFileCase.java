@@ -166,7 +166,7 @@ public class TeamFileCase {
 		worker.lock(fileName);
 	}
 	
-	@Test
+	@Test(dependsOnMethods = {"lock"})
 	@Parameters({"lock"})
 	public void unlock(String fileName){
 		worker.unlock(fileName);
