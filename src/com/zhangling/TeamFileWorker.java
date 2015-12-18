@@ -401,7 +401,7 @@ public class TeamFileWorker {
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click();
 		driver.findElement(By.xpath("//span[text()='"+folderName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@title='"+fileName+"']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@title='"+folderName+"']")).click();
 		Boolean ele= Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//a[text()='"+fileName+"']"));
 		if(!ele){
 			System.out.println("移动到文件夹失败");
