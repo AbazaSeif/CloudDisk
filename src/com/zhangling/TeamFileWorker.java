@@ -399,7 +399,7 @@ public class TeamFileWorker {
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[ @data-name='"+fileName+"']//li[1]//input")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='move']")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click();
-		driver.findElement(By.id("//span[text()='"+folderName+"']")).click();
+		driver.findElement(By.xpath("//span[text()='"+folderName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@title='"+fileName+"']")).click();
 		Boolean ele= Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//a[text()='"+fileName+"']"));
@@ -432,7 +432,7 @@ public class TeamFileWorker {
 		Actions act = new Actions(driver);
 		act.moveToElement(ele).build().perform();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//li[@class='filebtns']//a[@title='更多']")).click();
-		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[text()='锁定']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//a[text()='锁定']")).click();
 		Utils.waitFor(3000);
 		Boolean mark = Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//i[@class='main_ico_my_lock']"));
 		if(!mark){
