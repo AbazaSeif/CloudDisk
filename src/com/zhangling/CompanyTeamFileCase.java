@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class TeamFileCase {
+public class CompanyTeamFileCase {
 	TeamFileWorker worker;
 	@BeforeClass
 	@Parameters({"url","username","password"})
@@ -16,7 +16,7 @@ public class TeamFileCase {
 	}
 	
 	@BeforeMethod
-	@Parameters({"createTeam"})
+	@Parameters({"enterCompanyTeam"})
 	public void enterMyTeam(String teamName){
 		worker.enterMyTeam(teamName);
 	}
@@ -86,7 +86,7 @@ public class TeamFileCase {
 	 * 复制文件到个人文件
 	 */
 	@Test
-	@Parameters({"TeamFileCopyToMyFile"})
+	@Parameters({"copyToMyFiles"})
 	public void teamFilCopyToMyFiles(String file) {
 		worker.teamFilCopyToMyFiles(file);
 	}
@@ -95,7 +95,7 @@ public class TeamFileCase {
 	 * 复制文件到团队文件,文件名称后+1
 	 */
 	@Test
-	@Parameters({"teamFileCopyToTeamFile","createTeam"})
+	@Parameters({"copyToTeamFile","createTeam"})
 	public void teamFileCopyToTeamFile(String file,String teamname) {
 		worker.teamFileCopyToTeamFile(file, teamname);
 	}

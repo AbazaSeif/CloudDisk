@@ -51,10 +51,11 @@
 					
 			</methods>
 			</class> 
-			
+			<!-- 登陆 -->
 			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
 			<parameter name="username" value="jenny"></parameter>
 			<parameter name="password" value="888888"></parameter>
+			<!-- 个人文件 -->
 			<parameter name="upload" value="1.doc"></parameter>
 			<parameter name="cloudShare" value="2.xlsx"></parameter>
 			<parameter name="linkShare" value="3.ppt"></parameter>
@@ -69,9 +70,15 @@
 			<parameter name="common" value="9.wmv"></parameter>
 			<parameter name="renaming" value="10.jpg"></parameter>
 			<parameter name ="download" value ="11.html"></parameter>
+			<!-- 团队文件 -->
+			<parameter name="teamFileCopyToMyFile value="15.jpeg"></parameter>
+			<parameter name="teamFileCopyToTeamFile value="16.jpeg"></parameter>
+			<parameter name="teamFileCopyToCompanyFile value="17.jpeg"></parameter>						
 			<parameter name ="moveFileToFolder" value ="12.docx"></parameter>
 			<parameter name ="moveToCurrentDir" value ="13.xls"></parameter>
 			<parameter name ="lock" value ="14.pptx"></parameter>
+			<!-- 公司文件 -->
+			<parameter name ="enterCompanyTeam" value ="companyTeam"></parameter>
 		</classes>
 	</test>
 	<listeners>

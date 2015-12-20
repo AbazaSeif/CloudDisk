@@ -24,5 +24,11 @@ public class Navigate {
 	public static  void clickTeam(WebDriver driver,String teamName){
 		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
 	}
+	
+	public static void clickCompanyTeam(WebDriver driver,String teamName){
+		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
+	}
+	
+	
 
 }
