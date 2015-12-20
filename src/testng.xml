@@ -71,9 +71,9 @@
 			<parameter name="renaming" value="10.jpg"></parameter>
 			<parameter name ="download" value ="11.html"></parameter>
 			<!-- 团队文件 -->
-			<parameter name="teamFileCopyToMyFile value="15.jpeg"></parameter>
-			<parameter name="teamFileCopyToTeamFile value="16.jpeg"></parameter>
-			<parameter name="teamFileCopyToCompanyFile value="17.jpeg"></parameter>						
+			<parameter name="teamFileCopyToMyFile" value="15.jpeg"></parameter>
+			<parameter name="teamFileCopyToTeamFile" value="16.jpeg"></parameter>
+			<parameter name="teamFileCopyToCompanyFile" value="17.jpeg"></parameter>						
 			<parameter name ="moveFileToFolder" value ="12.docx"></parameter>
 			<parameter name ="moveToCurrentDir" value ="13.xls"></parameter>
 			<parameter name ="lock" value ="14.pptx"></parameter>

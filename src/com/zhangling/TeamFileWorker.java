@@ -28,12 +28,12 @@ public class TeamFileWorker {
 		File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
 		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
-		try {
+		/*try {
 			profile.addExtension(firepath);
 			profile.addExtension(firebug);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
 		
@@ -340,7 +340,7 @@ public class TeamFileWorker {
 		driver.findElement(By.xpath("//span[text()='提交']")).click();
 		Utils.waitFor(3000);
 		act.moveToElement(ele).build().perform();
-		driver.findElement(By.xpath("//a[@title='打标签']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='8.mp3']//a[@title='打标签']")).click();
 		Utils.waitFor(3000);
 		Boolean isexist = Utils.isExists(driver, By.xpath("//span[text()='"+tagname+"']"));
 		if(!isexist){
