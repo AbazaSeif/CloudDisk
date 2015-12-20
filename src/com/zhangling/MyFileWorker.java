@@ -124,6 +124,7 @@ public class MyFileWorker {
 			System.out.println("删除文件夹失败");
 			Assert.fail("删除文件夹失败");
 		}
+		
 	}
 
 	/**
