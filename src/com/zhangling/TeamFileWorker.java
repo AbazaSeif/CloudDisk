@@ -334,7 +334,7 @@ public class TeamFileWorker {
 		driver.findElement(By.xpath("//span[text()='提交']")).click();
 		Utils.waitFor(3000);
 		act.moveToElement(ele).build().perform();
-		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='8.mp3']//a[@title='打标签']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+file+"']//a[@title='打标签']")).click();
 		Utils.waitFor(3000);
 		Boolean isexist = Utils.isExists(driver, By.xpath("//span[text()='"+tagname+"']"));
 		if(!isexist){
