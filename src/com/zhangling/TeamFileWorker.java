@@ -28,12 +28,6 @@ public class TeamFileWorker {
 		File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
 		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
-		/*try {
-			profile.addExtension(firepath);
-			profile.addExtension(firebug);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
 		
