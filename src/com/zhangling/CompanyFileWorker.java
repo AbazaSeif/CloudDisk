@@ -25,27 +25,27 @@ public class CompanyFileWorker {
 	WebDriver driver;
 	
 	public CompanyFileWorker(String url) {
-		File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
-		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
-		FirefoxProfile profile = new FirefoxProfile(); 
-		try {
-			profile.addExtension(firepath);
-			profile.addExtension(firebug);
-		} catch (IOException e) {
-			e.printStackTrace();
+		WebDriver driver;
+			File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
+			File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
+			FirefoxProfile profile = new FirefoxProfile(); 
+			try {
+				profile.addExtension(firepath);
+				profile.addExtension(firebug);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			profile.setPreference("browser.startup.homepage", "about:blank");
+			profile.setPreference("startup.homepage_welcome_url.additional", "");
+			
+			profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
+			profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
+			profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
+			driver = new FirefoxDriver(profile);
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.manage().window().maximize();
+			driver.navigate().to(url);
 		}
-		profile.setPreference("browser.startup.homepage", "about:blank");
-		profile.setPreference("startup.homepage_welcome_url.additional", "");
-		
-		profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
-		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
-		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
-		
-		driver = new FirefoxDriver(profile);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-		driver.manage().window().maximize();
-		driver.navigate().to(url);
-	}
 	
 	public void enterCompanyTeam(String teamName){
 		Navigate.toCompanyFile(driver);

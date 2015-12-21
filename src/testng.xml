@@ -3,7 +3,7 @@
 <suite name="Suite1">
 	<test name="test1" preserve-order="true">
 		<classes>
-			 <!-- <class name="com.zhangling.MyFileCase">
+			 <class name="com.zhangling.MyFileCase">
 				<methods>
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
@@ -26,7 +26,7 @@
 					<include name="comment"></include>
 					<include name="renaming"></include> 		
 				</methods>
-			</class> 	 -->
+			</class> 	
 			
 			<class name="com.zhangling.TeamFileCase">
 			<methods>
@@ -76,6 +76,8 @@
 			<parameter name="teamFileCopyToCompanyFile" value="17.jpeg"></parameter>						
 			<parameter name ="moveFileToFolder" value ="12.docx"></parameter>
 			<parameter name ="moveToCurrentDir" value ="13.xls"></parameter>
+			<parameter name="teamFileCloudShare" value="18.xlsx"></parameter>
+			<parameter name="teamFileLinkShare" value="19.ppt"></parameter>
 			<parameter name ="lock" value ="14.pptx"></parameter>
 			<!-- 公司文件 -->
 			<parameter name ="enterCompanyTeam" value ="companyTeam"></parameter>

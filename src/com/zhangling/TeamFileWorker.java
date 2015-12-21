@@ -70,7 +70,7 @@ public class TeamFileWorker {
 
 	public String  newFolder() {		
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
-		WebElement element = driver.findElement(By.name("folderName"));
+		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']"));
 		String folderName = "folder" + System.currentTimeMillis();
 		element.sendKeys(folderName);
 		WebElement confirm = driver.findElement(By.className("confirmNewFolder"));
@@ -182,7 +182,7 @@ public class TeamFileWorker {
 		}
 	}
 
-	public void cloudShare(String shareFile) {
+	public void teamFileCloudShare(String shareFile) {
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+shareFile+"']/li/input")).click();
 		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='share']"));
@@ -205,7 +205,7 @@ public class TeamFileWorker {
 		}
 	}
 
-	public void linkShare(String shareFile) {
+	public void teamFileLinkShare(String shareFile) {
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+shareFile+"']/li/input")).click();
 		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='share']"));

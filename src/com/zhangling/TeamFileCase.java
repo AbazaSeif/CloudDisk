@@ -61,17 +61,17 @@ public class TeamFileCase {
 	 * 云盘分享
 	 */
 	@Test
-	@Parameters({"cloudShare"})
-	public void cloudShare(String file) {
-		worker.cloudShare(file);
+	@Parameters({"teamFileCloudShare"})
+	public void teamFileCloudShare(String file) {
+		worker.teamFileCloudShare(file);
 	}
 	/**
 	 * 链接分享
 	 */
 	@Test
-	@Parameters({"linkShare"})
-	public void linkShare(String file ) {
-		worker.linkShare(file);	
+	@Parameters({"teamFileLinkShare"})
+	public void teamFileLinkShare(String file ) {
+		worker.teamFileLinkShare(file);	
 	}
 	/**
 	 *在浏览器中打开链接分享 
