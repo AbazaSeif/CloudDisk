@@ -183,7 +183,7 @@ public class CompanyFileWorker {
 		}
 	}
 
-	public void cloudShare(String shareFile) {
+	public void companyFileCloudShare(String shareFile) {
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+shareFile+"']/li/input")).click();
 		WebElement element = driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='share']"));
@@ -206,7 +206,7 @@ public class CompanyFileWorker {
 		}
 	}
 
-	public void linkShare(String shareFile) {
+	public void companyFilelinkShare(String shareFile) {
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+shareFile+"']/li/input")).click();
 		WebElement element = driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='share']"));

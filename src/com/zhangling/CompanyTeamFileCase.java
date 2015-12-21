@@ -1,5 +1,6 @@
 package com.zhangling;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -7,18 +8,19 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class CompanyTeamFileCase {
-	TeamFileWorker worker;
+	CompanyFileWorker worker;
 	@BeforeClass
 	@Parameters({"url","username","password"})
 	public void initBrowser(String url,String username,String password){		
-		worker = new TeamFileWorker(url);
+		worker = new CompanyFileWorker(url);
 		worker.loginRight(username, password);
 	}
 	
 	@BeforeMethod
 	@Parameters({"enterCompanyTeam"})
-	public void enterMyTeam(String teamName){
-		worker.enterMyTeam(teamName);
+	public void enterMyTeam(WebDriver driver,String teamName){
+		Navigate.toCompanyFile(driver);
+		Navigate.clickCompanyTeam(driver, teamName);
 	}
 	
 	@Test
@@ -61,17 +63,17 @@ public class CompanyTeamFileCase {
 	 * 云盘分享
 	 */
 	@Test
-	@Parameters({"cloudShare"})
-	public void cloudShare(String file) {
-		worker.cloudShare(file);
+	@Parameters({"companyFileCloudShare"})
+	public void companyFileCloudShare(String file) {
+		worker.companyFileCloudShare(file);
 	}
 	/**
 	 * 链接分享
 	 */
 	@Test
 	@Parameters({"linkShare"})
-	public void linkShare(String file ) {
-		worker.linkShare(file);	
+	public void companyFilelinkShare(String file ) {
+		worker.companyFilelinkShare(file);	
 	}
 	/**
 	 *在浏览器中打开链接分享 

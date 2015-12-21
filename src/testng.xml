@@ -81,6 +81,11 @@
 			<parameter name ="lock" value ="14.pptx"></parameter>
 			<!-- 公司文件 -->
 			<parameter name ="enterCompanyTeam" value ="companyTeam"></parameter>
+			<parameter name="companyFileCloudShare" value="20.xlsx"></parameter>
+			<parameter name="companyFileLinkShare" value="21.ppt"></parameter>
+			<parameter name="companyFileCopyToTeamFile" value="22.jpeg"></parameter>
+			<parameter name="companyFileCopyToCompanyFile" value="23.jpeg"></parameter>
+			
 		</classes>
 	</test>
 	<listeners>
