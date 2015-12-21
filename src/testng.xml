@@ -3,12 +3,12 @@
 <suite name="Suite1">
 	<test name="test1" preserve-order="true">
 		<classes>
-			 <class name="com.zhangling.MyFileCase">
+			<class name="com.zhangling.MyFileCase">
 				<methods>
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
-					<include name="upload"></include> 
+					<include name="upload"></include>
 					<include name="download"></include>
 					<include name="deleteFile"></include>
 					<include name="cloudShare"></include>
@@ -16,7 +16,7 @@
 					<include name="openLinkShared"></include>
 					<include name="createTeam"></include>
 					<include name="copyToMyFiles"></include>
-					<include name="copyToTeamFile"></include> 
+					<include name="copyToTeamFile"></include>
 					<include name="copyToCompanyFile"></include>
 					<include name="favorites"></include>
 					<include name="newExternalUpload"></include>
@@ -24,33 +24,32 @@
 					<include name="deleteExternalUpload"></include>
 					<include name="tagging"></include>
 					<include name="comment"></include>
-					<include name="renaming"></include> 		
+					<include name="renaming"></include>
 				</methods>
-			</class> 	
-			
+			</class> 
+
 			<class name="com.zhangling.TeamFileCase">
-			<methods>
+				<methods>
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
-					<include name="upload"></include> 
+					<include name="upload"></include>
 					<include name="deleteFile"></include>
-					<include name="cloudShare"></include>
-					<include name="linkShare"></include>
+					<include name="teamFileCloudShare"></include>
+					<include name="teamFileLinkShare"></include>
 					<include name="openLinkShared"></include>
 					<include name="teamFileCopyToMyFiles"></include>
-					<include name="teamFileCopyToTeamFile"></include> 
+					<include name="teamFileCopyToTeamFile"></include>
 					<include name="teamFileCopyToCompanyFile"></include>
 					<include name="favorites"></include>
 					<include name="tagging"></include>
 					<include name="comment"></include>
-					<include name="renaming"></include> 
-					<include name="moveFileToFolder"></include> 
-					<include name="lock"></include> 
-					<include name="unlock"></include> 
-					
-			</methods>
-			</class> 
+					<include name="renaming"></include>
+					<include name="moveFileToFolder"></include>
+					<include name="lock"></include>
+					<include name="unlock"></include>
+				</methods>
+			</class>
 			<!-- 登陆 -->
 			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
 			<parameter name="username" value="jenny"></parameter>
@@ -69,23 +68,22 @@
 			<parameter name="tagging" value="8.mp3"></parameter>
 			<parameter name="common" value="9.wmv"></parameter>
 			<parameter name="renaming" value="10.jpg"></parameter>
-			<parameter name ="download" value ="11.html"></parameter>
+			<parameter name="download" value="11.html"></parameter>
 			<!-- 团队文件 -->
 			<parameter name="teamFileCopyToMyFile" value="15.jpeg"></parameter>
 			<parameter name="teamFileCopyToTeamFile" value="16.jpeg"></parameter>
-			<parameter name="teamFileCopyToCompanyFile" value="17.jpeg"></parameter>						
-			<parameter name ="moveFileToFolder" value ="12.docx"></parameter>
-			<parameter name ="moveToCurrentDir" value ="13.xls"></parameter>
+			<parameter name="teamFileCopyToCompanyFile" value="17.jpeg"></parameter>
+			<parameter name="moveFileToFolder" value="12.docx"></parameter>
+			<parameter name="moveToCurrentDir" value="13.xls"></parameter>
 			<parameter name="teamFileCloudShare" value="18.xlsx"></parameter>
 			<parameter name="teamFileLinkShare" value="19.ppt"></parameter>
-			<parameter name ="lock" value ="14.pptx"></parameter>
+			<parameter name="lock" value="14.pptx"></parameter>
 			<!-- 公司文件 -->
-			<parameter name ="enterCompanyTeam" value ="companyTeam"></parameter>
+			<parameter name="enterCompanyTeam" value="companyTeam"></parameter>
 			<parameter name="companyFileCloudShare" value="20.xlsx"></parameter>
 			<parameter name="companyFileLinkShare" value="21.ppt"></parameter>
 			<parameter name="companyFileCopyToTeamFile" value="22.jpeg"></parameter>
 			<parameter name="companyFileCopyToCompanyFile" value="23.jpeg"></parameter>
-			
 		</classes>
 	</test>
 	<listeners>
