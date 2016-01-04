@@ -73,6 +73,7 @@ public class TeamFileWorker {
 		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']"));
 		String folderName = "folder" + System.currentTimeMillis();
 		element.sendKeys(folderName);
+		Utils.waitFor(2000);
 		WebElement confirm = driver.findElement(By.className("confirmNewFolder"));
 		confirm.click();
 		Boolean success = Utils.isExists(driver, By.xpath("//a[@title='"+folderName+"']"));

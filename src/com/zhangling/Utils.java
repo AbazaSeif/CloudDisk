@@ -16,7 +16,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Utils {
@@ -44,12 +44,7 @@ public class Utils {
 	}
 
 	public static WebElement waitElementShow(WebDriver driver, final By by, int time) {
-		WebElement e = (new WebDriverWait(driver, time)).until(new ExpectedCondition<WebElement>() {
-			@Override
-			public WebElement apply(WebDriver d) {
-				return d.findElement(by);
-			}
-		});
+		WebElement e = (new WebDriverWait(driver, time)).until(ExpectedConditions.presenceOfElementLocated(by));
 		return e;
 	}
 	

@@ -9,7 +9,7 @@
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
 					<include name="upload"></include>
-					<include name="download"></include>
+					<!-- <include name="download"></include> -->
 					<include name="deleteFile"></include>
 					<include name="cloudShare"></include>
 					<include name="linkShare"></include>
@@ -20,15 +20,15 @@
 					<include name="copyToCompanyFile"></include>
 					<include name="favorites"></include>
 					<include name="newExternalUpload"></include>
-					<include name="closeExternalUpload"></include>
+					<!-- <include name="closeExternalUpload"></include>
 					<include name="deleteExternalUpload"></include>
 					<include name="tagging"></include>
 					<include name="comment"></include>
-					<include name="renaming"></include>
+					<include name="renaming"></include> -->
 				</methods>
 			</class> 
 
-			<class name="com.zhangling.TeamFileCase">
+			<!-- <class name="com.zhangling.TeamFileCase">
 				<methods>
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
@@ -49,9 +49,9 @@
 					<include name="lock"></include>
 					<include name="unlock"></include>
 				</methods>
-			</class>
+			</class> -->
 			<!-- 登陆 -->
-			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
+			<parameter name="url" value="http://y7test.y7tech.com/"></parameter>
 			<parameter name="username" value="jenny"></parameter>
 			<parameter name="password" value="888888"></parameter>
 			<!-- 个人文件 -->

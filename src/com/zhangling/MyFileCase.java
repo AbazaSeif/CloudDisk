@@ -136,7 +136,6 @@ public class MyFileCase {
 	public void copyToCompanyFile(String file) {
 		Navigate.toMyFile(driver);
 		myFileWorker.copyToCompanyFile(file);
-		Navigate.toMyFile(driver);
 	}
 
 	/**

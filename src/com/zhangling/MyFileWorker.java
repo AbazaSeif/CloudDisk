@@ -40,7 +40,7 @@ public class MyFileWorker {
 		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
 		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
 		driver = new FirefoxDriver(profile);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.navigate().to(url);
 	}
@@ -125,7 +125,8 @@ public class MyFileWorker {
 		File file1 = new File("D:\\upload\\" + fileName);
 
 		driver.findElement(By.xpath("//div[@id='Home']//span[@id='upload']")).click();
-		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
+		Utils.waitElementShow(driver, By.id("uploader_browse"), 10000);
+		driver.findElement(By.id("uploader_browse")).click();
 		AutoItX x = new AutoItX();
 		String uploadWin = "文件上传";
 		x.winActivate(uploadWin);
@@ -191,11 +192,13 @@ public class MyFileWorker {
 		driver.findElement(By.id("s2id_autogen2")).sendKeys("jenny");
 		Utils.waitElementShow(driver, By.xpath("//div[@title='张小一(jenny)']"), 5);
 		//driver.findElement(By.xpath("//div[@title='张小一(jenny)']")).sendKeys(Keys.ENTER);
-		new Actions(driver).click(driver.findElement(By.xpath("//div[@title='张小一(jenny)']"))).perform();
+		Actions action = new Actions(driver);
+		action.click(driver.findElement(By.xpath("//div[@title='张小一(jenny)']"))).build().perform();
 		driver.findElement(By.xpath("//button[text()='确定分享']")).click();
 		Navigate.toMyShares(driver);
-		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
-
+		Utils.waitElementShow(driver, By.xpath("//nav[@id='sidebar']/ul//span[text()='已发分享']"), 10000);
+		driver.findElement(By.xpath("//nav[@id='sidebar']/ul//span[text()='已发分享']")).click();
+		Utils.waitFor(3000);
 		Boolean sendShare = Utils.isExists(driver, By.xpath("//a[@data-name='"+shareFile+"']"));
 		if (sendShare) {
 			System.out.println("云盘分享文件成功");
@@ -224,6 +227,7 @@ public class MyFileWorker {
 	}
 
 	public void openLinkShared(String shareFile) {
+		Utils.waitFor(2000);
 		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
 		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//a[@title='"+shareFile+"' and @data-name='"+shareFile+"']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
@@ -259,8 +263,8 @@ public class MyFileWorker {
 		driver.findElement(By.xpath("//input[contains(@id,'s2id_autogen')]")).sendKeys("jenny01");
 		Utils.waitFor(1000);
 		new Actions(driver).click(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']"))).build().perform();
-		Utils.waitFor(1000);
-		new Actions(driver).click(driver.findElement(By.xpath("//button[text()='创建团队']"))).build().perform();
+		Utils.waitFor(5000);
+		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
 		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//span[text()='"+fileName+"']")).click();		
 		Boolean myteam = Utils.isExists(driver, By.xpath("//span[text()='"+fileName+"']"));
@@ -355,7 +359,6 @@ public class MyFileWorker {
 	
 	public void newExternalUpload(String myExternalUpload) {
 		driver.findElement(By.xpath("//span[text()='外链上传']")).click();
-		Utils.waitElementShow(driver, By.xpath("//span[text()='外链上传']"), 3);
 		driver.findElement(By.xpath("//div[@id='ExternalUpload']//span[@id='new_build']")).click();
 		WebElement element = driver.findElement(By.name("fileName"));
 		element.sendKeys(myExternalUpload);//
@@ -491,7 +494,7 @@ public class MyFileWorker {
 	}
 	
 	public void logout(){
-		driver.findElement(By.xpath("//b[@class='caret']")).click();
+		/*driver.findElement(By.xpath("//b[@class='caret']")).click();
 		driver.findElement(By.xpath("//span[text()='退出系统']")).click();
 		Utils.waitFor(3000);
 		Boolean button = Utils.isExists(driver, By.xpath("//button[text()='登 录']"));
@@ -500,7 +503,7 @@ public class MyFileWorker {
 		}else{
 			Assert.fail("退出系统失败");
 			System.out.println("退出系统失败");
-		}
+		}*/
 	}
 	
 	
