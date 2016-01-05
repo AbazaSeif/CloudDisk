@@ -51,7 +51,7 @@
 				</methods>
 			</class> -->
 			<!-- 登陆 -->
-			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
+			<parameter name="url" value="http://192.168.12.204/ucdisk/"></parameter>
 			<parameter name="username" value="sweet"></parameter>
 			<parameter name="password" value="888888"></parameter>
 			<!-- 个人文件 -->

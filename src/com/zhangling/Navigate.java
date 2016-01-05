@@ -21,7 +21,7 @@ public class Navigate {
 	}
 	
 	public static  void toMyShares(WebDriver driver){		
-		By xpath = By.xpath("//a[@lang='My_Share' and @title='我的分享']");
+		By xpath = By.xpath("//a[@title='我的分享']");
 		common(driver,xpath);
 	}
 	

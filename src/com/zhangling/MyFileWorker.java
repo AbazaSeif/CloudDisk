@@ -24,23 +24,27 @@ public class MyFileWorker {
 	WebDriver driver;
 	
 	public MyFileWorker(String url) {
-	/*	File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
+		File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
 		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
 		try {
-			profile.addExtension(firepath);
 			profile.addExtension(firebug);
+			profile.setPreference("extensions.firebug.currentVersion", "2.0.13");//设置firebug 版本
+			profile.addExtension(firepath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
 		
-		profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
+		/*profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
 		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
 		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
 */		
-		driver = new FirefoxDriver();
+		/*ProfilesIni allProfiles = new ProfilesIni();  
+		FirefoxProfile profile = allProfiles.getProfile("default");*/  
+		
+		driver = new FirefoxDriver(profile);
 		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.navigate().to(url);
@@ -139,10 +143,12 @@ public class MyFileWorker {
 			x.ControlSetText(uploadWin, "", "Edit1", file1.getAbsolutePath());// 在输入框中输入文件名称（包含路径）
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-
+			System.out.println("上传文件时AutoIt出错");
+			e.printStackTrace();
 		}
 		x.controlClick(uploadWin, "", "Button1");// 点击“打开”
 
+		Utils.waitFor(500);
 		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
 		Utils.waitFor(10000);
 		driver.findElement(By.xpath("//button[@title='关闭']")).click();
@@ -150,7 +156,9 @@ public class MyFileWorker {
 		if (! uploadedfile) {
 			System.out.println("文件上传失败");
 			Assert.fail("文件上传失败");
-		} 
+		} else{
+			System.out.println("文件上传成功");
+		}
 
 	}
 	
