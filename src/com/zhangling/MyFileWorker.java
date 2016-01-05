@@ -53,7 +53,8 @@ public class MyFileWorker {
 		if (!checkbox.isSelected()) {
 			checkbox.click();
 		}
-		driver.findElement(By.className("btn_login")).click();
+		Utils.waitFor(3000);
+		driver.findElement(By.xpath("//button[text()='登 录']")).click();
 		Utils.waitElementShow(driver, By.xpath("//span[text()='张苓']"), 10);
 		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张苓']"));
 		if (!exists) {
