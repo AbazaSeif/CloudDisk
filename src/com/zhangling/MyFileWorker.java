@@ -24,7 +24,7 @@ public class MyFileWorker {
 	WebDriver driver;
 	
 	public MyFileWorker(String url) {
-		File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
+	/*	File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
 		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
 		try {
@@ -39,7 +39,8 @@ public class MyFileWorker {
 		profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
 		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
 		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
-		driver = new FirefoxDriver(profile);
+*/		
+		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.navigate().to(url);
@@ -53,8 +54,8 @@ public class MyFileWorker {
 			checkbox.click();
 		}
 		driver.findElement(By.className("btn_login")).click();
-		Utils.waitElementShow(driver, By.xpath("//span[text()='张小一']"), 10);
-		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张小一']"));
+		Utils.waitElementShow(driver, By.xpath("//span[text()='张苓']"), 10);
+		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张苓']"));
 		if (!exists) {
 			Assert.fail("登陆文档云不成功");
 			System.out.println("登陆文档云失败");
