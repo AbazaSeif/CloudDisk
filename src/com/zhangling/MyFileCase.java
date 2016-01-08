@@ -92,7 +92,7 @@ public class MyFileCase {
 	 *在浏览器中打开链接分享 
 	 */
 	@Test(dependsOnMethods={"linkShare"})
-	@Parameters({"openLinkShare"})
+	@Parameters({"linkShare"})
 	public void openLinkShared(String file) {
 		Navigate.toMyShares(driver);
 		myFileWorker.openLinkShared(file);	

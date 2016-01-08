@@ -29,18 +29,16 @@ public class TeamFileWorker {
 		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
 		FirefoxProfile profile = new FirefoxProfile(); 
 		try {
-			profile.addExtension(firepath);
 			profile.addExtension(firebug);
+			profile.setPreference("extensions.firebug.currentVersion", "2.0.13");//设置firebug 版本
+			profile.addExtension(firepath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		profile.setPreference("browser.startup.homepage", "about:blank");
 		profile.setPreference("startup.homepage_welcome_url.additional", "");
 		
-		profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
-		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
-		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
-		driver = new FirefoxDriver(profile);
+		driver = new FirefoxDriver();
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		driver.manage().window().maximize();
 		driver.navigate().to(url);
@@ -59,8 +57,8 @@ public class TeamFileWorker {
 			checkbox.click();
 		}
 		driver.findElement(By.className("btn_login")).click();
-		Utils.waitElementShow(driver, By.xpath("//span[text()='张小一']"), 10);
-		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张小一']"));
+		Utils.waitElementShow(driver, By.xpath("//span[text()='张苓']"), 10);
+		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张苓']"));
 		if (!exists) {
 			Assert.fail("登陆文档云不成功");
 			System.out.println("登陆文档云失败");
@@ -68,10 +66,11 @@ public class TeamFileWorker {
 		System.out.println("登陆文档云成功");
 	}
 
-	public String  newFolder() {		
+	public String  newFolder() {
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
-		WebElement element = driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']"));
 		String folderName = "folder" + System.currentTimeMillis();
+		WebElement element = driver.findElement(By.xpath("//input[@name='folderName']"));	
+		element.click();
 		element.sendKeys(folderName);
 		Utils.waitFor(2000);
 		WebElement confirm = driver.findElement(By.className("confirmNewFolder"));
@@ -357,6 +356,7 @@ public class TeamFileWorker {
 		WebElement file = driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@class='list-item' and @data-name='"+fileName+"']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(file).build().perform();
+		Utils.waitFor(3000);
 		driver.findElement(By.xpath("//ul[@data-name='"+fileName+"']/li[3]/a[@title='评论']")).click();
 		driver.findElement(By.id("commentTextarea")).sendKeys("中国共产党万岁");
 		driver.findElement(By.xpath("//span[text()='评论']")).click();
@@ -378,6 +378,7 @@ public class TeamFileWorker {
 		act.moveToElement(ele).build().perform();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//li[@class='filebtns']//a[@title='更多']")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[text()='重命名']")).click();
+		Utils.waitFor(3000);
 		WebElement element = driver.findElement(By.className("rename_txt"));
 		element.clear();
 		element.sendKeys("pass");

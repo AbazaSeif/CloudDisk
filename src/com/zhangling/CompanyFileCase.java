@@ -1,14 +1,14 @@
 package com.zhangling;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-public class CompanyTeamFileCase {
+public class CompanyFileCase {
 	CompanyFileWorker worker;
+	CompanyFileWorker driver;
 	@BeforeClass
 	@Parameters({"url","username","password"})
 	public void initBrowser(String url,String username,String password){		
@@ -18,13 +18,12 @@ public class CompanyTeamFileCase {
 	
 	@BeforeMethod
 	@Parameters({"enterCompanyTeam"})
-	public void enterMyTeam(WebDriver driver,String teamName){
-		Navigate.toCompanyFile(driver);
-		Navigate.clickCompanyTeam(driver, teamName);
+	public void enterMyTeam(String teamName){
+	worker.enterCompanyTeam(teamName);
 	}
 	
 	@Test
-	public void newFolder(){
+	public void companyFlie_newFolder(){
 		worker.newFolder();		
 	}
 	
@@ -32,30 +31,30 @@ public class CompanyTeamFileCase {
 	 * 新建同名文件夹，依赖newFolder方法
 	 */
 	@Test
-	public void newFolderSame() {
+	public void companyFlie_newFolderSame() {
 		worker.newFolderSame();
 	}
 
 	@Test
-	public void deleteFolder() {// 删除文件夾
+	public void companyFlie_deleteFolder() {// 删除文件夾
 		worker.deleteFolder();
 	}
 
 	@Test
 	@Parameters({"upload"})
-	public void upload(String uploadFile) {
+	public void companyFlie_upload(String uploadFile) {
 		worker.uploadCommon(uploadFile);
 	}
 	
 	@Test
 	@Parameters({"download"})
-	public void download(String fileName){
+	public void companyFlie_download(String fileName){
 		worker.download(fileName);
 	}
 	
-	@Test(dependsOnMethods={"upload"})
+	@Test
 	@Parameters({"upload"})
-	public void deleteFile(String delFile){
+	public void companyFlie_deleteFile(String delFile){
 		worker.deleteFile(delFile);
 	}
 
@@ -64,23 +63,23 @@ public class CompanyTeamFileCase {
 	 */
 	@Test
 	@Parameters({"companyFileCloudShare"})
-	public void companyFileCloudShare(String file) {
+	public void companyFile_CloudShare(String file) {
 		worker.companyFileCloudShare(file);
 	}
 	/**
 	 * 链接分享
 	 */
 	@Test
-	@Parameters({"linkShare"})
-	public void companyFilelinkShare(String file ) {
+	@Parameters({"companyFileLinkShare"})
+	public void companyFileLinkShare(String file) {
 		worker.companyFilelinkShare(file);	
 	}
 	/**
 	 *在浏览器中打开链接分享 
 	 */
-	@Test(dependsOnMethods={"linkShare"})
-	@Parameters({"openLinkShare"})
-	public void openLinkShared(String file) {
+	@Test
+	@Parameters({"companyFileLinkShare"})
+	public void companyFileOpenLinkShare(String file) {
 		worker.openLinkShared(file);	
 	}
 
@@ -89,17 +88,17 @@ public class CompanyTeamFileCase {
 	 */
 	@Test
 	@Parameters({"copyToMyFiles"})
-	public void teamFilCopyToMyFiles(String file) {
-		worker.teamFilCopyToMyFiles(file);
+	public void companyFlieCopyToMyFiles(String file) {
+		worker.companyFlieCopyToMyFiles(file);
 	}
 	
 	/**
 	 * 复制文件到团队文件,文件名称后+1
 	 */
 	@Test
-	@Parameters({"copyToTeamFile","createTeam"})
-	public void teamFileCopyToTeamFile(String file,String teamname) {
-		worker.teamFileCopyToTeamFile(file, teamname);
+	@Parameters({"companyFileCopyToTeamFile","createTeam"})
+	public void companyFileCopyToTeamFile(String file,String teamname) {
+		worker.companyFileCopyToTeamFile(file, teamname);
 	}
 
 	/**
@@ -107,8 +106,8 @@ public class CompanyTeamFileCase {
 	 */
 	@Test
 	@Parameters({"copyToCompanyFile"})
-	public void teamFileCopyToCompanyFile(String file) {
-		worker.teamFileCopyToCompanyFile(file);
+	public void companyFileCopyToCompanyFile(String file) {
+		worker.companyFileCopyToCompanyFile(file);
 	}
 
 	/**
@@ -117,7 +116,7 @@ public class CompanyTeamFileCase {
 	 */
 	@Test
 	@Parameters("favoritesUploadFileName")
-	public void favorites(String filename) {
+	public void companyFlieFavorites(String filename) {
 		worker.favorites(filename);
 	}
 	

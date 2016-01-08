@@ -30,7 +30,7 @@ public class Navigate {
 		common(driver,xpath);
 	}
 	
-	public static void clickCompanyTeam(WebDriver driver,String teamName){
+	public static void clickCompany(WebDriver driver,String teamName){
 		By xpath = By.xpath("//span[text()='"+teamName+"']");
 		common(driver,xpath);
 	}

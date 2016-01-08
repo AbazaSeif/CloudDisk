@@ -25,31 +25,35 @@ public class CompanyFileWorker {
 	WebDriver driver;
 	
 	public CompanyFileWorker(String url) {
-		WebDriver driver;
-			File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
-			File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
-			FirefoxProfile profile = new FirefoxProfile(); 
-			try {
-				profile.addExtension(firepath);
-				profile.addExtension(firebug);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			profile.setPreference("browser.startup.homepage", "about:blank");
-			profile.setPreference("startup.homepage_welcome_url.additional", "");
-			
-			profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
-			profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
-			profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
-			driver = new FirefoxDriver(profile);
-			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-			driver.manage().window().maximize();
-			driver.navigate().to(url);
+		File firepath = new File("lib/firepath-0.9.7.1-fx.xpi"); 
+		File firebug = new File("lib/firebug-2.0.13-fx.xpi"); 
+		FirefoxProfile profile = new FirefoxProfile(); 
+		try {
+			profile.addExtension(firebug);
+			profile.setPreference("extensions.firebug.currentVersion", "2.0.13");//设置firebug 版本
+			profile.addExtension(firepath);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		profile.setPreference("browser.startup.homepage", "about:blank");
+		profile.setPreference("startup.homepage_welcome_url.additional", "");
+		
+		/*profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
+		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
+		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
+*/		
+		/*ProfilesIni allProfiles = new ProfilesIni();  
+		FirefoxProfile profile = allProfiles.getProfile("default");*/  
+		
+		driver = new FirefoxDriver(profile);
+		driver.manage().timeouts().implicitlyWait(8, TimeUnit.SECONDS);
+		driver.manage().window().maximize();
+		driver.navigate().to(url);
+	}
 	
-	public void enterCompanyTeam(String teamName){
+	public void enterCompanyTeam(String teamName){		
 		Navigate.toCompanyFile(driver);
-		Navigate.clickCompanyTeam(driver, teamName);
+		Navigate.clickCompany(driver, teamName);
 	}
 
 	public void loginRight(String username, String password) {
@@ -60,8 +64,8 @@ public class CompanyFileWorker {
 			checkbox.click();
 		}
 		driver.findElement(By.className("btn_login")).click();
-		Utils.waitElementShow(driver, By.xpath("//span[text()='张小一']"), 10);
-		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张小一']"));
+		Utils.waitElementShow(driver, By.xpath("//span[text()='张苓']"), 10);
+		boolean exists = Utils.isExists(driver, By.xpath("//span[text()='张苓']"));
 		if (!exists) {
 			Assert.fail("登陆文档云不成功");
 			System.out.println("登陆文档云失败");
@@ -167,7 +171,7 @@ public class CompanyFileWorker {
 	
 
 	/**
-	 * 删除文件1.txt，需要依赖uploadCommon（）
+	 * 删除文件
 	 */
 	public void deleteFile(String deleteFile) {
 		driver.findElement(By.xpath("//ul[@data-name='"+deleteFile+"']//input")).click();
@@ -226,11 +230,13 @@ public class CompanyFileWorker {
 
 	public void openLinkShared(String shareFile) {
 		Navigate.toMyShares(driver);
+		Utils.waitFor(2000);
 		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
 		Utils.waitFor(5000);
-		driver.findElement(By.xpath("//a[@title='"+shareFile+"' and @data-name='"+shareFile+"']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
+		Actions action = new Actions(driver);
+		action.click(driver.findElement(By.xpath("//div[@id='SendedShare']//a[@title='"+shareFile+"']/parent::span/parent::li/parent::ul//a[text()='复制链接和提取码']"))).build().perform();
 		String linkAndCode = Utils.getClip();
-		String code = linkAndCode.substring(linkAndCode.lastIndexOf(":") + 1);// 截取链接中最后一个：后面的内容
+		String code = linkAndCode.substring(linkAndCode.length()-6);// 截取链接中最后一个：后面的内容
 		((JavascriptExecutor) driver).executeScript("window.open('" + linkAndCode + "')");
 		
 		String mainHandle = driver.getWindowHandle();
@@ -245,14 +251,14 @@ public class CompanyFileWorker {
 		driver.findElement(By.id("linkcode")).sendKeys(code);
 		driver.findElement(By.xpath(".//a[contains(text(),'提取')]")).click();
 		boolean exist = Utils.isExists(driver, By.xpath("//a[text()='"+shareFile+"' and @code]"));
+		driver.switchTo().window(mainHandle);
 		if (!exist) {
 			 Assert.fail("打开分享链接不成功"); 
 		}
 	}
 	
 	
-	public void teamFilCopyToMyFiles(String file) {
-		
+	public void companyFlieCopyToMyFiles(String file) {
 		uploadCommon(file);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='copy']")).click();
@@ -269,17 +275,19 @@ public class CompanyFileWorker {
 		}
 	}
 	
-	public void teamFileCopyToTeamFile(String file,String teamName) {		
+	public void companyFileCopyToTeamFile(String file,String teamName) {		
 		uploadCommon(file);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='copy']")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
-		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='"+teamName+"']")).click();
+		By xpath = By.xpath("//div[@class='modal-dialog']//span[text()='"+teamName+"']");
+		driver.findElement(xpath).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Utils.waitFor(1000);
+		Navigate.toTeamFile(driver);
+		Navigate.clickTeam(driver, teamName);
 		Utils.waitFor(3000);
-		String name = file.substring(0, file.indexOf("."));
-		String prefix = file.substring(file.indexOf("."));
-		Boolean filename = Utils.isExists(driver, By.xpath("//div[@id='CompanyFiles']//a[@data-name='"+name+"(1)"+prefix+"']"));
+		Boolean filename = Utils.isExists(driver, By.xpath("//a[@data-name='"+file+"']"));
 		if (!filename) {
 			Assert.fail("复制到团队文件失败");
 			System.out.println("复制到团队文件失败");
@@ -288,21 +296,24 @@ public class CompanyFileWorker {
 		}
 	}
 	
-	public void teamFileCopyToCompanyFile(String filename) {
+	public void companyFileCopyToCompanyFile(String filename) {
 		uploadCommon(filename);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+filename+"']/child::*/input")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='copy']")).click();
 		driver.findElement(By.id("copy-compTree-holder_1_switch")).click();
-		driver.findElement(By.xpath("//span[text()='companyTeam']")).click();
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='companyTeam']")).click();
+		Utils.waitFor(1000);
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		Navigate.toCompanyFile(driver);
-		Boolean file = Utils.isExists(driver, By.xpath("//a[@data-name='"+filename+"']"));
-		if (!file) {
-			Assert.fail("复制到公司文件失败");
-			System.out.println("复制到公司文件失败");
+		Utils.waitFor(1000);
+		String name = filename.substring(0, filename.indexOf("."));
+		String prefix = filename.substring(filename.indexOf("."));
+		Boolean copyFileExists = Utils.isExists(driver, By.xpath("//ul[@data-name='"+name+"(1)"+prefix+"']/child::*/input"));
+		if (!copyFileExists) {
+			System.out.println("复制到个人文件失败");
+			Assert.fail("复制到个人文件失败");
 		}else{
-			System.out.println("复制到公司文件成功");
-		}			
+			System.out.println("复制到个人文件成功");
+		}
 	}
 	
 	
@@ -320,8 +331,8 @@ public class CompanyFileWorker {
 		driver.findElement(By.xpath("//span[text()='收藏夹']")).click();
 		Boolean favorite = Utils.isExists(driver, By.xpath("//a[@title='"+filename+"']"));
 		if (!favorite) {
-			Assert.fail("文件收藏失败");
 			System.out.println("文件收藏失败");
+			Assert.fail("文件收藏失败");
 		}else{
 			System.out.println("文件收藏成功");			
 		}

@@ -114,7 +114,7 @@ public class TeamFileCase {
 	 * @param filename
 	 */
 	@Test
-	@Parameters("favoritesUploadFileName")
+	@Parameters("teamFile_favorites")
 	public void favorites(String filename) {
 		worker.favorites(filename);
 	}
