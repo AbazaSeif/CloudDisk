@@ -316,9 +316,10 @@ public class MyFileWorker {
 		driver.findElement(By.xpath("//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.id("copy")).click();
 		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
-		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
-		Utils.waitFor(3000);
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
+		Utils.waitFor(500);
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='"+teamName+"']")).click();
+		Utils.waitFor(1000);
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='确定']")).click();
 		Navigate.toTeamFile(driver);
 		Navigate.clickTeam(driver, teamName);
 		Utils.waitFor(3000);
@@ -473,12 +474,12 @@ public class MyFileWorker {
 		Actions act = new Actions(driver);
 		act.moveToElement(ele).build().perform();
 		driver.findElement(By.xpath("//li[@data-name='"+fileName+"']/following-sibling::li[@class='filebtns']//a[@title='更多']")).click();
-		driver.findElement(By.xpath("//a[text()='重命名']")).click();
-		WebElement element = driver.findElement(By.className("rename_txt"));
+		driver.findElement(By.xpath("//div[@id='Home']//ul[@data-name='"+fileName+"']//a[text()='重命名']")).click();
+		WebElement element = driver.findElement(By.xpath("//div[@id='Home']//ul[@data-name='"+fileName+"']//input[@class='rename_txt']"));
 		element.clear();
 		element.sendKeys("pass");
 		
-		driver.findElement(By.className("js_sub_rename")).click();
+		driver.findElement(By.xpath("//div[@id='Home']//ul[@data-name='"+fileName+"']//button[@class='btn_gray_ico js_sub_rename']")).click();
 		driver.switchTo().alert().accept();
 		Boolean success = Utils.isExists(driver, By.xpath("//a[text()='pass']"));
 		if(!success){

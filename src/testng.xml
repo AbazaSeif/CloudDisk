@@ -3,8 +3,7 @@
 <suite name="Suite1">
 	<test name="test1" preserve-order="true">
 		<classes>
-		
-		<!--  <class name="com.zhangling.MyFileCase">
+			<!-- <class name="com.zhangling.MyFileCase">
 				<methods>
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
@@ -15,8 +14,8 @@
 					<include name="linkShare"></include>
 					<include name="openLinkShared"></include>
 					<include name="createTeam"></include>
-					<include name="copyToMyFiles"></include>
 					<include name="copyToTeamFile"></include>
+					<include name="copyToMyFiles"></include>
 					<include name="copyToCompanyFile"></include>
 					<include name="favorites"></include>
 					<include name="newExternalUpload"></include>
@@ -26,19 +25,19 @@
 					<include name="comment"></include>
 					<include name="renaming"></include>
 				</methods>
-			</class>
+			</class> -->
 				
-				<class name="com.zhangling.TeamFileCase">
+			<class name="com.zhangling.TeamFileCase">
 				<methods>					
-					<include name="newFolder"></include>
+					<!-- <include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
 					<include name="upload"></include>
 					<include name="deleteFile"></include>
-					<include name="teamFileCloudShare"></include>
+					<include name="teamFileCloudShare"></include> -->
 					<include name="teamFileLinkShare"></include>
 					<include name="openLinkShared"></include>
-					<include name="teamFileCopyToMyFiles"></include>
+					<!-- <include name="teamFileCopyToMyFiles"></include>
 					<include name="teamFileCopyToTeamFile"></include>
 					<include name="teamFileCopyToCompanyFile"></include>
 					<include name="favorites"></include>
@@ -47,33 +46,36 @@
 					<include name="renaming"></include>
 					<include name="moveFileToFolder"></include>
 					<include name="lock"></include>
-					<include name="unlock"></include>
+					<include name="unlock"></include> -->
 				</methods>
-			</class> -->
+			</class>
 				
 		
-			<class name="com.zhangling.CompanyFileCase">
+			<!-- <class name="com.zhangling.CompanyFileCase">
 				<methods>					
-					<!-- <include name="companyFlie_newFolder"></include>
+					<include name="companyFlie_newFolder"></include>
 					<include name="companyFlie_newFolderSame"></include>
 					<include name="companyFlie_deleteFolder"></include>
 					<include name="companyFlie_upload"></include>
 					<include name="companyFlie_deleteFile"></include>
 					<include name="companyFile_CloudShare"></include>
 					<include name="companyFileLinkShare"></include>
-					<include name="companyFileOpenLinkShare"></include> -->
-				 	<!-- <include name="companyFileCopyToMyFiles"></include> -->
-					<!-- <include name="companyFileCopyToTeamFile"></include>
-					<include name="companyFileCopyToCompanyFile"></include> -->
+					<include name="companyFileOpenLinkShare"></include>
+				 	<include name="companyFileCopyToMyFiles"></include>
+					<include name="companyFileCopyToTeamFile"></include>
+					<include name="companyFileCopyToCompanyFile"></include>
 					<include name="companyFlieFavorites"></include>
-					<!-- <include name="companyFlie_tagging"></include> 
-					<include name="companyFlie_comment"></include>
-					<include name="companyFlie_renaming"></include>
+					<include name="companyFlieTagging"></include>
+					<include name="companyFlieComment"></include>
+					<include name="companyFlieRenaming"></include>
 					<include name="moveFileToFolder"></include>
+					<include name="moveToCurrentDir">
+						<parameter name="teamName" value="companyTeam"></parameter>
+					</include>
 					<include name="lock"></include>
-					<include name="unlock"></include> -->
+					<include name="unlock"></include>
 				</methods>
-			</class>
+			</class> -->
 			
 			<!-- 登陆 -->
 			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>

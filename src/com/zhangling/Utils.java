@@ -44,7 +44,7 @@ public class Utils {
 	}
 
 	public static WebElement waitElementShow(WebDriver driver, final By by, int time) {
-		WebElement e = (new WebDriverWait(driver, time)).until(ExpectedConditions.presenceOfElementLocated(by));
+		WebElement e = (new WebDriverWait(driver, time/1000)).until(ExpectedConditions.presenceOfElementLocated(by));
 		return e;
 	}
 	

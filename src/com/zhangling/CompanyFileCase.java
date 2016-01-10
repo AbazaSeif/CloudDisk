@@ -1,5 +1,6 @@
 package com.zhangling;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -8,18 +9,20 @@ import org.testng.annotations.Test;
 
 public class CompanyFileCase {
 	CompanyFileWorker worker;
-	CompanyFileWorker driver;
+	WebDriver driver;
+	
 	@BeforeClass
 	@Parameters({"url","username","password"})
 	public void initBrowser(String url,String username,String password){		
 		worker = new CompanyFileWorker(url);
+		driver = worker.driver;
 		worker.loginRight(username, password);
 	}
 	
 	@BeforeMethod
 	@Parameters({"enterCompanyTeam"})
 	public void enterMyTeam(String teamName){
-	worker.enterCompanyTeam(teamName);
+		worker.enterCompanyTeam(teamName);
 	}
 	
 	@Test
@@ -88,8 +91,8 @@ public class CompanyFileCase {
 	 */
 	@Test
 	@Parameters({"copyToMyFiles"})
-	public void companyFlieCopyToMyFiles(String file) {
-		worker.companyFlieCopyToMyFiles(file);
+	public void companyFileCopyToMyFiles(String file) {
+		worker.companyFileCopyToMyFiles(file);
 	}
 	
 	/**
@@ -98,6 +101,7 @@ public class CompanyFileCase {
 	@Test
 	@Parameters({"companyFileCopyToTeamFile","createTeam"})
 	public void companyFileCopyToTeamFile(String file,String teamname) {
+		Navigate.toCompanyFile(driver);
 		worker.companyFileCopyToTeamFile(file, teamname);
 	}
 
@@ -105,7 +109,7 @@ public class CompanyFileCase {
 	 * 复制文件到公司文件
 	 */
 	@Test
-	@Parameters({"copyToCompanyFile"})
+	@Parameters({"companyFileCopyToCompanyFile"})
 	public void companyFileCopyToCompanyFile(String file) {
 		worker.companyFileCopyToCompanyFile(file);
 	}
@@ -126,7 +130,7 @@ public class CompanyFileCase {
 	 */
 	@Test
 	@Parameters({"tagging"})
-	public void tagging(String filename){
+	public void companyFlieTagging(String filename){
 		worker.tagging(filename);
 	}
 	
@@ -136,19 +140,16 @@ public class CompanyFileCase {
 	 */
 	@Test
 	@Parameters({"common"})
-	public void comment(String filename){
+	public void companyFlieComment(String filename){
 		worker.comment(filename);
 	}
 	
 	@Test
 	@Parameters({"renaming"})
-	public void renaming(String filename){
+	public void companyFlieRenaming(String filename){
 		worker.renaming(filename);		
 	}
-	/**
-	 * 团队文件中将文件移动到文件夹
-	 * @param fileName
-	 */
+	
 	@Test
 	@Parameters({"moveFileToFolder"})
 	public void moveFileToFolder(String fileName){
@@ -156,7 +157,7 @@ public class CompanyFileCase {
 	}
 	
 	@Test
-	@Parameters({"moveToCurrentDir","createTeam"})
+	@Parameters({"moveToCurrentDir","teamName"})
 	public void moveToCurrentDir(String fileName,String teamName){
 		worker.moveToCurrentDir(fileName, teamName);
 	}
@@ -175,7 +176,7 @@ public class CompanyFileCase {
 		
 	@AfterClass
 	public void logout(){
-	worker.logout();
+		worker.logout();
 	}
 	
 	

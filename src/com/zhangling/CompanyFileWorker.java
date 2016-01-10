@@ -275,18 +275,34 @@ public class CompanyFileWorker {
 		}
 	}
 	
+	public void companyFileCopyToMyFiles(String file) {
+		uploadCommon(file);
+		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+file+"']/child::*/input")).click();
+		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='copy']")).click();
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='个人文件']")).click();
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='确定']")).click();
+		Utils.waitFor(2000);
+		Navigate.toMyFile(driver);
+		Boolean filename = Utils.isExists(driver, By.xpath("//div[@id='Home']//a[@data-name='"+file+"']"));
+		if (!filename) {
+			Assert.fail("复制到个人文件失败");
+			System.out.println("复制到个人文件失败");
+		}else{
+			System.out.println("复制到个人文件成功");
+		}
+	}
+	
 	public void companyFileCopyToTeamFile(String file,String teamName) {		
 		uploadCommon(file);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+file+"']/child::*/input")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='copy']")).click();
-		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click(); // +号
-		By xpath = By.xpath("//div[@class='modal-dialog']//span[text()='"+teamName+"']");
-		driver.findElement(xpath).click();
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//a[@title='团队文件']/preceding-sibling::span")).click(); // +号
+		Utils.waitFor(300);
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='"+teamName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		Utils.waitFor(1000);
+		Utils.waitFor(500);
 		Navigate.toTeamFile(driver);
 		Navigate.clickTeam(driver, teamName);
-		Utils.waitFor(3000);
 		Boolean filename = Utils.isExists(driver, By.xpath("//a[@data-name='"+file+"']"));
 		if (!filename) {
 			Assert.fail("复制到团队文件失败");
@@ -300,19 +316,20 @@ public class CompanyFileWorker {
 		uploadCommon(filename);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+filename+"']/child::*/input")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='copy']")).click();
-		driver.findElement(By.id("copy-compTree-holder_1_switch")).click();
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//a[@title='公司文件']/preceding-sibling::span")).click();
+		Utils.waitFor(200);
 		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='companyTeam']")).click();
-		Utils.waitFor(1000);
+		Utils.waitFor(200);
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Utils.waitFor(1000);
 		String name = filename.substring(0, filename.indexOf("."));
 		String prefix = filename.substring(filename.indexOf("."));
 		Boolean copyFileExists = Utils.isExists(driver, By.xpath("//ul[@data-name='"+name+"(1)"+prefix+"']/child::*/input"));
 		if (!copyFileExists) {
-			System.out.println("复制到个人文件失败");
-			Assert.fail("复制到个人文件失败");
+			System.out.println("复制到公司文件失败");
+			Assert.fail("复制到公司文件失败");
 		}else{
-			System.out.println("复制到个人文件成功");
+			System.out.println("复制到公司文件成功");
 		}
 	}
 	
@@ -350,8 +367,9 @@ public class CompanyFileWorker {
 		driver.findElement(By.xpath("//a[text()='贴上']")).click();
 		driver.findElement(By.xpath("//span[text()='提交']")).click();
 		Utils.waitFor(3000);
+		ele = driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+file+"']/li[2]"));
 		act.moveToElement(ele).build().perform();
-		driver.findElement(By.xpath("//a[@title='打标签']")).click();
+		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+file+"']//a[@title='打标签']")).click();
 		Utils.waitFor(3000);
 		Boolean isexist = Utils.isExists(driver, By.xpath("//span[text()='"+tagname+"']"));
 		if(!isexist){
@@ -368,7 +386,7 @@ public class CompanyFileWorker {
 		WebElement file = driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@class='list-item' and @data-name='"+fileName+"']"));
 		Actions act = new Actions(driver);
 		act.moveToElement(file).build().perform();
-		driver.findElement(By.xpath("//ul[@data-name='"+fileName+"']/li[3]/a[@title='评论']")).click();
+		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+fileName+"']/li[3]/a[@title='评论']")).click();
 		driver.findElement(By.id("commentTextarea")).sendKeys("中国共产党万岁");
 		driver.findElement(By.xpath("//span[text()='评论']")).click();
 		Boolean common = Utils.isExists(driver, By.className("tooLongToHidden"));
@@ -378,8 +396,8 @@ public class CompanyFileWorker {
 			System.out.println("评论失败");
 			Assert.fail("评论失败");
 		}		
-		act.moveToElement(file).build().perform();
-		driver.findElement(By.className("file_comment")).click();
+//		act.moveToElement(file).build().perform();
+//		driver.findElement(By.className("file_comment")).click();
 	}
 	
 	public void renaming(String fileName){
@@ -389,13 +407,12 @@ public class CompanyFileWorker {
 		act.moveToElement(ele).build().perform();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+fileName+"']//li[@class='filebtns']//a[@title='更多']")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//a[text()='重命名']")).click();
-		WebElement element = driver.findElement(By.className("rename_txt"));
+		WebElement element = driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+fileName+"']//input[@class='rename_txt']"));
 		element.clear();
 		element.sendKeys("pass");
-		
-		driver.findElement(By.className("js_sub_rename")).click();
+		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+fileName+"']//button[@class='btn_gray_ico js_sub_rename']")).click();
 		driver.switchTo().alert().accept();
-		Boolean success = Utils.isExists(driver, By.xpath("//a[text()='pass']"));
+		Boolean success = Utils.isExists(driver, By.xpath("//div[@id='CompanyFiles']//a[text()='pass']"));
 		if(!success){
 			System.out.println("修改文件名失败");
 			Assert.fail("修改文件名失败");
@@ -407,9 +424,9 @@ public class CompanyFileWorker {
 	public void moveFileToFolder(String fileName){
 		uploadCommon(fileName);
 		String folderName = newFolder();
-		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[ @data-name='"+fileName+"']//li[1]//input")).click();
+		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[@data-name='"+fileName+"']//li[1]//input")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='move']")).click();
-		driver.findElement(By.id("copy-teamTree-holder_1_switch")).click();
+		driver.findElement(By.id("//div[@class='modal-dialog']//a[@title='团队文件']/preceding-sibling::span")).click();
 		driver.findElement(By.xpath("//span[text()='"+folderName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//a[@title='"+folderName+"']")).click();
@@ -426,7 +443,7 @@ public class CompanyFileWorker {
 		uploadCommon(fileName);
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//ul[ @data-name='"+fileName+"']//li[1]//input")).click();
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='move']")).click();
-		driver.findElement(By.xpath("//span[text()='"+teamName+"']")).click();
+		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='"+teamName+"']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Boolean ele = Utils.isExists(driver, By.xpath("//span[text()='不能移到相同目录']"));
 		if(!ele){

@@ -77,7 +77,7 @@ public class TeamFileCase {
 	 *在浏览器中打开链接分享 
 	 */
 	@Test(dependsOnMethods={"teamFileLinkShare"})
-	@Parameters({"openLinkShare"})
+	@Parameters({"teamFileLinkShare"})
 	public void openLinkShared(String file) {
 		worker.openLinkShared(file);	
 	}

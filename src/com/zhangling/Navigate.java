@@ -15,8 +15,8 @@ public class Navigate {
 		common(driver,xpath);
 	}
 	
-	public static  void toCompanyFile(WebDriver driver){		
-		By xpath = By.xpath("//i[@class='headermenu_ico_companyfile']");
+	public static void toCompanyFile(WebDriver driver){		
+		By xpath = By.xpath("//div[@id='header']//a[@title='公司文件']/i[@class='headermenu_ico_companyfile']");
 		common(driver,xpath);
 	}
 	
@@ -25,13 +25,13 @@ public class Navigate {
 		common(driver,xpath);
 	}
 	
-	public static  void clickTeam(WebDriver driver,String teamName){
-		By xpath = By.xpath("//span[text()='"+teamName+"']");
+	public static void clickTeam(WebDriver driver,String teamName){
+		By xpath = By.xpath("//ul[@id='teamNav']//span[text()='"+teamName+"']");
 		common(driver,xpath);
 	}
 	
 	public static void clickCompany(WebDriver driver,String teamName){
-		By xpath = By.xpath("//span[text()='"+teamName+"']");
+		By xpath = By.xpath("//ul[@id='companyNav']//span[text()='"+teamName+"']");
 		common(driver,xpath);
 	}
 	

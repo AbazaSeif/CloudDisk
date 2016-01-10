@@ -125,7 +125,6 @@ public class MyFileCase {
 	public void copyToTeamFile(String file,String teamname) {
 		Navigate.toMyFile(driver);
 		myFileWorker.copyToTeamFile(file,teamname);
-		Navigate.toMyFile(driver);
 	}
 
 	/**
