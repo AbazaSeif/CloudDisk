@@ -129,7 +129,6 @@ public class MyFileWorker {
 		File file = new File("lib/jacob-1.18-x64.dll");// 新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
-
 		driver.findElement(By.xpath("//div[@id='Home']//span[@id='upload']")).click();
 		Utils.waitElementShow(driver, By.id("uploader_browse"), 10000);
 		driver.findElement(By.id("uploader_browse")).click();
@@ -200,10 +199,10 @@ public class MyFileWorker {
 		element.click();
 		driver.findElement(By.id("cloudShare")).click();
 		driver.findElement(By.id("s2id_autogen2")).sendKeys("jenny");
-		Utils.waitElementShow(driver, By.xpath("//div[@title='张小一(jenny)']"), 5);
+		Utils.waitElementShow(driver, By.xpath("//div[@title='张苓(jenny)']"), 5);
 		//driver.findElement(By.xpath("//div[@title='张小一(jenny)']")).sendKeys(Keys.ENTER);
 		Actions action = new Actions(driver);
-		action.click(driver.findElement(By.xpath("//div[@title='张小一(jenny)']"))).build().perform();
+		action.click(driver.findElement(By.xpath("//div[@title='张苓(jenny)']"))).build().perform();
 		driver.findElement(By.xpath("//button[text()='确定分享']")).click();
 		Navigate.toMyShares(driver);
 		Utils.waitElementShow(driver, By.xpath("//nav[@id='sidebar']/ul//span[text()='已发分享']"), 10000);
@@ -273,10 +272,11 @@ public class MyFileWorker {
 		driver.findElement(By.xpath("//i[@class='ico_location']")).click();
 		driver.findElement(By.id("userGroupTree_1_span")).click();
 		driver.findElement(By.xpath("//button[text()='下一步']")).click();
-		driver.findElement(By.xpath("//input[contains(@id,'s2id_autogen')]")).sendKeys("jenny01");
+		driver.findElement(By.xpath("//input[contains(@id,'s2id_autogen')]")).sendKeys("jenny");
 		Utils.waitFor(1000);
-		new Actions(driver).click(driver.findElement(By.xpath("//div[text()='张小二(jenny01)']"))).build().perform();
+		new Actions(driver).click(driver.findElement(By.xpath("//div[text()='张苓(jenny)']"))).build().perform();
 		Utils.waitFor(5000);
+		driver.findElement(By.id("select2-drop-mask")).click();
 		driver.findElement(By.xpath("//button[text()='创建团队']")).click();
 		Utils.waitFor(5000);
 		driver.findElement(By.xpath("//span[text()='"+fileName+"']")).click();		
@@ -378,12 +378,12 @@ public class MyFileWorker {
 		element.sendKeys(myExternalUpload);//
 		Boolean label = Utils.isExists(driver, By.xpath("//label[text()='永不过期']"));
 		if (!label) {
-			WebElement date = driver.findElement(By.name("creatStartTime"));
+			WebElement date = driver.findElement(By.xpath("//div[@id='creatStartTimeBtn']//a[@class='add-on btn_gray']"));	
 			date.sendKeys(Utils.getToday());
 		}
-		Utils.waitElementShow(driver, By.xpath("//span[text()='确定']"), 10);
-		driver.findElement(By.xpath("//span[text()='确定']")).click();
-		driver.findElement(By.xpath("//h4[text()='外链上传文件夹属性']/preceding-sibling::button")).click();//X按钮
+		Utils.waitElementShow(driver, By.xpath("//div[@class='modal-footer dialog-footer']/span[text()='确定']"), 10);
+		driver.findElement(By.xpath("//div[@class='modal-footer dialog-footer']/span[text()='确定']")).click();
+		driver.findElement(By.xpath("//div[@class='modal-header dialog-header']/button")).click();//X按钮
 		Boolean folder = Utils.isExists(driver, By.xpath("//a[@title='"+myExternalUpload+"']"));
 		if (!folder) {
 			Assert.fail("新建外链上传文件夹失败");

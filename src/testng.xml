@@ -3,41 +3,41 @@
 <suite name="Suite1">
 	<test name="test1" preserve-order="true">
 		<classes>
-			<!-- <class name="com.zhangling.MyFileCase">
+			 <class name="com.zhangling.MyFileCase">
 				<methods>
-					<include name="newFolder"></include>
+					<!-- <include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
 					<include name="upload"></include>
 					<include name="deleteFile"></include>
-					<include name="cloudShare"></include>
+					<include name="cloudShare"></include> 
 					<include name="linkShare"></include>
 					<include name="openLinkShared"></include>
 					<include name="createTeam"></include>
 					<include name="copyToTeamFile"></include>
 					<include name="copyToMyFiles"></include>
 					<include name="copyToCompanyFile"></include>
-					<include name="favorites"></include>
+					<include name="favorites"></include>-->
 					<include name="newExternalUpload"></include>
 					<include name="closeExternalUpload"></include>
 					<include name="deleteExternalUpload"></include>
 					<include name="tagging"></include>
-					<include name="comment"></include>
-					<include name="renaming"></include>
+					<!-- <include name="comment"></include>
+					<include name="renaming"></include> -->
 				</methods>
-			</class> -->
+			</class>
 				
-			<class name="com.zhangling.TeamFileCase">
+		<!-- 	<class name="com.zhangling.TeamFileCase">
 				<methods>					
-					<!-- <include name="newFolder"></include>
+					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
 					<include name="upload"></include>
 					<include name="deleteFile"></include>
-					<include name="teamFileCloudShare"></include> -->
+					<include name="teamFileCloudShare"></include>
 					<include name="teamFileLinkShare"></include>
 					<include name="openLinkShared"></include>
-					<!-- <include name="teamFileCopyToMyFiles"></include>
+					<include name="teamFileCopyToMyFiles"></include>
 					<include name="teamFileCopyToTeamFile"></include>
 					<include name="teamFileCopyToCompanyFile"></include>
 					<include name="favorites"></include>
@@ -46,12 +46,12 @@
 					<include name="renaming"></include>
 					<include name="moveFileToFolder"></include>
 					<include name="lock"></include>
-					<include name="unlock"></include> -->
+					<include name="unlock"></include>
 				</methods>
 			</class>
 				
 		
-			<!-- <class name="com.zhangling.CompanyFileCase">
+			<class name="com.zhangling.CompanyFileCase">
 				<methods>					
 					<include name="companyFlie_newFolder"></include>
 					<include name="companyFlie_newFolderSame"></include>
@@ -78,7 +78,7 @@
 			</class> -->
 			
 			<!-- 登陆 -->
-			<parameter name="url" value="https://y7test.y7tech.com/ucdisk/"></parameter>
+			<parameter name="url" value="http://192.168.12.204/ucdisk/"></parameter>
 			<parameter name="username" value="sweet"></parameter>
 			<parameter name="password" value="888888"></parameter>
 			<!-- 个人文件 -->
