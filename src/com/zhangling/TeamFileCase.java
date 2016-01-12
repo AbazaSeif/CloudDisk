@@ -19,6 +19,7 @@ public class TeamFileCase {
 	@Parameters({"createTeam"})
 	public void enterMyTeam(String teamName){
 		worker.enterMyTeam(teamName);
+		worker.closeGroup();
 	}
 	
 	@Test

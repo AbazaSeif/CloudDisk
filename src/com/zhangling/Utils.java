@@ -16,6 +16,7 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -36,16 +37,26 @@ public class Utils {
 
 	public static boolean isExists(WebDriver driver, By by) {
 		try {
-			driver.findElement(by);
+//			ExpectedCondition<WebElement> presence=new ExpectedCondition<WebElement>(){@Override public WebElement apply(WebDriver d) {return d.findElement(by);}};
+			ExpectedCondition<WebElement> presence = ExpectedConditions.presenceOfElementLocated(by); 
+			new WebDriverWait(driver,1).until(presence);
 		} catch (Exception e) {
 			return false;
 		}
 		return true;
 	}
-
+	
 	public static WebElement waitElementShow(WebDriver driver, final By by, int time) {
 		WebElement e = (new WebDriverWait(driver, time/1000)).until(ExpectedConditions.presenceOfElementLocated(by));
 		return e;
+	}
+	
+	/**
+	 * 等待直到元素不可见，（ 元素必须已存在）
+	 */
+	public static void waitUntilElementInvisiable(WebDriver driver,By path){
+		ExpectedCondition<Boolean> presence = ExpectedConditions.invisibilityOfElementLocated(path); 
+		new WebDriverWait(driver,20).until(presence);
 	}
 	
 	public static String getToday(){

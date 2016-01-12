@@ -14,6 +14,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import autoitx4java.AutoItX;
@@ -55,6 +58,13 @@ public class TeamFileWorker {
 		Navigate.toTeamFile(driver);
 		Navigate.clickTeam(driver, teamName);
 	}
+	
+	public void closeGroup(){
+		By openClose = By.xpath("//nav[@id='sidebar']/span[text()='团队文件']/label/i[@id='group_open_close']");
+		if(!driver.findElement(openClose).getAttribute("style").equals("")){
+			driver.findElement(openClose).click();
+		}
+	}
 
 	public void loginRight(String username, String password) {
 		driver.findElement(By.className("user")).sendKeys(username);
@@ -73,7 +83,8 @@ public class TeamFileWorker {
 		System.out.println("登陆文档云成功");
 	}
 
-	public String  newFolder() {
+	public String newFolder() {
+		Utils.isExists(driver, By.xpath("//div[@id='dsdsf']"));
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='new_build']")).click();
 		String folderName = "folder" + System.currentTimeMillis();
 		WebElement element = driver.findElement(By.xpath("//input[@name='folderName']"));	
@@ -138,24 +149,26 @@ public class TeamFileWorker {
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
 
-		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='upload']")).click();
-		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
+		By upload = By.xpath("//div[@id='TeamFiles']//span[@id='upload']");
+		Utils.waitElementShow(driver, upload, 5000);
+		driver.findElement(upload).click();
+		driver.findElement(By.xpath("//a[@id='uploader_browse']/span")).click();
 		AutoItX x = new AutoItX();
 		String uploadWin = "文件上传";
 		x.winActivate(uploadWin);
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(200);
 			x.controlFocus(uploadWin, "", "Edit1");// 定位到文件名输入框
-			Thread.sleep(1000);
+			Thread.sleep(200);
 			x.ControlSetText(uploadWin, "", "Edit1", file1.getAbsolutePath());// 在输入框中输入文件名称（包含路径）
-			Thread.sleep(1000);
+			Thread.sleep(200);
 		} catch (InterruptedException e) {
 
 		}
 		x.controlClick(uploadWin, "", "Button1");// 点击“打开”
 
-		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
-		Utils.waitFor(10000);
+		driver.findElement(By.xpath("//a[@id='uploader_start' and not(contains(@class,'ui-state-disabled'))]")).click();//可点击状态
+		Utils.waitUntilElementInvisiable(driver, By.xpath("//a[@id='uploader_start' and contains(@class,'ui-state-disabled')]"));//不可点击状态
 		driver.findElement(By.xpath("//button[@title='关闭']")).click();
 		Boolean uploadedfile = Utils.isExists(driver, By.xpath("//a[@data-name='" + fileName + "']"));
 		if (! uploadedfile) {
@@ -196,9 +209,9 @@ public class TeamFileWorker {
 		element.click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@id='cloudShare']")).click();
 		driver.findElement(By.id("s2id_autogen2")).sendKeys("jenny");
-		Utils.waitElementShow(driver, By.xpath("//div[@title='张小一(jenny)']"), 5);
+		Utils.waitElementShow(driver, By.xpath("//div[@title='张苓(jenny)']"), 5);
 		//driver.findElement(By.xpath("//div[@title='张小一(jenny)']")).sendKeys(Keys.ENTER);
-		new Actions(driver).click(driver.findElement(By.xpath("//div[@title='张小一(jenny)']"))).perform();
+		new Actions(driver).click(driver.findElement(By.xpath("//div[@title='张苓(jenny)']"))).perform();
 		driver.findElement(By.xpath("//button[text()='确定分享']")).click();
 		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[text()='已发分享']")).click();
@@ -319,7 +332,7 @@ public class TeamFileWorker {
 		action.moveToElement(txt).build().perform();
 		Utils.takeScreenShot(driver);
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+filename+"']//li[@class='filebtns']//a[@title='更多']")).click();
-		driver.findElement(By.xpath("//div[@id='TeamFiles']//li[@class='filebtns']//a[@title='添加收藏']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+filename+"']//li[@class='filebtns']//a[@title='添加收藏']")).click();
 		driver.findElement(By.xpath("//span[text()='我的收藏']")).click();
 		driver.findElement(By.xpath("//span[text()='确定']")).click();
 		Navigate.toMyFile(driver);
@@ -338,7 +351,7 @@ public class TeamFileWorker {
 		WebElement ele = driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+file+"']/li[2]"));
 		Actions act = new Actions(driver);
 		act.moveToElement(ele).build().perform();
-		driver.findElement(By.xpath("//div[@id='TeamFiles']//a[@title='打标签']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+file+"']//a[@title='打标签']")).click();
 		WebElement tag = driver.findElement(By.className("js_tag_name"));
 		String tagname = "tag"+System.currentTimeMillis();
 		tag.sendKeys(tagname);
@@ -364,7 +377,7 @@ public class TeamFileWorker {
 		Actions act = new Actions(driver);
 		act.moveToElement(file).build().perform();
 		Utils.waitFor(3000);
-		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']/li[3]/a[@title='评论']")).click();
+		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']/li[@class='filebtns']/a[@title='评论']")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//textarea[@id='commentTextarea']")).sendKeys("中国共产党万岁");
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[text()='评论']")).click();
 		Boolean success = Utils.isExists(driver, By.xpath("//div[@id='TeamFiles']//div[text()='中国共产党万岁']"));

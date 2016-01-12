@@ -378,10 +378,10 @@ public class MyFileWorker {
 		element.sendKeys(myExternalUpload);//
 		Boolean label = Utils.isExists(driver, By.xpath("//label[text()='永不过期']"));
 		if (!label) {
-			WebElement date = driver.findElement(By.xpath("//div[@id='creatStartTimeBtn']//a[@class='add-on btn_gray']"));	
+			WebElement date = driver.findElement(By.xpath("//div[@class='modal-dialog']//input[@name='creatStartTime']"));	
 			date.sendKeys(Utils.getToday());
 		}
-		Utils.waitElementShow(driver, By.xpath("//div[@class='modal-footer dialog-footer']/span[text()='确定']"), 10);
+		new Actions(driver).click(driver.findElement(By.xpath("//div[@class='modal-dialog']//input[@name='creatStartTime']"))).build().perform();
 		driver.findElement(By.xpath("//div[@class='modal-footer dialog-footer']/span[text()='确定']")).click();
 		driver.findElement(By.xpath("//div[@class='modal-header dialog-header']/button")).click();//X按钮
 		Boolean folder = Utils.isExists(driver, By.xpath("//a[@title='"+myExternalUpload+"']"));

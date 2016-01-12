@@ -3,9 +3,9 @@
 <suite name="Suite1">
 	<test name="test1" preserve-order="true">
 		<classes>
-			 <class name="com.zhangling.MyFileCase">
+			 <!-- <class name="com.zhangling.MyFileCase">
 				<methods>
-					<!-- <include name="newFolder"></include>
+					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
 					<include name="upload"></include>
@@ -17,18 +17,18 @@
 					<include name="copyToTeamFile"></include>
 					<include name="copyToMyFiles"></include>
 					<include name="copyToCompanyFile"></include>
-					<include name="favorites"></include>-->
+					<include name="favorites"></include>
 					<include name="newExternalUpload"></include>
 					<include name="closeExternalUpload"></include>
 					<include name="deleteExternalUpload"></include>
 					<include name="tagging"></include>
-					<!-- <include name="comment"></include>
-					<include name="renaming"></include> -->
+					<include name="comment"></include>
+					<include name="renaming"></include>
 				</methods>
-			</class>
+			</class> -->
 				
-		<!-- 	<class name="com.zhangling.TeamFileCase">
-				<methods>					
+			<class name="com.zhangling.TeamFileCase">
+				<methods>		
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
 					<include name="deleteFolder"></include>
@@ -50,8 +50,7 @@
 				</methods>
 			</class>
 				
-		
-			<class name="com.zhangling.CompanyFileCase">
+			<!-- <class name="com.zhangling.CompanyFileCase">
 				<methods>					
 					<include name="companyFlie_newFolder"></include>
 					<include name="companyFlie_newFolderSame"></include>
