@@ -150,9 +150,9 @@ public class TeamFileCase {
 	 * @param fileName
 	 */
 	@Test
-	@Parameters({"moveFileToFolder"})
-	public void moveFileToFolder(String fileName){
-		worker.moveFileToFolder(fileName);
+	@Parameters({"moveFileToFolder","createTeam"})
+	public void moveFileToFolder(String fileName,String teamName){
+		worker.moveFileToFolder(fileName,teamName);
 	}
 	
 	@Test

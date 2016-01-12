@@ -247,7 +247,7 @@ public class TeamFileWorker {
 		Navigate.toMyShares(driver);
 		driver.findElement(By.xpath("//span[contains(text(),'已发分享')]")).click();
 		Utils.waitFor(3000);
-		driver.findElement(By.xpath("//div[@id='SendedShare']//a[@title='"+shareFile+"' and @data-name='"+shareFile+"']/ancestor::li[@class='filename_noico']/following-sibling::li[2]/span/div/embed")).click();
+		driver.findElement(By.xpath("//div[@id='SendedShare']//a[@title='"+shareFile+"' and @data-name='"+shareFile+"']/ancestor::li[@class='filename_noico']/following-sibling::li[@class='sharemode sharemodeUrl']/span")).click();
 		String linkAndCode = Utils.getClip();
 		String code = linkAndCode.substring(linkAndCode.lastIndexOf(":") + 1);// 截取链接中最后一个：后面的内容
 		((JavascriptExecutor) driver).executeScript("window.open('" + linkAndCode + "')");
@@ -414,12 +414,12 @@ public class TeamFileWorker {
 		}
 	}
 
-	public void moveFileToFolder(String fileName){
+	public void moveFileToFolder(String fileName,String teamName){
 		uploadCommon(fileName);
 		String folderName = newFolder();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+fileName+"']//li[1]//input")).click();
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//span[@id='move']")).click();
-		By add = By.xpath("//div[@class='modal-dialog']//span[@id='copy-teamTree-holder_1_switch']");
+		By add = By.xpath("//a[@title='"+teamName+"']/ancestor::li[@id='copy-teamTree-holder_1']/span");
 		Utils.waitElementShow(driver, add, 6000);
 		driver.findElement(add).click();
 		driver.findElement(By.xpath("//div[@class='modal-dialog']//span[text()='"+folderName+"']")).click();
