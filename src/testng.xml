@@ -75,14 +75,16 @@
 			</class>
 			
 			<!-- 登陆 -->
-			<parameter name="url" value="http://192.168.12.103/ucdisk/"></parameter>
+			<parameter name="url" value="http://192.168.12.204/ucdisk/"></parameter>
 			<parameter name="username" value="sweet"></parameter>
 			<parameter name="password" value="888888"></parameter>
+			<parameter name="teamName" value="companyTeam"></parameter>
+			<parameter name="enterCompanyTeam" value="companyTeam"></parameter>
+			<parameter name="createTeam" value="myTeam"></parameter>
 			<!-- 个人文件 -->
 			<parameter name="upload" value="1.doc"></parameter>
 			<parameter name="cloudShare" value="2.xlsx"></parameter>
 			<parameter name="linkShare" value="3.ppt"></parameter>
-			<parameter name="createTeam" value="myTeam"></parameter>
 			<parameter name="copyToMyFiles" value="4.png"></parameter>
 			<parameter name="copyToTeamFile" value="5.jpeg"></parameter>
 			<parameter name="copyToCompanyFile" value="6.txt"></parameter>
@@ -104,8 +106,6 @@
 			<parameter name="lock" value="14.pptx"></parameter>
 			<parameter name="teamFile_favorites" value="24.pdf"></parameter>
 			<!-- 公司文件 -->
-			<parameter name="teamName" value="companyTeam"></parameter>
-			<parameter name="enterCompanyTeam" value="companyTeam"></parameter>
 			<parameter name="companyFileCloudShare" value="20.rtf"></parameter>
 			<parameter name="companyFileLinkShare" value="21.ppt"></parameter>
 			<parameter name="companyFileCopyToTeamFile" value="22.jpeg"></parameter>
