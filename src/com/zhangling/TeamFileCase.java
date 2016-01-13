@@ -58,6 +58,14 @@ public class TeamFileCase {
 		worker.deleteFile(delFile);
 	}
 
+	@Test
+	@Parameters({"dissolutionTeam"})
+	public void dissolutionTeam(String teamName){
+		worker.dissolutionTeam(teamName);
+	}
+	
+	
+	
 	/**
 	 * 云盘分享
 	 */

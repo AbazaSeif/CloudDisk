@@ -166,7 +166,7 @@ public class TeamFileWorker {
 
 		}
 		x.controlClick(uploadWin, "", "Button1");// 点击“打开”
-
+		
 		driver.findElement(By.xpath("//a[@id='uploader_start' and not(contains(@class,'ui-state-disabled'))]")).click();//可点击状态
 		Utils.waitUntilElementInvisiable(driver, By.xpath("//a[@id='uploader_start' and contains(@class,'ui-state-disabled')]"));//不可点击状态
 		driver.findElement(By.xpath("//button[@title='关闭']")).click();
@@ -201,7 +201,29 @@ public class TeamFileWorker {
 			Assert.fail("删除文件失败");
 		}
 	}
-
+	
+	public void dissolutionTeam(String teamName){
+		/*MyFileWorker  team = new  MyFileWorker(teamName);
+		team.createTeam(teamName);
+		
+		Actions act = new Actions(driver);
+		WebElement  teamname = driver.findElement(By.xpath("//a[@title='"+teamName+"']/parent::div"));
+		act.moveToElement(teamname).build().perform();
+		driver.findElement(By.xpath("//a[@title='"+teamName+"']/following-sibling::div")).click();
+		driver.findElement(By.xpath("//a[@title='"+teamname+"']/following-sibling::div//span[@title='解散团队']")).click();
+		Utils.waitElementShow(driver, By.xpath(".//*[@id='Dissolve_Team']/div[2]/div/div[3]/span[3]"), 10);
+		driver.findElement(By.xpath(".//*[@id='Dissolve_Team']/div[2]/div/div[3]/span[3]")).click();
+		Utils.waitFor(5000);
+		
+		if(!teamname){
+			System.out.println("解散团队成功");
+		}else{
+			System.out.println("解散团队失败");
+			Assert.fail("解散团队失败");
+		}*/
+	}
+	
+	
 	public void teamFileCloudShare(String shareFile) {
 		uploadCommon(shareFile);
 		driver.findElement(By.xpath("//div[@id='TeamFiles']//ul[@data-name='"+shareFile+"']/li/input")).click();

@@ -12,6 +12,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import org.openqa.selenium.firefox.internal.ProfilesIni;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 
@@ -40,7 +41,8 @@ public class MyFileWorker {
 		/*profile.setPreference("browser.download.folderList", 2);//0桌面;1默认;2指定目录
 		profile.setPreference("browser.download.dir", "d:\\");//下载到指定目录
 		profile.setPreference("browser.helperApps.neverAsk.saveToDisk","application/pdf");//多个用逗号分开
-*/		
+		 */		
+		
 		/*ProfilesIni allProfiles = new ProfilesIni();  
 		FirefoxProfile profile = allProfiles.getProfile("default");*/  
 		
@@ -147,15 +149,14 @@ public class MyFileWorker {
 		}
 		x.controlClick(uploadWin, "", "Button1");// 点击“打开”
 
-		Utils.waitFor(500);
-		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
-		Utils.waitFor(10000);
+		driver.findElement(By.xpath("//a[@id='uploader_start' and not(contains(@class,'ui-state-disabled'))]")).click();//可点击状态
+		Utils.waitUntilElementInvisiable(driver, By.xpath("//a[@id='uploader_start' and contains(@class,'ui-state-disabled')]"));//不可点击状态
 		driver.findElement(By.xpath("//button[@title='关闭']")).click();
 		Boolean uploadedfile = Utils.isExists(driver, By.xpath("//a[@data-name='" + fileName + "']"));
 		if (! uploadedfile) {
 			System.out.println("文件上传失败");
 			Assert.fail("文件上传失败");
-		} else{
+		}else{
 			System.out.println("文件上传成功");
 		}
 

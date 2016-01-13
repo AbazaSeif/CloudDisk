@@ -135,7 +135,6 @@ public class CompanyFileWorker {
 		File file = new File("lib/jacob-1.18-x64.dll");// 新建文件指向字符串指向的路径
 		System.setProperty(LibraryLoader.JACOB_DLL_PATH, file.getAbsolutePath());// 注册此文件
 		File file1 = new File("D:\\upload\\" + fileName);
-
 		driver.findElement(By.xpath("//div[@id='CompanyFiles']//span[@id='upload']")).click();
 		driver.findElement(By.xpath(".//*[@id='uploader_browse']/span")).click();
 		AutoItX x = new AutoItX();
@@ -151,16 +150,17 @@ public class CompanyFileWorker {
 
 		}
 		x.controlClick(uploadWin, "", "Button1");// 点击“打开”
-
-		driver.findElement(By.xpath("//a[@id='uploader_start']/child::span")).click();
-		Utils.waitFor(10000);
+		
+		driver.findElement(By.xpath("//a[@id='uploader_start' and not(contains(@class,'ui-state-disabled'))]")).click();//可点击状态
+		Utils.waitUntilElementInvisiable(driver, By.xpath("//a[@id='uploader_start' and contains(@class,'ui-state-disabled')]"));//不可点击状态
 		driver.findElement(By.xpath("//button[@title='关闭']")).click();
 		Boolean uploadedfile = Utils.isExists(driver, By.xpath("//a[@data-name='" + fileName + "']"));
 		if (! uploadedfile) {
 			System.out.println("文件上传失败");
 			Assert.fail("文件上传失败");
-		} 
-
+		}else{
+			System.out.println("文件上传成功");
+		}
 	}
 	
 	public void download(String fileName){

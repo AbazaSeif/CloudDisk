@@ -37,7 +37,6 @@ public class Utils {
 
 	public static boolean isExists(WebDriver driver, By by) {
 		try {
-//			ExpectedCondition<WebElement> presence=new ExpectedCondition<WebElement>(){@Override public WebElement apply(WebDriver d) {return d.findElement(by);}};
 			ExpectedCondition<WebElement> presence = ExpectedConditions.presenceOfElementLocated(by); 
 			new WebDriverWait(driver,1).until(presence);
 		} catch (Exception e) {
@@ -52,10 +51,18 @@ public class Utils {
 	}
 	
 	/**
-	 * 等待直到元素不可见，（ 元素必须已存在）
+	 * 等待直到元素不可见
 	 */
 	public static void waitUntilElementInvisiable(WebDriver driver,By path){
 		ExpectedCondition<Boolean> presence = ExpectedConditions.invisibilityOfElementLocated(path); 
+		new WebDriverWait(driver,20).until(presence);
+	}
+	
+	/**
+	 *等待直到元素可见 
+	 */
+	public static void waitUntilElementVisiable(WebDriver driver,By path){
+		ExpectedCondition<WebElement> presence = ExpectedConditions.visibilityOfElementLocated(path); 
 		new WebDriverWait(driver,20).until(presence);
 	}
 	

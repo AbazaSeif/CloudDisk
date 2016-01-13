@@ -27,7 +27,7 @@
 				</methods>
 			</class>
 				
-		<class name="com.zhangling.TeamFileCase">
+			<!-- <class name="com.zhangling.TeamFileCase">
 				<methods>		
 					<include name="newFolder"></include>
 					<include name="newFolderSame"></include>
@@ -72,7 +72,7 @@
 					<include name="lock"></include>
 					<include name="unlock"></include>
 				</methods>
-			</class>
+			</class> -->
 			
 			<!-- 登陆 -->
 			<parameter name="url" value="http://192.168.12.204/ucdisk/"></parameter>
@@ -95,6 +95,7 @@
 			<parameter name="renaming" value="10.jpg"></parameter>
 			<parameter name="download" value="11.html"></parameter>
 			<!-- 团队文件 -->
+			<parameter name="dissolutionTeam" value="y7tech"></parameter>
 			<parameter name="enterCompanyFile" value="companyTeam"></parameter>
 			<parameter name="teamFileCopyToMyFile" value="15.jpeg"></parameter>
 			<parameter name="teamFileCopyToTeamFile" value="16.jpeg"></parameter>
